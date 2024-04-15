@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Ordered Products</title>
+    <style>
+        .order-details {
+            width: 50%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f2f2f2;
+            border-radius: 10px;
+        }
+
+        .product-card {
+            display: flex;
+            margin-bottom: 10px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-image {
+            flex: 15%;
+            padding: 10px;
+        }
+
+        .product-image img {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .product-details {
+            flex: 85%;
+            padding: 10px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .product-price {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .product-brand {
+            font-size: 14px;
+            color: #666666;
+        }
+
+        .product-quantity {
+            font-size: 14px;
+            color: #666666;
+        }
+
+        .logo {
+            text-align: center; /* Center the logo horizontally */
+            margin-top: 25px; /* 25px below the top document edge */
+        }
+    </style>
+</head>
+<body>
+
+<div class="logo">
+    <img src="/images/Fambruh-logo-white.jpg" alt="Logo">
+</div>
+
+<div class="order-details">
+    <!-- Loop through each product in the products set -->
+    <div class="product-card" th:each="productDTO : ${products}">
+        <div class="product-image">
+            <!-- Display ProductImageMain here -->
+            <img th:src="'data:image/png;base64,' + ${productDTO.base64Image}" alt="Product Image">
+        </div>
+        <div class="product-details">
+            <div class="product-name" th:text="${productDTO.product.name}"></div>
+            <div class="product-price" th:text="'₹' + ${productDTO.product.price}"></div>
+            <div class="product-brand" th:text="'By ' + ${productDTO.product.brand}"></div>
+            <div class="product-quantity" th:text="'Quantity: ' + ${productDTO.quantity}"></div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
