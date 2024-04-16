@@ -4,25 +4,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import coms.service.UserDetailService;
-import coms.configuration.JwtAuthFilter;
-import coms.configuration.AuthEntryPoint;
 
-@SuppressWarnings("deprecation")
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Configuration
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig {
 
     @Autowired
     private UserDetailService userDetailService;
@@ -38,37 +34,37 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-
-    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(this.userDetailService).passwordEncoder(passwordEncoder());
     }
     
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-            .csrf().disable()
-            .cors().disable()
-            .authorizeRequests()
-            .antMatchers("/generate-token").permitAll()
-            .antMatchers("/user/signup").permitAll()
-            .antMatchers("/get/all-products", "/get/products/**", "/get/products-by-category/**", "/get-product/**").permitAll()
-            .antMatchers("/api/**").permitAll()
-            .antMatchers("/get/all-blogs", "/newsletter/subscriptions", "/newsletter/subscription/**", "/newsletter/subscribe", "/newsletter/unsubscribe/**").permitAll()
-            .antMatchers(HttpMethod.OPTIONS).permitAll()
-            .antMatchers("/get/order-invoice/**").permitAll()
-           
-            .and()
-            .exceptionHandling().authenticationEntryPoint(authEntryPoint)
-            .and()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-        http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+    @Bean
+	protected SecurityFilterChain configureAuthorization (HttpSecurity http) throws Exception{
+    	return 
+    	  http
+	      .csrf().disable()
+	      .cors().disable()
+	      .authorizeHttpRequests((auth) -> {
+	      	try {
+	      	    auth
+	      		.antMatchers("/generate-token", "/current-user").permitAll()
+	            .antMatchers("/user/**").permitAll()
+	            .antMatchers("/product/getById/**", "/product/get/all", "/product/getByName/**", 
+	              		     "/product/get/comboproduct/**", "/product/get/all-comboproducts").permitAll()
+	            .antMatchers("/home/**").permitAll()
+	            .antMatchers("/blog/get/all-blogs", "/blog/get/**", "/blog/get/blogByTitle/**", "/newsletter/**").permitAll()
+	            .antMatchers(HttpMethod.OPTIONS).permitAll()
+	            .anyRequest().authenticated();
+	      	} catch(Exception e) {
+	      		throw new RuntimeException(e);
+	      	}
+	      })
+	      .exceptionHandling().authenticationEntryPoint(authEntryPoint)
+	      .and()
+	      .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+	      .and()
+	      .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+	      .build(); 
     }
 
 }

@@ -1,9 +1,6 @@
 package coms.controller;
 
-import java.net.URI;
 import java.security.Principal;
-
-import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,19 +8,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import coms.model.dtos.RegisterDto;
-import coms.model.user.User;
 import coms.service.ReferralService;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/user")
+@RequestMapping("/referral")
 public class ReferralSystemController {
 	
 	@Autowired 
@@ -36,7 +28,7 @@ public class ReferralSystemController {
     }
 	
 	@PreAuthorize("hasAuthority('ADMIN')")
-	@GetMapping("/referral/{referralCode}")
+	@GetMapping("/{referralCode}")
     public ResponseEntity<?> getAllByReferralCode(@PathVariable String referralCode) {
 		return ResponseEntity.ok(refService.getAllByReferralCode(referralCode));
 	}
@@ -53,6 +45,9 @@ public class ReferralSystemController {
         return ResponseEntity.ok(refService.makeUserAreferral(principal));
     }
 	
-	
-	
+	@PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
+	@GetMapping("/referralFriendsSignups")
+    public ResponseEntity<?> checkReferralFriendsSignups(Principal principal) {
+        return refService.getReferralNotifications(principal);
+    }
 }

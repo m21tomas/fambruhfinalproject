@@ -10,21 +10,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import coms.configuration.ImageUtil;
 import coms.model.blog.Blog;
 import coms.model.blog.BlogImage;
-import coms.model.dtos.*;
 import coms.service.Blogservices;
 
 @RestController
 @CrossOrigin(origins = "*")
-public class Blogcontroller {
+@RequestMapping("/blog")
+public class BlogController {
 
     @Autowired
     private Blogservices blogService;
@@ -34,7 +43,7 @@ public class Blogcontroller {
 
  // Add new blog post
     @PreAuthorize("hasAuthority('ADMIN')")
-    @PostMapping("/add/blog")
+    @PostMapping("/add/new")
     public ResponseEntity<?> addNewBlog(@RequestParam("blog") String blogData,
                                         @RequestParam("image") MultipartFile file) throws IOException {
         // Check if the uploaded file is an image or GIF
@@ -66,7 +75,7 @@ public class Blogcontroller {
 
     // Update existing blog post
     @PreAuthorize("hasAuthority('ADMIN')")
-    @PutMapping("/update/blog/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<?> updateBlog(@PathVariable("id") Long id, @Valid @RequestBody Blog blog) {
         Blog existingBlog = blogService.getBlogById(id);
         if (existingBlog != null) {
@@ -87,7 +96,7 @@ public class Blogcontroller {
     }
 
     // Get blog post by ID
-    @GetMapping("/get/blog/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<?> getBlogById(@PathVariable("id") Long id) {
         Blog blog = blogService.getBlogById(id);
         if (blog != null) {
@@ -124,7 +133,7 @@ public class Blogcontroller {
 
     // Delete blog post by ID
     @PreAuthorize("hasAuthority('ADMIN')")
-    @DeleteMapping("/delete/blog/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteBlog(@PathVariable("id") Long id) {
         blogService.deleteBlogById(id);
         return ResponseEntity.status(HttpStatus.OK).build();

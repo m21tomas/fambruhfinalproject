@@ -1,6 +1,7 @@
 package coms.service;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,6 +11,8 @@ import javax.mail.MessagingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,10 +26,12 @@ import coms.exceptions.UnauthorisedRequestException;
 import coms.exceptions.UserNotFoundException;
 import coms.model.dtos.RegisterDto;
 import coms.model.dtos.UserInfoResponse;
+import coms.model.extra.Notification;
 import coms.model.user.Authority;
 import coms.model.user.Role;
 import coms.model.user.User;
 import coms.model.user.UserRole;
+import coms.repository.NotificationRepo;
 import coms.repository.RoleRepo;
 import coms.repository.UserRepo;
 
@@ -41,6 +46,9 @@ public class ReferralService {
 	
 	@Autowired
 	private RoleRepo roleRepo;
+	
+	@Autowired
+	private NotificationRepo notifRepo;
 	
 	@Autowired
 	private EmailUtil emailUtil;
@@ -227,6 +235,34 @@ public class ReferralService {
 				throw new MessagingException("Unable to send email for account verification. "+"\n"+e.getMessage());
 			}
 		}
+		
 		return createdUser;
+	}
+	
+	public ResponseEntity<?> getReferralNotifications(Principal principal){
+		User userByPricipal = (User) userDetailService.loadUserByUsername(principal.getName());
+		
+		User foundUser = userRepo.findByUsername(userByPricipal.getUsername());
+		
+		if(foundUser == null) {
+			throw new UserNotFoundException(userByPricipal.getUsername()+" user not found!");
+		}
+		
+		List<Notification> notifications = notifRepo.findByReferralUser(foundUser.getUsername());
+		
+		if(notifications.size()>0) {
+			List<String> messages = new ArrayList<>();
+			
+			messages = notifications.stream().map(notification -> notification.toString()).toList();
+			
+			for(Notification item : notifications) {
+				notifRepo.delete(item);
+			}
+			
+			return new ResponseEntity<List<String>>(messages, HttpStatus.OK);
+		}
+		else {
+			return ResponseEntity.notFound().build();
+		}
 	}
 }

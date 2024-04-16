@@ -1,5 +1,6 @@
 package coms.service;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,9 +16,11 @@ import coms.exceptions.ExistingUserException;
 import coms.exceptions.TokenValidationTimeException;
 import coms.exceptions.UserNotFoundException;
 import coms.model.dtos.RegisterDto;
+import coms.model.extra.Notification;
 import coms.model.user.Role;
 import coms.model.user.User;
 import coms.model.user.UserRole;
+import coms.repository.NotificationRepo;
 import coms.repository.RoleRepo;
 import coms.repository.UserRepo;
 
@@ -33,6 +36,12 @@ public class UserService {
 	
 	@Autowired
 	private EmailUtil emailUtil;
+	
+	@Autowired
+	private NotificationRepo notifRepo;
+	
+	@Autowired
+	private ReferralService refService;
 	
 	@Autowired
 	private JwtUtil jwtUtil;
@@ -141,12 +150,26 @@ public class UserService {
 		}
 		
 		if(jwtUtil.validateToken(jwtToken, verifyUser)) {
-			verifyUser.setEnabled(true);
-			User verifiedUser = userRepo.save(verifyUser);
-			if(verifiedUser.isEnabled()) {
-				String str = "User by the nickname of "+ verifyUser.getUsername() + " account is verified and "
-			                 + verifyUser.getUsername() + " can login.";
-				return str;
+			if(!verifyUser.isEnabled()) {
+				verifyUser.setEnabled(true);
+				User verifiedUser = userRepo.save(verifyUser);
+				if(verifiedUser.isEnabled()) {
+					
+					if(notifRepo.findByNewUser(verifiedUser.getUsername()).size() == 0 &&
+							verifiedUser.getReferredByCode() != null && !verifiedUser.getReferredByCode().isBlank()) {
+						String referralUsername = refService.getAllByReferralCode(verifiedUser.getReferredByCode()).stream().findAny().get().getUsername();
+						Notification notification = new Notification(verifiedUser.getUsername(), verifiedUser.getEmail(), referralUsername,
+								verifiedUser.getReferredByCode(), LocalDateTime.now());
+						notifRepo.save(notification);
+					}
+					
+					String str = "User by the nickname of "+ verifyUser.getUsername() + " account is verified and "
+							+ verifyUser.getUsername() + " can login.";
+					return str;
+				}
+			}
+			else {
+				return "You are already verified.";
 			}
 		}
 		String badStr = " Email link time for the account verification expired. \n"
@@ -166,12 +189,13 @@ public class UserService {
 			try {
 				String jwtToken = jwtUtil.generateVerifyAccountToken(checkUser);
 				emailUtil.sendAccountVerificationEmail(checkUser.getEmail(), jwtToken);
+				return "Email sent... please verify account within 2 minutes";
 			} catch (MessagingException e) {
 				throw new MessagingException("Unable to send email for account verification. "+"\n"+e.getMessage());
 			}
-		}
-		
-		return "Email sent... please verify account within 2 minutes";
+		}else {
+			return "You are already verified.";
+		}	
 	}
 
 	@Transactional(readOnly = true)

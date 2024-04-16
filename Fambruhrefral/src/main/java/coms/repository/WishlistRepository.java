@@ -9,6 +9,6 @@ import coms.model.user.User;
 import java.util.List;
 
 @Repository
-public interface wishlistrepository extends JpaRepository<Wishlist, Integer> {
+public interface WishlistRepository extends JpaRepository<Wishlist, Integer> {
     List<Wishlist> findByUserUsername(String username);
 }

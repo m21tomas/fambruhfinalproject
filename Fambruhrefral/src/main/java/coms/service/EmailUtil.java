@@ -30,7 +30,7 @@ public class EmailUtil {
     mimeMessageHelper.setSubject("Fambruh - New User email verification");
     mimeMessageHelper.setText("""
         <div>
-          <a href="http://localhost:9400/verify-account?email=%s&jwtToken=%s" target="_blank">Click this link to verify</a>
+          <a href="http://localhost:9400/user/verify-account?email=%s&jwtToken=%s" target="_blank">Click this link to verify</a>
         </div>
         """.formatted(email, jwtToken), true);
 

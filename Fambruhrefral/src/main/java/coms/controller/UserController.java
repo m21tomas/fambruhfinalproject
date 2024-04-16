@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -26,6 +27,7 @@ import coms.service.UserService;
 
 @RestController
 @CrossOrigin(origins = "*")
+@RequestMapping("/user")
 public class UserController {
 	
 	@Autowired
@@ -37,22 +39,19 @@ public class UserController {
 	@PostConstruct
 	public void createAdmin() {
 	    User existingAdmin = this.userService.getByUsername("fambruh@army");
-	    if (existingAdmin != null) {
-	        System.out.println("Admin user with username 'fambruh@army' already exists!");
-	        // Handle the situation where the admin user already exists
-	    } else {
+	    if (existingAdmin == null) {
 	    	RegisterDto adminDto = new RegisterDto();
 	    	adminDto.setUsername("fambruh@army");
 	    	adminDto.setPassword("admin123");
 	    	adminDto.setEmail("shaikhjunaidgh@gmail.com");
 
 	        User adminCreated = this.userService.createAdmin(adminDto);
-	        System.out.println("Admin username: " + adminCreated.getUsername());
+	        System.out.println("Admin with the username: " + adminCreated.getUsername() + " created.");
 	    }
 	}
 
 	//create new user
-	@PostMapping("/user/signup")
+	@PostMapping("/signup")
 	public ResponseEntity<?> createNewUser(@Valid @RequestBody RegisterDto userDto) throws MessagingException{
 		User createdUser = this.userService.createUser(userDto);
 		System.out.println("\nNew user: "+createdUser.getUsername()+" created. Check email to verify account so you can login.\n");

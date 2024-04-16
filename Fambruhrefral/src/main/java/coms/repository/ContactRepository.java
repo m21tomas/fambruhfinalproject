@@ -7,5 +7,5 @@ import coms.model.extra.Contactus;
 
 
 @Repository
-public interface contactrepository extends JpaRepository<Contactus,Integer> {
+public interface ContactRepository extends JpaRepository<Contactus,Integer> {
 }

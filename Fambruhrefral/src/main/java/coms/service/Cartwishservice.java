@@ -19,7 +19,7 @@ public class Cartwishservice {
     @Autowired
     private CartRepository cartItemRepository;
     @Autowired
-    private wishlistrepository wishlistRepository;
+    private WishlistRepository wishlistRepository;
     @Autowired
     private UserRepo userRepository;
 

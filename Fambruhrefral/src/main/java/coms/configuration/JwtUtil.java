@@ -18,8 +18,8 @@ import java.util.function.Function;
 
 @Component
 public class JwtUtil {
-	
-	private String SECRET_KEY = "medicare";
+	@Value("${SECRET_KEY}")
+	private String SECRET_KEY;
 
 	public static final long TWO_MINUTES_VALIDITY = 1*1*2*60; //days*hours*minutes*seconds
 	

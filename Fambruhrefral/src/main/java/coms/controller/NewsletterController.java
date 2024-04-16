@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/newsletter")
-public class Newslettercontroller {
+public class NewsletterController {
 
     @Autowired
     private newsletterservice newsletterService;

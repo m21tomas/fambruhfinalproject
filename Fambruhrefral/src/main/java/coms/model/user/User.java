@@ -1,10 +1,12 @@
 package coms.model.user;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -48,6 +50,9 @@ public class User implements UserDetails{
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
 	private Set<UserRole> userRoles = new HashSet<>();
+	
+	@Column(name = "last_seen")
+    private LocalDateTime lastSeen;
 
 	public User() {
 		super();
@@ -139,6 +144,14 @@ public class User implements UserDetails{
 	
 	public void setReferredVerified(boolean referredVerified) {
 		this.referredVerified = referredVerified;
+	}
+	
+	public LocalDateTime getLastSeen() {
+		return lastSeen;
+	}
+	
+	public void setLastSeen(LocalDateTime lastSeen) {
+		this.lastSeen = lastSeen;
 	}
 	
 	@Override

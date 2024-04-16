@@ -41,7 +41,7 @@ import coms.repository.ProductRepo;
 import coms.repository.Sizerepo;
 import coms.repository.UserRepo;
 import coms.repository.MainImageRepo;
-import coms.repository.wishlistrepository;
+import coms.repository.WishlistRepository;
 
 @Service
 public class ProductService {
@@ -68,7 +68,7 @@ public class ProductService {
     private CartRepository cartItemRepository;
     
     @Autowired
-    private wishlistrepository wishlistrepo;
+    private WishlistRepository wishlistrepo;
     
     @Autowired
     private Sizerepo sizerepo;

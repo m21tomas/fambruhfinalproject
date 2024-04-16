@@ -11,20 +11,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import coms.model.extra.Contactus;
 import coms.model.user.User;
 import coms.repository.UserRepo;
-import coms.repository.contactrepository;
+import coms.repository.ContactRepository;
 import coms.service.UserService;
 
 @RestController
 @CrossOrigin(origins = "*")
-
-public class homecontroller {
+@RequestMapping("/home")
+public class HomeController {
 	@Autowired
-	private contactrepository contactrepo;
+	private ContactRepository contactrepo;
 	
 	@Autowired
 	private UserRepo userrepo;

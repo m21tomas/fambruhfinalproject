@@ -64,9 +64,6 @@ public class JwtAuthFilter extends OncePerRequestFilter{
 		}else {
 			System.out.println("Invalid username!");
 		}
-		
-		filterChain.doFilter(request, response);
-		
+		filterChain.doFilter(request, response);	
 	}
-
 }
