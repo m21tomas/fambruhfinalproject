@@ -2,11 +2,19 @@ package coms.controller;
 
 import java.security.Principal;
 import java.text.DateFormat;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,20 +27,30 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import coms.exceptions.UserNotFoundException;
 import coms.model.cartorder.CartItem;
 import coms.model.cartorder.CartOrder;
+import coms.model.cartorder.ComboProductQuantity;
 import coms.model.cartorder.UserOrder;
+import coms.model.dtos.OrderInvoiceDto;
+import coms.model.product.ComboProduct;
 import coms.model.product.Product;
 import coms.model.product.ProductImageMain;
 import coms.model.product.ProductQuantity;
 import coms.model.user.User;
 import coms.repository.CartRepository;
+import coms.repository.ComboProductRepository;
+import coms.repository.OrderRepo;
+import coms.repository.OrderStatus;
 import coms.repository.ProductRepo;
 import coms.repository.UserRepo;
+import coms.service.Cartwishservice;
 import coms.service.EmailUtil;
 import coms.service.UserDetailService;
 import coms.service.UserOrderService;
@@ -45,13 +63,22 @@ public class UserOrderController {
 	private UserOrderService userOrderService;
 	
 	@Autowired
+	private Cartwishservice cartService;
+	
+	@Autowired
 	private CartRepository cartRepo;
+	
+	@Autowired
+    private OrderRepo orderRepo;
 	
 	@Autowired
 	private UserRepo userRepo;
 	
 	@Autowired
     private ProductRepo productRepo;
+	
+	@Autowired
+	private ComboProductRepository comboRepo;
 	
 	@Autowired
 	private EmailUtil emailUtil;
@@ -81,30 +108,45 @@ public class UserOrderController {
 		Calendar cl = Calendar.getInstance();
 		String orderDate = df.format(cl.getTime());
 		userOrder.setDate(orderDate);
-		userOrder.setStatus("PLACED");
+		//userOrder.setDate(LocalDate.now().toString());
+		userOrder.setStatus(OrderStatus.valueOf("PLACED"));
 		userOrder.setPaidAmount(cartOrder.getPaidAmount());
 		userOrder.setPaymentMode(cartOrder.getPaymentMode());
-		Set<CartItem> cartItems  = cartOrder.getCartItems();
-		Set<ProductQuantity> productQuantities  = new HashSet<>();
-		for(CartItem item : cartItems) {
-			Product product = productRepo.findById(item.getProduct().getPid()).orElse(null);
-			if(product != null) {
-				int quantity = item.getQuantity();
-				ProductQuantity productQuantity = new ProductQuantity();
-				productQuantity.setProduct(product);
-				productQuantity.setQuantity(quantity);
-				userOrderService.saveProductQuantity(productQuantity);
-				productQuantities.add(productQuantity);
-			}
-		}
 		
-		userOrder.setProducts(productQuantities);
+		Set<CartItem> cartItems  = cartOrder.getCartItems();
+		// Add each cart item and its associated quantities to the order
+	    for (CartItem cartItem : cartItems) {
+	    	Optional<CartItem> checkItem = cartRepo.findById(cartItem.getId());
+	    	if(checkItem.isPresent()) {
+	    		CartItem existingCartItem = checkItem.get();
+	    		
+	    		for (ProductQuantity productQuantity : existingCartItem.getProductQuantities()) {
+	    	        productQuantity.setCartItem(null);
+	    	    }
+	    		for (ComboProductQuantity comboProductQuantity : existingCartItem.getComboProductQuantities()) {
+	                comboProductQuantity.setCartItem(null);
+	            }
+	    		
+	    		if(checkItem.get().getProductQuantities().size() > 0) {	    			
+	    			userOrder.getProducts().addAll(checkItem.get().getProductQuantities());
+	    		}
+	    		else if (checkItem.get().getComboProductQuantities().size() > 0) {
+	    			userOrder.getComboProducts().addAll(checkItem.get().getComboProductQuantities());
+	    		}
+	    		cartRepo.delete(checkItem.get());
+	    	}else {
+	    		Map<String, Object> body = new LinkedHashMap<>();
+ 	            body.put("timestamp", LocalDateTime.now());
+ 	            body.put("message", "No such cart item with id: "+cartItem.getId().toString()+" to make an order");
+ 	            return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+	    	}
+	    }
 		
 //		userOrder.setConfirmationEmailSent(true);
 //		UserOrder orderCreated = this.userOrderService.saveOrder(userOrder);
 //		return ResponseEntity.ok(orderCreated);
 		// Save the user order
-	    UserOrder orderCreated = this.userOrderService.saveOrder(userOrder);
+	    UserOrder orderCreated = userOrderService.saveOrder(userOrder);
 	    
 	    if(orderCreated.getUsername().equals(userByPricipal.getUsername()) &&
 	       foundUser.getReferredByCode() != null && !foundUser.getReferredByCode().isEmpty()
@@ -113,7 +155,8 @@ public class UserOrderController {
 	        userRepo.save(foundUser);
 	    }
 
-	    
+//	    cartItems.forEach(cartItem -> cartService.removeCartItemById(cartItem.getId()));
+//	    
 //	    List<OrderInvoiceDto> productDTOs = new ArrayList<>();
 //	    for (ProductQuantity productQuantity : orderCreated.getProducts()) {
 //	        Product product = productQuantity.getProduct();
@@ -161,6 +204,12 @@ public class UserOrderController {
 	}
 	
 	@PreAuthorize("hasAuthority('ADMIN')")
+	@PutMapping("/changeStatus/{oid}")
+	public ResponseEntity<?> changeUserOrderStatus(@PathVariable("oid") Long oid, @RequestParam String status){
+		return userOrderService.changeUserOrderStatus(oid, status);
+	}
+	
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@GetMapping("/get/all")
 	public ResponseEntity<?> getAllOrders(){
 		List<UserOrder> orders = this.userOrderService.getAll();
@@ -198,7 +247,15 @@ public class UserOrderController {
 	@PreAuthorize("hasAuthority('ADMIN')")
 	@DeleteMapping("/delete/{oid}")
 	public ResponseEntity<?> deleteOrderById(@PathVariable("oid") Long oid){
-		this.userOrderService.deleteOrder(oid);
-		return ResponseEntity.status(HttpStatus.OK).build();
+		Optional<UserOrder> foundOrder = orderRepo.findById(oid);
+		if(foundOrder.isPresent()) {			
+			userOrderService.deleteOrder(oid);
+			return ResponseEntity.status(HttpStatus.OK).build();
+		}else {
+			Map<String, Object> body = new LinkedHashMap<>();
+	        body.put("timestamp", LocalDateTime.now());
+	        body.put("message", "No order found by the provided id to be deleted.");
+	        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+		}
 	}
 }

@@ -1,4 +1,5 @@
 package coms.controller;
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import coms.model.cartorder.Wishlist;
 import coms.model.dtos.CartItemResponseDto;
+import coms.model.product.ComboProduct;
 import coms.model.product.Product;
 import coms.repository.Size;
 import coms.service.Cartwishservice;
@@ -44,16 +46,22 @@ public class CartwishController {
     
     @PreAuthorize("hasAuthority('USER')")
     @PostMapping("/cart/add")
-    public ResponseEntity<?> addToCart(@RequestBody Product product, @RequestParam int quantity, @RequestParam String username) {
-        System.out.println("\nUSERNAME: "+username+"\n");
-        cartWishService.addToCart(product, quantity, username);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<?> addToCart(@RequestBody Product product, @RequestParam String size, @RequestParam int quantity, @RequestParam String username) {
+        System.out.println("\nAdding product to cart - USERNAME: "+username+"\n");
+        return cartWishService.addToCart(product, size, quantity, username);
+    }
+    
+    @PreAuthorize("hasAuthority('USER')")
+    @PostMapping("/cart/addCombo")
+    public ResponseEntity<?> addComboToCart(@RequestBody ComboProduct comboProduct, @RequestParam int quantity, @RequestParam String username) {
+        System.out.println("\nAdding combo product to cart - USERNAME: "+username+"\n");
+        return cartWishService.addComboToCart(comboProduct, quantity, username);
     }
     
     @PreAuthorize("hasAuthority('USER')")
     @PostMapping("/wishlist/add")
-    public ResponseEntity<?> addToWishlist(@RequestBody Product product, @RequestParam String username) {
-        cartWishService.addToWishlist(product, username);
+    public ResponseEntity<?> addToWishlist(@RequestBody Product product, @RequestParam String size, @RequestParam String username) {
+        cartWishService.addToWishlist(product, username, size);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
     
@@ -71,11 +79,10 @@ public class CartwishController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     
-    @PreAuthorize("hasAuthority('USER')")
-    @DeleteMapping("/cart/{cartItemId}")
+    @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
+    @DeleteMapping("/cart/delete/{cartItemId}")
     public ResponseEntity<?> removeCartItemById(@PathVariable Long cartItemId) {
-        cartWishService.removeCartItemById(cartItemId);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return cartWishService.removeCartItemById(cartItemId);
     }
     
     @PreAuthorize("hasAuthority('USER')")

@@ -11,7 +11,6 @@ import coms.repository.Size;
 
 
 @Entity
-
 public class ProductSize {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)

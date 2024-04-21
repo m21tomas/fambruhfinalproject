@@ -1,14 +1,20 @@
 package coms.model.cartorder;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import coms.model.product.ComboProduct;
 import coms.model.product.Product;
+import coms.model.product.ProductQuantity;
 import coms.model.user.User;
 
 @Entity
@@ -17,78 +23,62 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    private Product product;
-
-   
     @ManyToOne
     private User user;
+    
+    @OneToMany(cascade= {CascadeType.ALL}, mappedBy = "cartItem")
+    private List<ProductQuantity> productQuantities = new ArrayList<>();
 
-    private int quantity;
-
-    @OneToOne
-    private ComboProduct comboproduct;
-
+    @OneToMany(cascade= {CascadeType.ALL}, mappedBy = "cartItem")
+    private List<ComboProductQuantity> comboProductQuantities = new ArrayList<>();
+    
     public CartItem() {
         super();
     }
+    
+    public CartItem(User user, List<ProductQuantity> productQuantities) {
+		super();
+		this.user = user;
+		this.productQuantities = productQuantities;
+	}
 
-    // Constructor for cart item with combo product
-    public CartItem(ComboProduct comboproduct, User user) {
-        super();
-        this.user = user;
-        this.comboproduct = comboproduct;
-    }
+    public CartItem(User user, List<ProductQuantity> productQuantities,
+			List<ComboProductQuantity> comboProductQuantities) {
+		super();
+		this.user = user;
+		this.productQuantities = productQuantities;
+		this.comboProductQuantities = comboProductQuantities;
+	}
 
-    // Constructor for cart item with single product
-    public CartItem(User user, Product product, int quantity) {
-        super();
-        this.product = product;
-        this.user = user;
-        this.quantity = quantity;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    // Getters and setters
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public ComboProduct getComboproduct() {
-        return comboproduct;
-    }
+	public User getUser() {
+		return user;
+	}
 
-    public void setComboproduct(ComboProduct comboproduct) {
-        this.comboproduct = comboproduct;
-    }
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-    public int getQuantity() {
-        return quantity;
-    }
+	public List<ProductQuantity> getProductQuantities() {
+		return productQuantities;
+	}
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
+	public void setProductQuantities(List<ProductQuantity> productQuantities) {
+		this.productQuantities = productQuantities;
+	}
 
-    public Long getid() {
-        return id;
-    }
+	public List<ComboProductQuantity> getComboProductQuantities() {
+		return comboProductQuantities;
+	}
 
-    public void setid(Long id) {
-        this.id = id;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-	
+	public void setComboProductQuantities(List<ComboProductQuantity> comboProductQuantities) {
+		this.comboProductQuantities = comboProductQuantities;
+	}
 }

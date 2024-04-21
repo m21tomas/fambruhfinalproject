@@ -1,8 +1,10 @@
 package coms.model.dtos;
 
-import coms.model.product.Product;
+import java.util.Set;
+
 import coms.model.product.ComboProduct;
-import coms.repository.Size;
+import coms.model.product.Product;
+import coms.model.product.ProductSize;
 
 public class CartItemResponseDto {
 
@@ -10,20 +12,22 @@ public class CartItemResponseDto {
 	private String username;
 	private Product product;
 	private int quantity;
+	private int comboQuantity;
 	private ComboProduct comboproduct;
-	private Size size;
+	private Set<ProductSize> sizes;
 
 	public CartItemResponseDto() {}
 
 	public CartItemResponseDto(Long id, String username, Product product, coms.model.product.ComboProduct comboproduct,
-			int quantity, Size size) {
+			int quantity, int comboQuantity, Set<ProductSize> size) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.product = product;
 		this.quantity = quantity;
+		this.comboQuantity = comboQuantity;
 		this.comboproduct = comboproduct;
-		this.size = size;
+		this.sizes = size;
 	}
 
 	public String getUsername() {
@@ -58,6 +62,14 @@ public class CartItemResponseDto {
 		this.quantity = quantity;
 	}
 
+	public int getComboQuantity() {
+		return comboQuantity;
+	}
+
+	public void setComboQuantity(int comboQuantity) {
+		this.comboQuantity = comboQuantity;
+	}
+
 	public ComboProduct getComboproduct() {
 		return comboproduct;
 	}
@@ -66,12 +78,12 @@ public class CartItemResponseDto {
 		this.comboproduct = comboproduct;
 	}
 
-	public Size getSize() {
-		return size;
+	public Set<ProductSize> getSizes() {
+		return sizes;
 	}
 
-	public void setSize(Size size) {
-		this.size = size;
+	public void setSizes(Set<ProductSize> sizes) {
+		this.sizes = sizes;
 	}
 
 }

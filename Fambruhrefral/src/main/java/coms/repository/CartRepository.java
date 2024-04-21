@@ -10,5 +10,8 @@ import coms.model.user.*;
 public interface CartRepository extends JpaRepository<CartItem, Long> {
 	public List<CartItem> findByUser(User user);
 	public List<CartItem> findByUserUsername(String username);
-	public void deleteByProductPid(Long productId);
+
+    void deleteByProductQuantities_Product_Pid(Long productId);
+
+    void deleteByComboProductQuantities_ComboProduct_Id(Long comboProductId);
 }

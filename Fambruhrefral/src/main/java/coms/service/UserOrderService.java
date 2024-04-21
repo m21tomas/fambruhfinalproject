@@ -1,19 +1,24 @@
 package coms.service;
 
-import java.util.HashSet;
+import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import coms.model.cartorder.CartItem;
+import coms.model.cartorder.ComboProductQuantity;
 import coms.model.cartorder.UserOrder;
-import coms.model.product.Product;
 import coms.model.product.ProductQuantity;
-import coms.model.product.ComboProduct;
-import coms.repository.Order;
+import coms.repository.ComboQuantityRepo;
 import coms.repository.OrderRepo;
+import coms.repository.OrderStatus;
 import coms.repository.ProductQuantityRepo;
 
 @Service
@@ -25,12 +30,20 @@ public class UserOrderService {
     @Autowired
     private ProductQuantityRepo productQuantityRepo;
     
+    @Autowired
+    private ComboQuantityRepo comboQuantityRepo;
+    
     public UserOrder saveOrder(UserOrder userOrder) {
 		UserOrder orderSaved = this.orderRepo.save(userOrder);
 		return orderSaved;
 	}
+    
 	public void saveProductQuantity(ProductQuantity productQuantity) {
 		this.productQuantityRepo.save(productQuantity);
+	}
+	
+	public void saveComboProductQuantity(ComboProductQuantity comboProductQuantity) {
+		this.comboQuantityRepo.save(comboProductQuantity);
 	}
 	
 	public List<UserOrder> getAll(){
@@ -46,9 +59,30 @@ public class UserOrderService {
 		UserOrder order = this.orderRepo.findById(oid).get();
 		return order;
 	}
-	
+	@Transactional
 	public void deleteOrder(Long oid) {
 		this.orderRepo.deleteById(oid);
+	}
+	
+	@Transactional
+	public ResponseEntity<?> changeUserOrderStatus(Long oid, String status) {
+		Optional<UserOrder> foundOrder = orderRepo.findById(oid);
+		
+		if(foundOrder.isPresent()) {
+			UserOrder theOrder = foundOrder.get();
+			theOrder.setStatus(OrderStatus.valueOf(status));
+			UserOrder savedOrder = orderRepo.save(theOrder);
+			if(savedOrder.getStatus() == OrderStatus.valueOf(status)) {
+				return new ResponseEntity<>("Order status is changed to "+status, HttpStatus.OK);
+			} else {
+				return new ResponseEntity<>("Order status is NOT changed to "+status, HttpStatus.BAD_REQUEST);
+			}
+		}else {
+			Map<String, Object> body = new LinkedHashMap<>();
+            body.put("timestamp", LocalDateTime.now());
+            body.put("message", "No order found by the provided order id.");
+    		return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+		}
 	}
 
 }

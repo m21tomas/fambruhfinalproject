@@ -5,17 +5,20 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
 import coms.model.product.ProductQuantity;
+import coms.repository.OrderStatus;
 
 @Entity
 public class UserOrder {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long oid;
 
     private String username;
@@ -28,8 +31,8 @@ public class UserOrder {
     private String contact;
     private String date;
 
-    
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
 
     private String returnStatus; // Status for return functionality
     private String replacementStatus; // Status for replacement functionality
@@ -40,14 +43,17 @@ public class UserOrder {
 
     @ManyToMany(cascade = CascadeType.ALL)
     private Set<ProductQuantity> products = new HashSet<>();
+    
+    @ManyToMany(cascade = CascadeType.ALL)
+    private Set<ComboProductQuantity> comboProducts = new HashSet<>();
 
     public UserOrder() {
     }
 
     public UserOrder(Long oid, String username, String firstname, String lastname, String address, String district,
-			int pinCode, String state, String contact, String date, String status, String returnStatus,
+			int pinCode, String state, String contact, String date, OrderStatus status, String returnStatus,
 			String replacementStatus, Double paidAmount, String paymentMode, boolean confirmationEmailSent,
-			boolean addressVerified, Set<ProductQuantity> products) {
+			boolean addressVerified, Set<ProductQuantity> products, Set<ComboProductQuantity> comboProducts) {
 		super();
 		this.oid = oid;
 		this.username = username;
@@ -67,9 +73,13 @@ public class UserOrder {
 		this.confirmationEmailSent = confirmationEmailSent;
 		this.addressVerified = addressVerified;
 		this.products = products;
+		this.comboProducts = comboProducts;
 	}
 
-	public UserOrder(String username, String address, String district, int pinCode, String state, String contact, String date, String status, String returnStatus, String replacementStatus, Double paidAmount, String paymentMode, boolean confirmationEmailSent, boolean addressVerified, Set<ProductQuantity> products) {
+	public UserOrder(String username, String address, String district, int pinCode, String state, String contact, String date,
+			OrderStatus status, String returnStatus, String replacementStatus, Double paidAmount, String paymentMode,
+			boolean confirmationEmailSent, boolean addressVerified, Set<ProductQuantity> products, 
+			Set<ComboProductQuantity> comboProducts) {
         this.username = username;
         this.address = address;
         this.district = district;
@@ -85,6 +95,7 @@ public class UserOrder {
         this.confirmationEmailSent = confirmationEmailSent;
         this.addressVerified = addressVerified;
         this.products = products;
+        this.comboProducts = comboProducts;
     }
 
     // Getters and setters...
@@ -169,11 +180,11 @@ public class UserOrder {
         this.date = date;
     }
 
-    public String getStatus() {
+    public OrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
@@ -232,4 +243,12 @@ public class UserOrder {
     public void setProducts(Set<ProductQuantity> products) {
         this.products = products;
     }
+
+	public Set<ComboProductQuantity> getComboProducts() {
+		return comboProducts;
+	}
+
+	public void setComboProducts(Set<ComboProductQuantity> comboProducts) {
+		this.comboProducts = comboProducts;
+	}
 }

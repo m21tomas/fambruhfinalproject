@@ -1,8 +1,11 @@
 package coms.repository;
 
-public enum Order {
+public enum OrderStatus {
     PLACED,
     PROCESSING,
+    CONFIRMED,
+    ON_THE_WAY,
+    OUT_OF_DELIVERY,
     SHIPPED,
     DELIVERED,
     RETURN_REQUESTED,

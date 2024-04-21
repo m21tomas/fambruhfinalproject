@@ -3,20 +3,15 @@ package coms.service;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.DefaultResourceLoader;
-import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -27,6 +22,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import coms.model.dtos.ProductResponseDto;
+import coms.model.product.ComboProduct;
 import coms.model.product.Product;
 import coms.model.product.ProductImage1;
 import coms.model.product.ProductImage2;
@@ -34,13 +30,12 @@ import coms.model.product.ProductImage3;
 import coms.model.product.ProductImageDetail;
 import coms.model.product.ProductImageHover;
 import coms.model.product.ProductImageMain;
-import coms.model.product.ComboProduct;
 import coms.repository.CartRepository;
 import coms.repository.ComboProductRepository;
+import coms.repository.MainImageRepo;
 import coms.repository.ProductRepo;
 import coms.repository.Sizerepo;
 import coms.repository.UserRepo;
-import coms.repository.MainImageRepo;
 import coms.repository.WishlistRepository;
 
 @Service
@@ -294,12 +289,12 @@ public class ProductService {
         dto.setProductDiscountedPrice(product.getProductDiscountedPrice());
         dto.setAvailable(product.isAvailable());
         dto.setSizes(product.getSizes());
-        dto.setMainImageData(getImageFromFile(product.getMainImage().getFilePath()));
-        dto.setHoverImageData(getImageFromFile(product.getHoverImage().getFilePath()));
-        dto.setImage1Data(getImageFromFile(product.getImage1().getFilePath()));
-        dto.setImage2Data(getImageFromFile(product.getImage2().getFilePath()));
-        dto.setImage3Data(getImageFromFile(product.getImage3().getFilePath()));
-        dto.setDetailImageData(getImageFromFile(product.getDetailImage().getFilePath()));
+        dto.setMainImage(getImageFromFile(product.getMainImage().getFilePath()));
+        dto.setHoverImage(getImageFromFile(product.getHoverImage().getFilePath()));
+        dto.setImage1(getImageFromFile(product.getImage1().getFilePath()));
+        dto.setImage2(getImageFromFile(product.getImage2().getFilePath()));
+        dto.setImage3(getImageFromFile(product.getImage3().getFilePath()));
+        dto.setDetailImage(getImageFromFile(product.getDetailImage().getFilePath()));
         return dto;
     }
     
@@ -394,9 +389,13 @@ public class ProductService {
     
     @Transactional
     public void deleteCartItemsByProductId(Long productId) {
-        cartItemRepository.deleteByProductPid(productId);
+        cartItemRepository.deleteByProductQuantities_Product_Pid(productId);
     }
 
+    @Transactional
+    public void deleteCartItemsByComboProductId(Long comboProductId) {
+        cartItemRepository.deleteByComboProductQuantities_ComboProduct_Id(comboProductId);
+    }
     
     // Delete a product by ID
     @Transactional
@@ -440,8 +439,59 @@ public class ProductService {
     // Combo Product Services
 
     // Add a combo product
-    public ComboProduct addComboProduct(ComboProduct comboProduct) {
-        return this.comboProductRepository.save(comboProduct);
+    public ResponseEntity<?> addComboProduct(ComboProduct providedProduct) {
+    	Optional<Product> productOpt1 = productRepo.findById(providedProduct.getProduct1().getPid());
+    	Optional<Product> productOpt2 = productRepo.findById(providedProduct.getProduct2().getPid());
+    	List<Product> pr1List = new ArrayList<>(); boolean size1Available = true;
+    	List<Product> pr2List = new ArrayList<>(); boolean size2Available = true;
+    	if(productOpt1.isPresent()) {
+    		pr1List = productRepo.findByNameAndIsAvailableTrue(productOpt1.get().getName());
+    		size1Available = pr1List.stream().anyMatch(item ->
+    	    item.getSizes().stream().anyMatch(item2 ->
+    	        item2.isAvailable() && item2.getSizeName().equals(providedProduct.getSize1())));	
+    	}
+    	if(productOpt2.isPresent()) {
+    		pr2List = productRepo.findByNameAndIsAvailableTrue(productOpt2.get().getName());
+    		size2Available = pr2List.stream().anyMatch(item ->
+    	    item.getSizes().stream().anyMatch(item2 ->
+    	        item2.isAvailable() && item2.getSizeName().equals(providedProduct.getSize2())));
+    	}
+    	
+    	if(!pr1List.isEmpty() && !pr2List.isEmpty() && size1Available && size2Available) {
+    		ComboProduct comboProduct = new ComboProduct();
+    		comboProduct.setProduct1(productOpt1.get());
+    		comboProduct.setSize1(providedProduct.getSize1());
+    		comboProduct.setProduct2(productOpt2.get());
+    		comboProduct.setSize2(providedProduct.getSize2());
+    		
+    		ComboProduct savedCombo = comboProductRepository.save(comboProduct);
+    		return new ResponseEntity<ComboProduct>(savedCombo, HttpStatus.CREATED);
+    	} else {
+    		String pr1_mis = "", pr2_mis = "", pr1_size = "", pr2_size = "";
+    		
+    		Map<String, Object> body = new LinkedHashMap<>();
+            body.put("timestamp", LocalDateTime.now());
+            body.put("message", "ComboProduct was not added. Reason:");
+    		
+    		if(pr1List.isEmpty()) {
+    			pr1_mis = "Because no such product1";
+    			body.put("Reason 1", pr1_mis);
+    		}
+    		if(pr2List.isEmpty()) {
+    			pr2_mis = "Because no such product2";
+    			body.put("Reason 2", pr2_mis);
+    		}
+    		if(!size1Available) {
+    			pr1_size = "Because no size "+ providedProduct.getSize1().toString() + " available for product1";
+    			body.put("Reason 3", pr1_size);
+    		}
+    		if(!size2Available) {
+    			pr2_size = "Because no size "+ providedProduct.getSize2().toString() + " available for product2";
+    			body.put("Reason 4", pr2_size);
+    		}
+
+    		return new ResponseEntity<Map<String, Object>>(body, HttpStatus.BAD_REQUEST);
+    	}
     }
 
     // Find all combo products
