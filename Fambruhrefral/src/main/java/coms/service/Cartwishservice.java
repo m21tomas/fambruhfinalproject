@@ -6,7 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import coms.model.cartorder.CartItem;
+import coms.model.cartorder.CartItemBack;
 import coms.model.cartorder.ComboProductQuantity;
 import coms.model.cartorder.Wishlist;
 import coms.model.dtos.CartItemResponseDto;
@@ -45,10 +45,10 @@ public class Cartwishservice {
         return remapCartItemToDTO(cartItemRepository.findByUserUsername(username));
     }
     
-    private static List<CartItemResponseDto> remapCartItemToDTO(List<CartItem> cartItem){
+    private static List<CartItemResponseDto> remapCartItemToDTO(List<CartItemBack> cartItem){
     	List<CartItemResponseDto> responseDto = new ArrayList<>();
     	
-    	for(CartItem item : cartItem) {
+    	for(CartItemBack item : cartItem) {
     		CartItemResponseDto dtoItem = new CartItemResponseDto();
     		dtoItem.setId(item.getId());
     		dtoItem.setUsername(item.getUser().getUsername());
@@ -83,7 +83,7 @@ public class Cartwishservice {
     // Method to remove a cart item by its ID
     @Transactional
     public ResponseEntity<?> removeCartItemById(Long cartItemId) {
-    	Optional<CartItem> cartItem = cartItemRepository.findById(cartItemId);
+    	Optional<CartItemBack> cartItem = cartItemRepository.findById(cartItemId);
     	
     	if(cartItem.isPresent()) {
     		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -130,7 +130,7 @@ public class Cartwishservice {
 	        	Optional<Product> foundProduct = productRepo.findById(product.getPid());
 	        	if(foundProduct.isPresent()) {
 	        		if(foundProduct.get().getSizes().stream().anyMatch(item -> item.getSizeName().toString().equals(size) && item.isAvailable())) {	        			
-	        			CartItem cartItem = new CartItem();
+	        			CartItemBack cartItem = new CartItemBack();
 	        			cartItem.setUser(user);
 	        			ProductQuantity pq = new ProductQuantity(cartItem, foundProduct.get(), Size.valueOf(size), quantity);
 	        			cartItem.getProductQuantities().add(pq);
@@ -175,7 +175,7 @@ public class Cartwishservice {
 	        	User user = userRepository.findByUsername(username);
 	        	Optional<ComboProduct> foundCombo = comboRepo.findById(comboProduct.getId());
 	        	if(foundCombo.isPresent()) {
-	        		CartItem cartItem = new CartItem();
+	        		CartItemBack cartItem = new CartItemBack();
 		        	cartItem.setUser(user);
 		        	ComboProductQuantity cpq = new ComboProductQuantity(cartItem, comboProduct, quantity);
 		        	cartItem.getComboProductQuantities().add(cpq);
@@ -204,7 +204,7 @@ public class Cartwishservice {
 
     // Method to move a cart item to the wishlist
     public void moveCartItemToWishlist(Long cartItemId, String username) {
-        CartItem cartItem = cartItemRepository.findById(cartItemId).orElse(null);
+        CartItemBack cartItem = cartItemRepository.findById(cartItemId).orElse(null);
         if (cartItem != null) {
             Product product = cartItem.getProductQuantities().stream().findAny().get().getProduct();
             Size productSize = cartItem.getProductQuantities().stream().findAny().get().getSize();
@@ -230,7 +230,7 @@ public class Cartwishservice {
     // Method to update the quantity of a cart item by product ID
 
     public void updateCartItemQuantity(Long cartItemId, int quantity) {
-        CartItem cartItem = cartItemRepository.findById(cartItemId).orElse(null);
+        CartItemBack cartItem = cartItemRepository.findById(cartItemId).orElse(null);
         if (cartItem != null) {
         	cartItem.getProductQuantities().stream().findAny().get().setQuantity(quantity);
             cartItemRepository.save(cartItem);
@@ -238,7 +238,7 @@ public class Cartwishservice {
     }
     // Method to update the size of a cart item
     public void updateCartItemSize(Long cartItemId, Size size) {
-        CartItem cartItem = cartItemRepository.findById(cartItemId).orElse(null);
+        CartItemBack cartItem = cartItemRepository.findById(cartItemId).orElse(null);
         if (cartItem != null) {
           
             cartItemRepository.save(cartItem);

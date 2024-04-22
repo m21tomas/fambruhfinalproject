@@ -84,14 +84,14 @@ public class ProductController {
     }
 
     // Add new combo product
-    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
+    //@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     @PostMapping("/add/comboproduct")
     public ResponseEntity<?> addNewComboProduct(@RequestBody ComboProduct comboProduct) {
         return productService.addComboProduct(comboProduct);
     }
 
     // Update existing combo product
-    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
+    //@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     @PutMapping("/update/comboproduct/{id}")
     public ResponseEntity<?> updateComboProduct(@PathVariable("id") Long id, @Valid @RequestBody ComboProduct comboProduct) {
         ComboProduct existingComboProduct = productService.findComboProduct(id);

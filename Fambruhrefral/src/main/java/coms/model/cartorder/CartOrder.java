@@ -3,7 +3,7 @@ package coms.model.cartorder;
 import java.util.HashSet;
 import java.util.Set;
 
-import coms.model.product.ProductQuantity;
+import coms.model.dtos.CartcomboItem;
 
 public class CartOrder {
     private String username;
@@ -17,14 +17,13 @@ public class CartOrder {
     private Double paidAmount;
     private String paymentMode;
     private Set<CartItem> cartItems = new HashSet<>();
+    private Set<CartcomboItem> cartcomboItems = new HashSet<>();
 
     public CartOrder() {
     }
 
-
-
 	public CartOrder(String username, String firstname, String lastname, String address, String district, int pinCode,
-			String state, String contact, Double paidAmount, String paymentMode, Set<CartItem> cartItems) {
+			String state, String contact, Double paidAmount, String paymentMode, Set<CartItem> cartItems, Set<CartcomboItem> cartcomboItems) {
 		super();
 		this.username = username;
 		this.firstname = firstname;
@@ -37,33 +36,24 @@ public class CartOrder {
 		this.paidAmount = paidAmount;
 		this.paymentMode = paymentMode;
 		this.cartItems = cartItems;
+		this.cartcomboItems = cartcomboItems;
 	}
-
-
 
 	public String getFirstname() {
 		return firstname;
 	}
 
-
-
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
-
-
 
 	public String getLastname() {
 		return lastname;
 	}
 
-
-
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
-
-
 
 	public String getUsername() {
 		return username;
@@ -137,5 +127,11 @@ public class CartOrder {
 		this.cartItems = cartItems;
 	}
 
-   
+	public Set<CartcomboItem> getCartcomboItems() {
+		return cartcomboItems;
+	}
+
+	public void setCartcomboItems(Set<CartcomboItem> cartcomboItems) {
+		this.cartcomboItems = cartcomboItems;
+	}
 }

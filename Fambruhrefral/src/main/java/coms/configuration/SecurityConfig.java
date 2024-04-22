@@ -50,6 +50,7 @@ public class SecurityConfig {
 	      		.antMatchers("/generate-token", "/current-user").permitAll()
 	            .antMatchers("/user/**").permitAll()
 	            .antMatchers("/product/getById/**", "/product/get/all", "/product/getByName/**", 
+	            			 "/product/add/*",
 	              		     "/product/get/comboproduct/**", "/product/get/all-comboproducts").permitAll()
 	            .antMatchers("/home/**").permitAll()
 	            .antMatchers("/blog/get/all-blogs", "/blog/get/**", "/blog/get/blogByTitle/**", "/newsletter/**").permitAll()

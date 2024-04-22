@@ -9,6 +9,6 @@ import coms.model.cartorder.Wishlist;
 import coms.model.product.ProductSize;
 
 	@Repository
-	public interface Sizerepo extends JpaRepository<ProductSize, Integer> {
+	public interface Sizerepo extends JpaRepository<ProductSize, Long> {
 	   
 	}

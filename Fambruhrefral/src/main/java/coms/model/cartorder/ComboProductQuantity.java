@@ -15,7 +15,7 @@ public class ComboProductQuantity {
 	private Long id;
 
 	@ManyToOne
-	private CartItem cartItem;
+	private CartItemBack cartItem;
 
 	@ManyToOne
 	private ComboProduct comboProduct;
@@ -30,7 +30,7 @@ public class ComboProductQuantity {
 		this.quantity = quantity;
 	}
 
-	public ComboProductQuantity(CartItem cartItem, ComboProduct comboProduct, int quantity) {
+	public ComboProductQuantity(CartItemBack cartItem, ComboProduct comboProduct, int quantity) {
 		super();
 		this.cartItem = cartItem;
 		this.comboProduct = comboProduct;
@@ -45,11 +45,11 @@ public class ComboProductQuantity {
 		this.id = id;
 	}
 
-	public CartItem getCartItem() {
+	public CartItemBack getCartItem() {
 		return cartItem;
 	}
 
-	public void setCartItem(CartItem cartItem) {
+	public void setCartItem(CartItemBack cartItem) {
 		this.cartItem = cartItem;
 	}
 

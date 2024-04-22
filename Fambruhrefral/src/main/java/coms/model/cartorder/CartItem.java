@@ -1,84 +1,83 @@
 package coms.model.cartorder;
 
-import java.util.ArrayList;
-import java.util.List;
+import coms.model.product.ProductSize;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-
-import coms.model.product.ComboProduct;
-import coms.model.product.Product;
-import coms.model.product.ProductQuantity;
-import coms.model.user.User;
-
-@Entity
 public class CartItem {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @ManyToOne
-    private User user;
+	private Long pid;
+    private String name;
+    private String brand;
+    private Double price;
+    private String img3;
+    private Integer quantity;
+    private ProductSize selectedSize; // Add selectedSize property
     
-    @OneToMany(cascade= {CascadeType.ALL}, mappedBy = "cartItem")
-    private List<ProductQuantity> productQuantities = new ArrayList<>();
-
-    @OneToMany(cascade= {CascadeType.ALL}, mappedBy = "cartItem")
-    private List<ComboProductQuantity> comboProductQuantities = new ArrayList<>();
+    public CartItem() {}
     
-    public CartItem() {
-        super();
-    }
-    
-    public CartItem(User user, List<ProductQuantity> productQuantities) {
+	public CartItem(Long pid, String name, String brand, Double price, String img3, Integer quantity,
+			ProductSize selectedSize) {
 		super();
-		this.user = user;
-		this.productQuantities = productQuantities;
+		this.pid = pid;
+		this.name = name;
+		this.brand = brand;
+		this.price = price;
+		this.img3 = img3;
+		this.quantity = quantity;
+		this.selectedSize = selectedSize;
 	}
 
-    public CartItem(User user, List<ProductQuantity> productQuantities,
-			List<ComboProductQuantity> comboProductQuantities) {
-		super();
-		this.user = user;
-		this.productQuantities = productQuantities;
-		this.comboProductQuantities = comboProductQuantities;
+	public Long getPid() {
+		return pid;
 	}
 
-	public Long getId() {
-		return id;
+	public void setPid(Long pid) {
+		this.pid = pid;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public String getName() {
+		return name;
 	}
 
-	public User getUser() {
-		return user;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public String getBrand() {
+		return brand;
 	}
 
-	public List<ProductQuantity> getProductQuantities() {
-		return productQuantities;
+	public void setBrand(String brand) {
+		this.brand = brand;
 	}
 
-	public void setProductQuantities(List<ProductQuantity> productQuantities) {
-		this.productQuantities = productQuantities;
+	public Double getPrice() {
+		return price;
 	}
 
-	public List<ComboProductQuantity> getComboProductQuantities() {
-		return comboProductQuantities;
+	public void setPrice(Double price) {
+		this.price = price;
 	}
 
-	public void setComboProductQuantities(List<ComboProductQuantity> comboProductQuantities) {
-		this.comboProductQuantities = comboProductQuantities;
+	public String getImg3() {
+		return img3;
+	}
+
+	public void setImg3(String img3) {
+		this.img3 = img3;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+
+	public ProductSize getSelectedSize() {
+		return selectedSize;
+	}
+
+	public void setSelectedSize(ProductSize selectedSize) {
+		this.selectedSize = selectedSize;
 	}
 }

@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import coms.model.cartorder.CartItem;
+import coms.model.cartorder.CartItemBack;
 import coms.repository.Size;
 
 @Entity
@@ -20,7 +20,7 @@ public class ProductQuantity {
     private Long pqid;
     
     @ManyToOne
-    private CartItem cartItem;
+    private CartItemBack cartItem;
 
     @ManyToOne
     @JsonIgnore
@@ -39,7 +39,7 @@ public class ProductQuantity {
         this.quantity = quantity;
     }
 
-    public ProductQuantity(CartItem cartItem, Product product, Size size, int quantity) {
+    public ProductQuantity(CartItemBack cartItem, Product product, Size size, int quantity) {
 		this.cartItem = cartItem;
 		this.product = product;
 		this.size = size;
@@ -78,11 +78,11 @@ public class ProductQuantity {
         this.quantity = quantity;
     }
 
-	public CartItem getCartItem() {
+	public CartItemBack getCartItem() {
 		return cartItem;
 	}
 
-	public void setCartItem(CartItem cartItem) {
+	public void setCartItem(CartItemBack cartItem) {
 		this.cartItem = cartItem;
 	}
 }
