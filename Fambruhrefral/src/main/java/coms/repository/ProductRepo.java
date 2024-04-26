@@ -12,5 +12,5 @@ import coms.model.product.Product;
 public interface ProductRepo extends JpaRepository<Product, Long>{
 	public List<Product> findByNameContainingIgnoreCaseOrSaltContainingIgnoreCase(String name, String salt);
 	
-	public List<Product> findByNameAndIsAvailableTrue(String name);
+	public List<Product> findByNameAndAvailableTrue(String name);
 }

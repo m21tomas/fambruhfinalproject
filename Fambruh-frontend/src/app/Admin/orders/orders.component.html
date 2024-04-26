@@ -1,0 +1,45 @@
+<div class="container">
+   
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Username</th>
+                 
+                        <th>Address</th>
+                        <th>District</th>
+                        <th>Pin Code</th>
+                        <th>State</th>
+                        <th>Contact</th>
+                        <th>Paid Amount</th>
+                        <th>Payment Mode</th>
+                        <th>Status</th>
+                   
+                        <th>Date</th>
+                        <!-- Add more table headers as needed -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let order of orders; let i = index">
+                        <td>{{ order.oid }}</td>
+                        <td>{{ order.username }}</td>
+               
+                        <td>{{ order.address }}</td>
+                        <td>{{ order.district }}</td>
+                        <td>{{ order.pinCode }}</td>
+                        <td>{{ order.state }}</td>
+                        <td>{{ order.contact }}</td>
+                        <td>{{ order.paidAmount }}</td>
+                        <td>{{ order.paymentMode }}</td>
+                        <td>{{ order.status }}</td>
+                    
+                        <td>{{ order.date }}</td>
+                        <!-- Add more table cells as needed -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

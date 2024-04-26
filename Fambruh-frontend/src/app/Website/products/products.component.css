@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+
+
+:root {
+  --cyberpunk-yellow: #f0e801;
+  --among-us-red: rgba(193, 167, 21, 0.8);
+  --fall-guys-pink: #fa40a3;
+}
+
+.bg-cyberpunk:hover {
+  background: var(--cyberpunk-yellow);
+}
+.bg-among-us:hover {
+  background: #e2c707;
+}
+.bg-fall-guys:hover {
+  background: var(--fall-guys-pink);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: black;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+ 
+}
+
+.card {
+    margin-top: 30px;
+  transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  margin-bottom: 30px;
+}
+
+.card:hover {
+    box-shadow: 0 0 30px rgba(255, 218, 9, 0.8); /* Brighter and larger shadow on hover */
+}
+
+.name {
+  transform: translate3d(0, 0, 50px);
+  transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+}
+
+.card:hover .name {
+  top: 1rem;
+  opacity: 1;
+}
+
+.buy {
+  background-color: rgb(47, 46, 46);
+  left: 50%;
+  transform: translate3d(-50%, 0, 50px);
+  transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  opacity: 1;
+  text-decoration: none;
+  font-family: Calculator;
+ letter-spacing: 2px;
+  color: greenyellow;
+}
+
+.card:hover .buy {
+  bottom: 1rem;
+  opacity: 1;
+}
+
+img {
+  transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  height: 400px;
+  width: 300px;
+}
+
+.card:hover img {
+  transform: translate3d(0, 0, 50px);
+  transform-style: preserve-3d;
+}
+
+.image::before {
+  content: "";
+  border-radius: .25rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: .25rem;
+  opacity: 0;
+  transition: all .5s;
+}
+
+.card:hover .image::before {
+  opacity: .2;
+}
+

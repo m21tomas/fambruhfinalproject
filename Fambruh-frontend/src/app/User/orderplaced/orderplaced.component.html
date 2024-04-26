@@ -1,0 +1,28 @@
+
+<app-navbar></app-navbar>
+<div class="container">
+    <div class="printer-top"></div>
+      
+    <div class="paper-container">
+      <div class="printer-bottom"></div>
+  
+      <div class="paper">
+        <div class="main-contents">
+          <div class="success-icon">&#10004;</div>
+          <div class="success-title">
+            Payment Complete
+          </div>
+          <div class="success-description">
+           {{orderInvoice.address}}
+          </div>
+          <div class="order-details">
+            <div class="order-number-label">Order Number</div>
+            <div class="order-number">{{orderInvoice.oid}}</div>
+          </div>
+          <div class="order-footer">Thank you!</div>
+          <div class="orders"><a routerLink="/userorder">Check your order</a></div>
+        </div>
+        <div class="jagged-edge"></div>
+      </div>
+    </div>
+  </div>

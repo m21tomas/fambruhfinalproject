@@ -1,0 +1,63 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-10">
+        <a routerLink="/productform" class="btn btn-primary mb-3">Add Product</a>
+        <table class="table table-responsive">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Discounted Price</th>
+              <th>Is Available</th>
+              <th>Brand</th>
+              <th>Sizes</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of products; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ product.name }}</td>
+              <td>{{ product.price }}</td>
+              <td>{{ product.discountedPrice }}</td>
+              <td>
+                <label class="switch">
+                    <input type="checkbox" name="available" [(ngModel)]="product.available"
+                        (change)="onActivate(product.pid,product)">
+                    <span class="slider round"></span>
+                </label>
+            </td>
+              <td>{{ product.brand }}</td>
+              <td>
+                <ul>
+                  <li *ngFor="let size of product.sizes">
+                    <label class="checkbox-container">{{ size.sizeName }}
+                  
+                      <span class="checkmark"></span>
+                    </label>
+                  </li>
+                </ul>
+              </td>
+              
+              
+              <td>
+                <button class="btn btn-danger" (click)="deleteProduct(product.pid)">Delete</button>
+                <button class="btn btn-primary" (click)="updateProduct(product.pid)">Update</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-md-2">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Number of Products</h5>
+            <p class="card-text">{{ products.length }}</p>
+          </div>
+        </div>
+        <!-- You can add more card sections for additional statistics if needed -->
+      </div>
+    </div>
+  </div>
+  

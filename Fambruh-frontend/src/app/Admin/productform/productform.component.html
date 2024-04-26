@@ -1,0 +1,149 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-9">
+        <form #productForm="ngForm">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" [(ngModel)]="product.name" required #name="ngModel">
+            <span class="text-danger" *ngIf="name.invalid && (name.dirty || name.touched)">
+              Name is required
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="brand">Brand</label>
+            <input type="text" class="form-control" id="brand" name="brand" [(ngModel)]="product.brand" required #brand="ngModel">
+            <span class="text-danger" *ngIf="brand.invalid && (brand.dirty || brand.touched)">
+              Brand is required
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" class="form-control" id="description" name="description" [(ngModel)]="product.description" required #description="ngModel">
+            <span class="text-danger" *ngIf="description.invalid && (description.dirty || description.touched)">
+              Description is required
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="salt">Salt</label>
+            <input type="text" class="form-control" id="salt" name="salt" [(ngModel)]="product.salt" required #salt="ngModel">
+            <span class="text-danger" *ngIf="description.invalid && (salt.dirty || salt.touched)">
+              Salt is required
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="totalAvailable">Total available</label>
+            <input type="number" class="form-control" id="totalAvailable" name="totalAvailable" [(ngModel)]="product.totalAvailable" required #totalAvailable="ngModel">
+            <span class="text-danger" *ngIf="totalAvailable.invalid && (totalAvailable.dirty || totalAvailable.touched)">
+              Price is required and must have up to two decimal places
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="price">Price</label>
+            <input type="text" class="form-control" id="price" name="price" [(ngModel)]="product.price" required pattern="[0-9]+(\.[0-9]{1,2})?" #price="ngModel">
+            <span class="text-danger" *ngIf="price.invalid && (price.dirty || price.touched)">
+              Price is required and must have up to two decimal places
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="discountedPrice">Discounted Price</label>
+            <input type="text" class="form-control" id="discountedPrice" name="discountedPrice" [(ngModel)]="product.discountedPrice" pattern="[0-9]+(\.[0-9]{1,2})?" #discountedPrice="ngModel">
+            <span class="text-danger" *ngIf="discountedPrice.invalid && (discountedPrice.dirty || discountedPrice.touched)">
+              Discounted price must have up to two decimal places
+            </span>
+          </div>         
+          <div class="form-group">
+            <label>Is Available?</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="isAvailableYes" name="isAvailable" value="true" [(ngModel)]="product.available" #isAvailable="ngModel">
+              <label class="form-check-label" for="isAvailableYes">Yes</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" id="isAvailableNo" name="isAvailable" value="false" [(ngModel)]="product.available" #isAvailable="ngModel">
+              <label class="form-check-label" for="isAvailableNo">No</label>
+            </div>
+            
+          </div>
+          <div>
+            <label>Select available size for new product: </label>
+            <div *ngFor="let size of product.sizes">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" [(ngModel)]="size.available" name="size{{size.sizeId}}">
+                <label class="form-check-label" for="size{{size.sizeId}}">{{size.sizeName}}</label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="img1">Select Main Image:</label>
+            <input type="file" class="form-control-file border" id="img1" accept="image/*"
+                (change)="onChangeMainImage($event)">
+        </div>
+        <div class="form-group">
+          <label for="img2">Select Hover Image:</label>
+          <input type="file" class="form-control-file border" id="img2" accept="image/*"
+              (change)="onChangeHoverImage($event)">
+      </div>
+      <div class="form-group">
+        <label for="img3">Select Detail Image:</label>
+        <input type="file" class="form-control-file border" id="img3" accept="image/*"
+            (change)=" onChangeDetailImage($event)">
+    </div>
+    <div class="form-group">
+      <label for="img4">Select Image1:</label>
+      <input type="file" class="form-control-file border" id="img4" accept="image/*"
+          (change)="onChangeImage1($event)">
+  </div>
+  <div class="form-group">
+    <label for="img5">Select Image2:</label>
+    <input type="file" class="form-control-file border" id="img5" accept="image/*"
+        (change)="onChangeImage2($event)">
+</div>
+<div class="form-group">
+  <label for="img6">Select Image3:</label>
+  <input type="file" class="form-control-file border" id="img6" accept="image/*"
+      (change)=" onChangeImage3($event)">
+</div>
+      
+         
+          <div class="text-center">
+            <div class="btn-group">
+                <button (click)="onSubmit()" class="btn btn-primary"
+                    [disabled]="productForm.invalid" data-toggle="modal"
+                    data-target="#myModal">Add Product</button>
+                <!-- The Modal -->
+                <div class="modal fade" id="myModal">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Add a new Product</h4>
+                                <button type="button" class="close" (click)="onClick()"
+                                    data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <span *ngIf="isValid" style="color:green">{{message}}</span>
+                                <span *ngIf="!isValid" style="color: red">{{message}}</span>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                    (click)="onClick()">Close</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <button type="reset" class="btn btn-danger">Reset</button>
+            </div>
+        </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+  

@@ -232,7 +232,7 @@ public class UserOrderController {
 		if(cartItems.size() > 0) {
 			for(CartItem item : cartItems) {
 				Optional<Product> optProduct0 = productRepo.findById(item.getPid());
-				Optional<Product> productAvailable = productRepo.findByNameAndIsAvailableTrue(item.getName()).stream().findAny();
+				Optional<Product> productAvailable = productRepo.findByNameAndAvailableTrue(item.getName()).stream().findAny();
 				if(optProduct0.isPresent() && productAvailable.isPresent()) {
 					Size size = item.getSelectedSize().getSizeName();
 					

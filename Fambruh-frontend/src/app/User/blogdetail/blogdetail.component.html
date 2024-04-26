@@ -1,0 +1,27 @@
+<article  *ngIf="blog" class="post">
+    <div>
+      <div class="absolute-bg" >
+        <img [src]="blog.img">
+      </div>
+    </div>
+    <div class="post__container">
+      <span class="post__category">{{blog.author}}</span>
+      
+      <div class="post__content">
+        <header>
+          <time class="post__time">{{ formatDate(blog.postDate) }}</time>
+          <h1 class="post__header"><span>{{blog.title}}</span></h1>
+        </header>
+      
+      
+
+        <p class="post__text">{{blog.content1}}</p>
+        <p class="post__text">{{blog.content2}}</p>
+        <p class="post__text">{{blog.content3}}</p>
+      </div>
+      <div class="post__link">
+        <a [routerLink]="['/blogs']">Other Posts</a>
+      </div>
+    </div>
+  </article>
+  

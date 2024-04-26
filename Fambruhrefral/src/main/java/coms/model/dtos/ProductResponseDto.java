@@ -12,8 +12,8 @@ public class ProductResponseDto {
     private String salt;
     private int totalAvailable;
     private Double price;
-    private Double productDiscountedPrice;
-    private boolean isAvailable;
+    private Double discountedPrice;
+    private boolean available;
     private Set<ProductSize> sizes;
     private byte[] mainImage;
     private byte[] hoverImage;
@@ -25,7 +25,7 @@ public class ProductResponseDto {
     public ProductResponseDto() {}
     
 	public ProductResponseDto(Long pid, String name, String brand, String description, String salt, int totalAvailable,
-			Double price, Double productDiscountedPrice, boolean isAvailable, Set<ProductSize> sizes,
+			Double price, Double discountedPrice, boolean available, Set<ProductSize> sizes,
 			byte[] mainImageData, byte[] hoverImage, byte[] image1, byte[] image2, byte[] image3,
 			byte[] detailImage) {
 		super();
@@ -36,8 +36,8 @@ public class ProductResponseDto {
 		this.salt = salt;
 		this.totalAvailable = totalAvailable;
 		this.price = price;
-		this.productDiscountedPrice = productDiscountedPrice;
-		this.isAvailable = isAvailable;
+		this.discountedPrice = discountedPrice;
+		this.available = available;
 		this.sizes = sizes;
 		this.mainImage = mainImageData;
 		this.hoverImage = hoverImage;
@@ -102,22 +102,22 @@ public class ProductResponseDto {
 		this.price = price;
 	}
 	
-	public Double getProductDiscountedPrice() {
-		return productDiscountedPrice;
+	public Double getDiscountedPrice() {
+		return discountedPrice;
 	}
-	
-	public void setProductDiscountedPrice(Double productDiscountedPrice) {
-		this.productDiscountedPrice = productDiscountedPrice;
+
+	public void setDiscountedPrice(Double discountedPrice) {
+		this.discountedPrice = discountedPrice;
 	}
-	
+
 	public boolean isAvailable() {
-		return isAvailable;
+		return available;
 	}
-	
-	public void setAvailable(boolean isAvailable) {
-		this.isAvailable = isAvailable;
+
+	public void setAvailable(boolean available) {
+		this.available = available;
 	}
-	
+
 	public Set<ProductSize> getSizes() {
 		return sizes;
 	}

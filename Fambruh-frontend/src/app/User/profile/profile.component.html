@@ -1,0 +1,169 @@
+
+<app-navbar></app-navbar>
+<body>
+<div class="container-fluid">
+    <div class="row col-12">
+        <div class="side col-lg-3 my-lg-0 my-md-1">
+            <div id="sidebar" class="bg-purple">
+                <div class="h4 text-white">Account</div>
+                <ul>
+                    <li class="tab" (click)="selectTab('tab1')" [class.active]="selectedTab === 'tab1'"> <a class="text-decoration-none d-flex align-items-start">
+                            <div class="fas fa-box pt-2 me-3"></div>
+                            <div class="d-flex flex-column">
+                                <div class="link">My Account</div>
+                                <div class="link-desc">View & Manage orders and returns</div>
+                            </div>
+                        </a> </li>
+                    <li class="tab" (click)="selectTab('tab2')" [class.active]="selectedTab === 'tab2'"> <a class="text-decoration-none d-flex align-items-start">
+                            <div class="fas fa-box-open pt-2 me-3"></div>
+                            <div class="d-flex flex-column">
+                                <div class="link">My Orders</div>
+                                <div class="link-desc">View & Manage orders and returns</div>
+                            </div>
+                        </a> </li>
+                
+               
+                        <li class="tab" (click)="logout()" >
+                            <a class="text-decoration-none d-flex align-items-start">
+                                <div class="fas fa-headset pt-2 me-3"></div>
+                                <div class="d-flex flex-column">
+                                    <div class="link">Logout</div>
+                                    <div class="link-desc">its time to move out</div>
+                                </div>
+                            </a>
+                        </li>
+                        
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-9 my-lg-0 my-1">
+            <div id="main-content" class="bg-white border tab-content" *ngIf="selectedTab === 'tab1'">
+                <div class="d-flex flex-column">
+                    <div class="h5">Hello {{userDetails.username}},</div>
+                    <div>Logged in as: {{userDetails.email}}</div>
+                </div>
+                <div class="d-flex my-4 flex-wrap">
+                    <div class="box me-4 my-1 bg-light"> <img src="https://www.freepnglogos.com/uploads/box-png/cardboard-box-brown-vector-graphic-pixabay-2.png" alt="">
+                        <div class="d-flex align-items-center mt-2">
+                            <div class="tag">Orders placed</div>
+                            <div class="ms-auto number">10</div>
+                        </div>
+                    </div>
+                    <div class="box me-4 my-1 bg-light"> <img src="https://www.freepnglogos.com/uploads/shopping-cart-png/shopping-cart-campus-recreation-university-nebraska-lincoln-30.png" alt="">
+                        <div class="d-flex align-items-center mt-2">
+                            <div class="tag">Items in Cart</div>
+                            <div class="ms-auto number">10</div>
+                        </div>
+                    </div>
+                    <div class="box me-4 my-1 bg-light"> <img src="https://www.freepnglogos.com/uploads/love-png/love-png-heart-symbol-wikipedia-11.png" alt="">
+                        <div class="d-flex align-items-center mt-2">
+                            <div class="tag">Wishlist</div>
+                            <div class="ms-auto number">10</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-uppercase">My recent orders</div>
+              
+                <div *ngFor="let order of recorders" class="order my-3 bg-light">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="d-flex flex-column justify-content-between order-summary">
+                                <div class="d-flex align-items-center">
+                                    <div class="text-uppercase">Order #{{ order.oid }}</div>
+                                    <div class="green-label ms-auto text-uppercase">{{ order.paymentMethod }}</div>
+                                </div>
+                                <div class="fs-8">Products #{{ order.products.length }}</div>
+                                <div class="fs-8">Date: {{ order.date | date:'dd MMM, yyyy | h:mm a' }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="d-sm-flex align-items-sm-start justify-content-sm-between">
+                                <div class="status">Status : {{ order.status }}</div>
+                                <div class="btn btn-primary text-uppercase" (click)="getOrderDetails(order.id)">order info</div>
+                            </div>
+        
+                         
+<div class="checkout-wrap">
+    <ul class="checkout-bar">
+  
+      <li class="active">
+        <a href="#">PLACED</a>
+      </li>
+      
+      <li class="active">CONFIRMED</li>
+      
+      <li class="active">PROCESSING</li>
+      
+      <li class="active">ON_THE_WAY</li>
+      
+      <li class="active">DELIVERED</li>
+         
+    </ul>
+  </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <div id="main-content" class="bg-white border tab-content" *ngIf="selectedTab === 'tab2'">
+           
+                <div class="text-uppercase">My orders</div>
+              
+                <div *ngFor="let order of orders| paginate : 
+                {
+                    itemsPerPage: tableSize,
+                    currentPage: page,
+                    totalItems: count
+                }" class="order my-3 bg-light">
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="d-flex flex-column justify-content-between order-summary">
+                                <div class="d-flex align-items-center">
+                                    <div class="text-uppercase">Order #{{ order.oid }}</div>
+                                    <div class="green-label ms-auto text-uppercase">{{ order.paymentMethod }}</div>
+                                </div>
+                                <div class="fs-8">Products #{{ order.products.length }}</div>
+                                <div class="fs-8">Date: {{ order.date | date:'dd MMM, yyyy | h:mm a' }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-9">
+                            <div class="d-sm-flex align-items-sm-start justify-content-sm-between">
+                                <div class="status">Status : {{ order.status }}</div>
+                                <div class="btn btn-primary text-uppercase" (click)="getOrderDetails(order.id)">order info</div>
+                            </div>
+        
+                         
+<div class="checkout-wrap">
+    <ul class="checkout-bar">
+  
+      <li class="active">
+        <a href="#">PLACED</a>
+      </li>
+      
+      <li class="active">CONFIRMED</li>
+      
+      <li class="active">PROCESSING</li>
+      
+      <li class="active">ON_THE_WAY</li>
+      
+      <li class="active">DELIVERED</li>
+         
+    </ul>
+  </div>
+  
+
+                        </div>
+                    </div></div>  <div class="d-flex justify-content-center">
+                        <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                        </pagination-controls>
+                    </div></div></div>
+
+        
+    </div>
+</div>
+
+</body>

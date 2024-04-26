@@ -46,6 +46,7 @@ public class User implements UserDetails{
 	
     private String referredByCode;
     
+    @Column(name = "Verified_referral_user", columnDefinition = "VARCHAR(5)")
     private boolean referredVerified = false;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")

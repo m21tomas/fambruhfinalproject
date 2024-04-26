@@ -47,6 +47,12 @@ public class ProductService {
     @Value("${image.upload.path}")
     private String uploadPath;
     
+//    @Value("${$IMAGES_PATH}")
+//    private String uploadPath;
+    
+ //   @Value("C:/Users/Junaid Shaikh/Desktop/images/")
+ //   private String uploadPath;
+    
     @Autowired
     private ComboProductRepository comboProductRepository;
     
@@ -286,7 +292,7 @@ public class ProductService {
         dto.setSalt(product.getSalt());
         dto.setTotalAvailable(product.getTotalAvailable());
         dto.setPrice(product.getPrice());
-        dto.setProductDiscountedPrice(product.getProductDiscountedPrice());
+        dto.setDiscountedPrice(product.getDiscountedPrice());
         dto.setAvailable(product.isAvailable());
         dto.setSizes(product.getSizes());
         dto.setMainImage(getImageFromFile(product.getMainImage().getFilePath()));
@@ -356,7 +362,7 @@ public class ProductService {
     		updateProduct.setSalt(product.getSalt());
     		updateProduct.setTotalAvailable(product.getTotalAvailable());
     		updateProduct.setPrice(product.getPrice());
-    		updateProduct.setProductDiscountedPrice(product.getProductDiscountedPrice());
+    		updateProduct.setDiscountedPrice(product.getDiscountedPrice());
     		updateProduct.setAvailable(product.isAvailable());
     		updateProduct.setSizes(product.getSizes());
     		
@@ -421,7 +427,7 @@ public class ProductService {
     
     // Find available products by name
     public ResponseEntity<?> findTrueProduct(String name) {
-        List<Product> products = productRepo.findByNameAndIsAvailableTrue(name);
+        List<Product> products = productRepo.findByNameAndAvailableTrue(name);
         if(products.isEmpty()) {
         	Map<String, Object> body = new LinkedHashMap<>();
             body.put("timestamp", LocalDateTime.now());
@@ -445,13 +451,13 @@ public class ProductService {
     	List<Product> pr1List = new ArrayList<>(); boolean size1Available = true;
     	List<Product> pr2List = new ArrayList<>(); boolean size2Available = true;
     	if(productOpt1.isPresent()) {
-    		pr1List = productRepo.findByNameAndIsAvailableTrue(productOpt1.get().getName());
+    		pr1List = productRepo.findByNameAndAvailableTrue(productOpt1.get().getName());
     		size1Available = pr1List.stream().anyMatch(item ->
     	    item.getSizes().stream().anyMatch(item2 ->
     	        item2.isAvailable() && item2.getSizeName().equals(providedProduct.getSize1())));	
     	}
     	if(productOpt2.isPresent()) {
-    		pr2List = productRepo.findByNameAndIsAvailableTrue(productOpt2.get().getName());
+    		pr2List = productRepo.findByNameAndAvailableTrue(productOpt2.get().getName());
     		size2Available = pr2List.stream().anyMatch(item ->
     	    item.getSizes().stream().anyMatch(item2 ->
     	        item2.isAvailable() && item2.getSizeName().equals(providedProduct.getSize2())));

@@ -1,0 +1,328 @@
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<app-navbar></app-navbar>
+<body>
+
+  
+  
+
+  <div class="wrapper" >
+    <div class="content">
+ 
+   
+      
+      
+      
+      
+      
+      
+      <div class="product-slider" >
+        <button class="swiper-button-prev">
+          <span class="icon">
+            <svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-left"></use></svg>
+          </span>
+        </button>
+        <button class="swiper-button-next">
+          <span class="icon">
+            <svg class="icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg>
+          </span>
+        </button>
+  
+
+        <div class="product-slider__wrp swiper-wrapper" >
+      
+          <div class="product-slider__item swiper-slide" *ngIf="product" >
+            <div class="product-img">
+              <div class="product-img__item">
+                <img [src]="product.img3" alt="Product Image" class="product-img__img">
+              </div>
+            </div>
+            
+            
+            <div class="product-slider__card">
+              <img src="assets/Box2.png" alt="star wars" class="product-slider__cover">
+<div class="product-slider__content">
+
+
+ 
+
+
+
+  <h1 class="product-slider__title">
+   {{product.name}}
+  </h1>
+  <span class="product-slider__price">₹{{product.price}}<sup></sup></span>
+
+ 
+
+  <div class="product-ctr">
+    <div class="product-labels"><h6 style="font-family: 'Times New Roman', Times, serif;" (click)="toggleSizeChart()">Size chart&nbsp;&nbsp;<i class="fa-solid fa-arrow-up-right-from-square"></i></h6>
+     
+      
+      <div class="product-labels__group">
+        <label class="product-labels__item">
+            <input type="radio" class="product-labels__checkbox" name="type5" (change)="selectSize('S')" [checked]="selectedSize?.sizeName === 'S'">
+            <span class="product-labels__txt">S</span>
+        </label>
+    
+        <label class="product-labels__item">
+            <input type="radio" class="product-labels__checkbox" name="type5" (change)="selectSize('M')" [checked]="selectedSize?.sizeName === 'M'">
+            <span class="product-labels__txt">M</span>
+        </label>
+    
+        <label class="product-labels__item">
+            <input type="radio" class="product-labels__checkbox" name="type5" (change)="selectSize('L')" [checked]="selectedSize?.sizeName === 'L'">
+            <span class="product-labels__txt">L</span>
+        </label>
+    
+        <label class="product-labels__item">
+            <input type="radio" class="product-labels__checkbox" name="type5" (change)="selectSize('XL')" [checked]="selectedSize?.sizeName === 'XL'">
+            <span class="product-labels__txt">XL</span>
+        </label>
+    </div>
+    
+
+    </div> <span class="hr-vertical"></span>
+    <div class="size-inf" *ngIf="sizeChartVisible" (click)="toggleSizeChart()">
+     
+      <div class="table-responsive">
+   
+        <th class="gap">Size</th>
+        <th class="gap">Chest</th>
+        <th class="gap">Length</th>
+        <th class="gap">Shoulder</th>
+        <tr>
+        <td>S</td>
+        <td>46</td>
+        <td>26</td>
+        <td>20</td>
+        </tr>
+   
+            <tr>
+                <td>M</td>
+                <td>48</td>
+                <td>26.5</td>
+                <td>21</td>
+                </tr>
+                <tr>
+                    <td>L</td>
+                    <td>50</td>
+                    <td>27</td>
+                    <td>22</td>
+                    </tr>
+                    <tr>
+                        <td>XL</td>
+                        <td>52</td>
+                        <td>27.5</td>
+                        <td>23</td>
+                        </tr>
+        </div>
+    </div>
+  
+    
+
+
+</div>
+
+
+  <div class="product-slider__bottom">
+    <button class="product-slider__cart" *ngIf="product.available && selectedSize" (click)="addToCart(product, selectedSize)">
+      Add to cart
+  </button>
+  
+    <button class="product-slider__cart2" *ngIf="!product.available" disabled>
+     Out of Stock
+        
+          </button>
+    <button class="product-slider__fav js-fav" (click)="toggleFavorite()" >
+<span class="heart"></span> ADD TO WISHLIST
+</button>
+
+
+  </div>
+</div>
+
+
+
+
+
+
+
+            </div>
+            
+          </div>
+          
+          
+          <div class="product-slider__item swiper-slide" *ngIf="product" >
+            <div class="product-img">
+              <div class="product-img__item">
+                <img src="assets/whd.png" alt="Product Image" class="product-img__img">
+              </div>
+            </div>
+            
+            
+            <div class="product-slider__card">
+              <img src="assets/Box2.png" alt="star wars" class="product-slider__cover">
+<div class="product-slider__content">
+
+
+ 
+
+
+
+  <h1 class="product-slider__title">
+   Combo
+  </h1>
+  <span class="product-slider__price">₹1699<sup></sup></span>
+
+
+
+
+
+
+
+
+  <div class="product-ctr">
+
+
+<div  class="box">
+  <label>Select Product 1:</label>
+  <select style="color: black;" [(ngModel)]="selectedProduct1">
+    <option style="color: black;" *ngFor="let product of products" [ngValue]="product">{{ product.name }}</option>
+  </select>
+</div>
+
+<div class="box" *ngIf="selectedProduct1">
+  <label>Select Size for Product 1:</label>
+  <select style="color: black;" [(ngModel)]="selectedSize1">
+    <option style="color: black;" *ngFor="let size of selectedProduct1.sizes" [ngValue]="size">{{ size.sizeName }}</option>
+  </select>
+</div>
+<br>
+<div class="box">
+  <label>Select Product 2:</label>
+  <select style="color: black;" [(ngModel)]="selectedProduct2">
+    <option style="color: black;"  *ngFor="let product of products" [ngValue]="product">{{ product.name }}</option>
+  </select>
+</div>
+
+<div class="box" *ngIf="selectedProduct1">
+  <label>Select Size for Product 2:</label>
+  <select style="color: black;" [(ngModel)]="selectedSize2">
+    <option style="color: black;" *ngFor="let size of selectedProduct1.sizes" [ngValue]="size">{{ size.sizeName }}</option>
+  </select>
+</div>
+
+      
+     
+    
+
+   
+
+    
+
+
+</div>
+  
+<span class="hr-vertical"></span>
+
+  <div class="product-slider__bottom">
+    <button class="product-slider__cart" *ngIf="product.available && selectedSize1 && selectedSize2 && selectedProduct1 && selectedProduct2" (click)="addComboToCart(selectedProduct1,selectedSize1,selectedProduct2,selectedSize2)">
+      Add to cart
+    </button>
+    
+    
+  
+    <button class="product-slider__cart2" *ngIf="!product.available" disabled>
+     Out of Stock
+        
+          </button>
+  
+
+
+  </div>
+</div>
+
+
+
+
+
+
+
+            </div>
+            
+          </div>
+          
+
+       
+
+
+
+        
+        </div>
+       
+       
+      
+        
+        
+
+
+   
+      </div> 
+      
+    </div>
+   
+
+  </div>
+ 
+
+   
+  <div style="letter-spacing: 2px; background-color: black; text-align: center; color: white;" class="container-fluid">
+    <div class="col-12 row">
+    <div style="margin-top: 130px;" class="col-lg-4">
+<h1>FEATURE 1</h1>
+<p style="padding-left: 95px; padding-right: 95px;">Lorem ipsum dolor sidunt magnam aut vel inventored iure magnam similique repudiandae expedita?Lorem ipsum dolor sidunt magnam aut vel inventored iure magnam similique repudiandae expedita?</p>
+    </div>
+
+      <div  style="margin-top: 130px;" class="col-lg-4">
+        <h1>FEATURE 2</h1>
+        <p style="padding-left: 95px; padding-right: 95px;">Lorem ipsum dolor sidunt magnam aut vel inventored iure magnam similique repudiandae expedita?Lorem ipsum dolor sidunt magnam aut vel inventored iure magnam similique repudiandae expedita?</p>
+      </div> 
+
+     <div  style="margin-top: 130px;" class="col-lg-4">
+      <h1>FEATURE 2</h1>
+      <p style="padding-left: 95px; padding-right: 95px;">Lorem ipsum dolor sidunt magnam aut vel inventored iure magnam similique repudiandae expedita?Lorem ipsum dolor sidunt magnam aut vel inventored iure magnam similique repudiandae expedita?</p>
+     </div>
+
+    </div>
+
+    <div style="margin-top: 250px; height: auto;" class="row1 col-12 row">
+      <div class="col-lg-4">
+        <img [src]="product.img4">
+      </div>
+      <div class="col-lg-4">
+        <img [src]="product.img5">
+      </div>
+      <div class="col-lg-4">
+        <img [src]="product.img6">
+      </div>
+    </div>
+    
+      <div style="margin-top: 80px;" class="col-12 row">
+        <div class="col-lg-4">
+          <span style="color: grey; font-size: 20px;">GARMENTS</span><br>
+          <span>DESIGN</span><br>
+          <span>FABRIC COLOR</span><br>
+          <span>FABRIC COLOR(INSIDE)</span><br>
+          <span>FABRIC TEXTURE SIZE</span><br>
+          <span>FABRIC MATTE</span>
+        </div>
+      </div>
+  </div>
+
+</body>
+<app-footer></app-footer>
+

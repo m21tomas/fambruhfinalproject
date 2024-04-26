@@ -1,0 +1,65 @@
+body {
+    background: rgb(0, 0, 0);
+    color: white;
+  }
+  .container-fluid{
+   letter-spacing: 2px;
+    background-color: black;
+    color: #fff;
+    font-family: Myfont2;
+    
+  }
+
+  h1 {
+    color: #fff;
+    padding: 10px 0;
+  }
+  .card-title{
+    font-size: 22px;
+    font-family: Myfont !important;
+    color: #e2c707;
+  }
+  .blog-details {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .blog-details i {
+    margin-right: 5px;
+  }
+  
+  .card-text{
+    color: white;
+  
+  }
+  .card {
+
+  margin-top: 30px;
+ background-color: black;
+color: white;
+ 
+    transition: 0.3s;
+    border: none;
+  
+    &:hover {
+      box-shadow: 0 8px 16px 0 #e2c707;
+        -webkit-transform: scale(1.02);
+        .card-image {
+          opacity: 1;
+         
+        }
+    }
+    a {
+      color: initial;
+      &:hover {
+        text-decoration: initial;
+      }
+    }
+    .text-muted i {
+      margin: 0 10px;
+    }
+  }
+.card-img-top{
+  height: 300px;
+
+}

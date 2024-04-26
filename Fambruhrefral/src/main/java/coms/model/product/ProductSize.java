@@ -20,7 +20,6 @@ public class ProductSize {
     private Size sizeName;
 
     @NotNull(message = "isAvailable cannot be null")
-    @Column(name = "available", columnDefinition = "BOOLEAN")
     private boolean available;
 
     @ManyToMany(mappedBy = "sizes")

@@ -46,10 +46,10 @@ public class Product {
     @NotNull(message = "price cannot be null")
     private Double price;
 
-    private Double productDiscountedPrice;
+    private Double discountedPrice;
     
 	@NotNull(message = "isAvailable cannot be null")
-	private boolean isAvailable;
+	private boolean available;
 
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(name = "product_size_table",
@@ -95,8 +95,8 @@ public class Product {
 			@NotBlank(message = "description cannot be blank") String description,
 			@NotBlank(message = "salt cannot be blank") String salt,
 			@NotNull(message = "available cannot be null") int totalAvailable,
-			@NotNull(message = "price cannot be null") Double price, Double productDiscountedPrice,
-			@NotNull(message = "isAvailable cannot be null") boolean isAvailable, Set<ProductSize> sizes,
+			@NotNull(message = "price cannot be null") Double price, Double discountedPrice,
+			@NotNull(message = "isAvailable cannot be null") boolean available, Set<ProductSize> sizes,
 			ProductImageMain mainImage, ProductImageHover hoverImage, ProductImage1 image1, ProductImage2 image2,
 			ProductImage3 image3, ProductImageDetail detailImage) {
 		super();
@@ -107,8 +107,8 @@ public class Product {
 		this.salt = salt;
 		this.totalAvailable = totalAvailable;
 		this.price = price;
-		this.productDiscountedPrice = productDiscountedPrice;
-		this.isAvailable = isAvailable;
+		this.discountedPrice = discountedPrice;
+		this.available = available;
 		this.sizes = sizes;
 		this.mainImage = mainImage;
 		this.hoverImage = hoverImage;
@@ -174,20 +174,20 @@ public class Product {
 		this.price = price;
 	}
 
-	public Double getProductDiscountedPrice() {
-		return productDiscountedPrice;
+	public Double getDiscountedPrice() {
+		return discountedPrice;
 	}
 
-	public void setProductDiscountedPrice(Double productDiscountedPrice) {
-		this.productDiscountedPrice = productDiscountedPrice;
+	public void setDiscountedPrice(Double discountedPrice) {
+		this.discountedPrice = discountedPrice;
 	}
 
 	public boolean isAvailable() {
-		return isAvailable;
+		return available;
 	}
 
-	public void setAvailable(boolean isAvailable) {
-		this.isAvailable = isAvailable;
+	public void setAvailable(boolean available) {
+		this.available = available;
 	}
 
 	public Set<ProductSize> getSizes() {
