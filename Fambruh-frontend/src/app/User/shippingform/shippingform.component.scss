@@ -1,0 +1,117 @@
+
+body {
+  background-color:black;
+  padding: 0 15px;
+  color:white;
+ 
+ letter-spacing: 2px;
+}
+
+h1 {
+  text-transform: uppercase;
+}
+
+.container {
+  
+  max-width: 725px;
+  width: 100%;
+}
+
+form {
+  label,
+  legend {
+
+    text-transform: uppercase;
+  }
+  label {
+    display: block;
+    margin: 0 0 10px;
+  }
+  abbr {
+    color: pink;
+    &[title] {
+      text-decoration: none;
+    }
+  }
+  fieldset {
+    border: 0;
+    margin: 50px 0 0;
+    padding: 0;
+    legend {
+      border-bottom: 1px solid #eee;
+      display: block;
+      padding-bottom: 5px;
+      width: 100%;
+    }
+  }
+
+  input {
+    background-color: transparent;
+    border: 0;
+    border: 1px solid rgb(255, 255, 255);
+    display: block;
+    padding: 6px 0;
+    width: 100%;
+
+  }
+  select {
+    appearance: none;
+    background-color: rgb(0, 0, 0);
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 0;
+    color: white;
+    cursor: pointer;
+    display: block;
+
+    padding: 10px 20px;
+    width: 100%;
+
+  }
+  button {
+    appearance: none;
+    background-color:#e2c707;
+    border: none;
+    color: white;
+    cursor: pointer;
+    display: block;
+    height: 60px;
+    line-height: 60px;
+    margin-top: 50px;
+    overflow: hidden;
+    text-transform: uppercase;
+
+    .label-up {
+      display:block;
+      margin: 0px 30px;
+      height: 100%;
+      position: relative;
+      top: 0;
+      transition: top .25s ease-in-out;
+    }
+  }
+  .form-item {
+    margin: 20px 0;
+    > div {
+      position: relative;
+      &:nth-of-type(even) {
+        margin: 20px 0;
+     
+      }
+    }
+    &.flex {
+
+      > div {
+
+      }
+    }
+  }
+  .focus {
+    background-color:pink;
+    bottom: 0;
+    height: 2px;
+    left: 0;
+    position: absolute;
+    transition: 0.4s;
+    width: 0;
+  }
+}

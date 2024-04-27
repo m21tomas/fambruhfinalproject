@@ -1,0 +1,149 @@
+
+
+
+<app-navbar></app-navbar>
+<body  style="padding-top: 60px;">
+	<section class="order-detail row">
+		<div class="order-detail--wrapper col-xs-12 col-md-12 col-lg-9">
+			<header class="order-detail--head row">
+				<h1 class="order-detail--title col-xs-12 col-md-12 col-lg-12">Shopping Cart</h1>
+				<div class="order-detail__legend row">
+					<a class="order-detail__legend--action btn" href="@Url.ContentUrl(Model.StartPage.CheckoutPage)">Checkout</a>
+					<div class="order-detail__legend--item" id="order-detail__legend--quantity" aria-hidden="true" role="presentation">Quantity</div>
+					<div class="order-detail__legend--item" id="order-detail__legend--price" aria-hidden="true" role="presentation">Price</div>
+				</div>
+			</header>
+			<div class="order-detail--body row">
+				<section class="cart-items col-xs-12 col-md-12 col-lg-9">
+					<div class="cart-item cart-item--shopping-cart row" *ngFor="let item of cartItems">
+						<div class="cart-item--wrapper">
+							<div class="cart-item--details">
+							<a class="cart-item--link cart-item--image-link" href="@cartItem.LineItem.AddedFromUrl()">
+								<div class="cart-item--image">
+									<img class="img-responsive" [src]="item.img3">
+								</div>
+							</a>
+							<div class="cart-item--description">
+								<a class="cart-item--link cart-item--text-link" href="@cartItem.LineItem.AddedFromUrl()">
+									<h2 class="cart-item--title">{{item.name}}</h2>
+								</a>
+								<div class="cart-item--detail cart-item--size">Size: {{item.selectedSize.sizeName}}</div>
+								<div class="cart-item--action">
+									
+											<button (click)="removeItem(item)" class="cart-item--submit cart-item--remove" type="submit">Remove from cart</button>
+										
+									</div>
+							</div>	
+						</div>
+							<div class="cart-item--values">
+								<div class="cart-item--quantity">
+									<div class="cart-item--quantity-form"  aria-labelledby="order-detail__legend--quantity">
+										<input style="color: black; background-color: white;" class="cart-item--quantity-input" [value]="quantity" disabled><hr>
+										<button (click)="decrementQuantity(item)" class="cart-item--quantity-update cart-item--submit" aria-label="Increase Quantity" type="submit">-</button>&nbsp;&nbsp;
+										<button class="cart-item--quantity-update cart-item--submit" aria-label="Decrease Quantity" type="submit">+</button>
+									</div>
+								</div>
+								<div class="cart-item--price" aria-labelledby="order-detail__legend--price"><span>₹ {{item.price}}</span></div>
+							</div>
+						</div>
+					
+					
+				
+				
+					</div>
+					<div class="cart-item cart-item--shopping-cart row" *ngFor="let item of cartcomboItems">
+						<div class="cart-item--wrapper">
+							<div class="cart-item--details">
+							<a class="cart-item--link cart-item--image-link" href="@cartItem.LineItem.AddedFromUrl()">
+								<div class="cart-item--image">
+									<img class="img-responsive" [src]="item.img3">
+							
+								</div>
+								<div class="cart-item--image">
+									<img class="img-responsive" [src]="item.img3">
+								</div>
+							</a>
+							<div class="cart-item--description">
+								<a class="cart-item--link cart-item--text-link" href="@cartItem.LineItem.AddedFromUrl()">
+									<h2 class="cart-item--title">{{item.name}}</h2>
+								</a>
+								<div class="cart-item--detail cart-item--size">Size: {{item.selectedSize1.sizeName}}</div>
+								<div class="cart-item--detail cart-item--size">Size: {{item.selectedSize2.sizeName}}</div>
+								<div class="cart-item--action">
+									
+											<button (click)="comboremoveItem(item)" class="cart-item--submit cart-item--remove" type="submit">Remove from cart</button>
+										
+									</div>
+							</div>	
+						</div>
+							<div class="cart-item--values">
+								<div class="cart-item--quantity">
+									<div class="cart-item--quantity-form"  aria-labelledby="order-detail__legend--quantity">
+										<input style="color: black; background-color: white;" class="cart-item--quantity-input" [value]="quantity" disabled><hr>
+									
+									</div>
+								</div>
+								<div class="cart-item--price" aria-labelledby="order-detail__legend--price"><span>₹ {{item.price}}</span></div>
+							</div>
+						</div>
+					
+					
+				
+				
+					</div>
+				</section>
+				<aside style="color: black;" class="cart-summary col-xs-12 col-md-12 col-lg-3">
+					<table class="cart-summary--table">
+						<thead class="cart-summary--table-head">
+							<th colspan="2">
+								<h2 class="cart-summary--title row">Order Summary</h2>
+							</th>
+						</thead>
+						<tbody class="cart-summary--table-body">
+							<tr class="cart-summary--table-row">
+								<td class="cart-summary--table-col" scope="row">Items</td>
+								<td class="cart-summary--table-col">₹{{totalPrice}}</td>
+							</tr>
+							<tr class="cart-summary--table-row">
+								<td class="cart-summary--table-col" scope="row">Shipping</td>
+								<td class="cart-summary--table-col">₹0.00</td>
+							</tr>
+							<tr class="cart-summary--table-row">
+								<td class="cart-summary--table-col" scope="row">Estimated Tax</td>
+								<td class="cart-summary--table-col">₹0.00</td>
+							</tr>
+						</tbody>
+						<tfoot class="cart-summary--table-foot">
+							<tr class="cart-summary--table-row">
+								<td class="cart-summary--table-col" scope="row">
+									<div>Estimated Order Total</div>
+								</td>
+								<td class="cart-summary--table-col">
+									<div>
+										<span class="cart-summary--table-total">₹{{totalPrice}}</span>
+										<span class="cart-summary--table-currency">INR</span>
+									</div>
+								</td>
+							</tr>
+						</tfoot>
+					</table>
+					<section class="cart-summary--fields">
+						<section class="cart-summary--promo-code">
+							<form class="cart-summary--promo-code-form">
+								<label class="cart-summary--promo-code-label" for="promocode">Add a Promotion Code</label>
+								<div class="cart-summary--promo-code-wrapper">
+									<input class="cart-summary--promo-code-input" type="text" placeholder="Enter code" id="promocode">
+									<button class="cart-summary--promo-code-submit btn" type="submit">Apply</button>
+								</div>
+							</form>
+						</section>
+						<section class="cart-summary--order-actions">
+							<a class="btn cart-summary--order-action" (click)="navigateToC()">Checkout</a>
+							<a class="btn cart-summary--order-action" routerLink="">Continue Shopping</a>
+						</section>
+					</section>
+				</aside>
+			</div>
+		</div>
+	</section>
+	</body>

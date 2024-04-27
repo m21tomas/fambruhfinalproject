@@ -1,0 +1,209 @@
+
+<app-navbar></app-navbar>
+<body >
+<div style="padding-top: 100px;" class="container">
+    <form id="contact-form" #orderDetailForm="ngForm" (ngSubmit)="onSubmit()">
+      <h1 style="color:#e2c707">Billing & Shipping Form</h1>
+      <p>Required fields are followed by <strong><abbr title="required">*</abbr></strong>.</p>
+  
+      <div class="form-item">
+        <div>
+          <label for="fname">First Name <abbr title="required" aria-label="required">*</abbr></label>
+        <input id="fname" #fname="ngModel"
+          required [(ngModel)]="orderDetails.firstName" ngModel
+          type="text"
+          name="firstName"
+          placeholder="First name"
+          aria-required="true" />
+          <span *ngIf="fname.invalid && fname.touched" style="color: red">Please enter a valid
+            first name.</span>
+        </div>
+        <div>
+          <label for="lname">Last Name <abbr title="required" aria-label="required">*</abbr></label>
+          <input #lname="ngModel" id="lname"
+            required  [(ngModel)]="orderDetails.lastName" ngModel
+            type="text"
+            name="lname"
+            placeholder="Last name"
+            aria-required="true" />
+            <span *ngIf="lname.invalid && lname.touched" style="color: red">Please enter a valid
+              last name.</span>
+        </div>
+      </div>
+  
+      <div class="form-item ">
+        <div>
+          <label for="phone">Phone Number <abbr title="required" aria-label="required">*</abbr></label>
+          <div class="input-group-prepend">
+            <span class="input-group-text">+91</span>
+        </div>
+          <input
+            required  [(ngModel)]="orderDetails.contact" ngModel
+            type="number" ID="phn"
+            name="contact" minlength="10" #phone="ngModel" 
+            placeholder="123-456-7890"
+          
+            aria-required="true" />
+            <span *ngIf="phone.invalid && phone.touched" style="color:red">Please enter valid contact
+              number</span>
+        </div>
+      </div>
+  
+      <fieldset id="form-billing-address">
+        <legend style="color:#e2c707">Billing Address</legend>
+          <div class="form-item">
+            <div>
+              <label for="address-1">Address 1 <abbr title="required" aria-label="required">*</abbr></label>
+              <textarea
+                required  [(ngModel)]="orderDetails.address" #add="ngModel"
+                type="text" rows="2" ngModel
+                id="add" name="address"
+                placeholder="Address line 1"
+                aria-required="true"></textarea>
+                <span *ngIf="add.invalid && add.touched" style="color: red">Please enter a valid
+                  shipping address.</span>
+            </div>
+          </div>
+          <div class="form-item">
+            <div>
+              <label for="address-2">Address 2</label>
+              <textarea
+              required  [(ngModel)]="orderDetails.address" #add="ngModel"
+              type="text" rows="2" ngModel
+              id="add2" name="address"
+              placeholder="Address line 1"
+              aria-required="true"></textarea>
+              <span *ngIf="add.invalid && add.touched" style="color: red">Please enter a valid
+                shipping address.</span>
+            </div>
+          </div>
+          <div class="form-item ">
+            <div>
+              <label for="city">City <abbr title="required" aria-label="required">*</abbr></label>
+              <input
+                required  [(ngModel)]="orderDetails.district" ngModel
+                type="text" #dt="ngModel"
+                name="district"
+                placeholder="City" id="dt"
+                aria-required="true" />
+                <span *ngIf="dt.invalid && dt.touched" style="color: red">Please enter a valid
+                  district name.</span>
+            </div>
+            <div>
+            <label for="state">State <abbr title="required" aria-label="required">*</abbr></label>
+            <select
+              required  [(ngModel)]="orderDetails.state" ngModel id="ste"
+              name="state" #ste="ngModel"
+              aria-required="true" >
+              <option value="">-- Select --</option>
+              <option value="Alabama">Alabama</option>
+              <option value="Alaska">Alaska</option>
+              <option value="Arizona">Arizona</option>
+              <option value="Arkansas">Arkansas</option>
+              <option value="California">California</option>
+              <option value="Colorado">Colorado</option>
+              <option value="Connecticut">Connecticut</option>
+              <option value="West Virginia">West Virginia</option>
+              <option value="Wisconsin">Wisconsin</option>
+              <option value="Wyoming">Wyoming</option>
+            </select>
+            <span *ngIf="ste.invalid && ste.touched" style="color: red">Please enter a valid
+              state name.</span>
+            </div>
+          </div>
+          <div class="form-item ">
+            <div>
+              <label for="zip-code">Zip Code <abbr title="required" aria-label="required">*</abbr></label>
+              <input
+                required  [(ngModel)]="orderDetails.pinCode" ngModel
+                type="number"  minlength="6" #pc="ngModel"
+                id="pc" name="pinCode"
+                placeholder="400050"
+              
+                aria-required="true" />
+                <span *ngIf="pc.invalid && pc.touched" style="color: red">Please enter a valid area
+                  pincode.</span>
+            </div>
+          </div>
+</fieldset>
+          <div class="text-center">
+            <button type="submit" class="btn btn-success btn-lg" [disabled]="orderDetailForm.invalid"
+                data-toggle="modal" data-target="#myModal">Pay Now {{price | currency:
+                'INR'}}</button>
+        </div>
+
+  
+       <!-- The Modal -->
+                        <div class="modal fade" id="myModal">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+
+                                    <!-- Modal Header -->
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Kindly enter your card details</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <div class="was-validated">
+                                            <div class="form-group">
+                                                <label for="uname">Enter the name on the card:</label>
+                                                <input type="text" class="form-control" id="uname"
+                                                    placeholder="Enter the name on card" name="cname" required>
+                                                <div class="valid-feedback">Valid.</div>
+                                                <div class="invalid-feedback">Please fill out this field.
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="crd">Enter your card number:</label>
+                                                <input type="number" class="form-control" id="crd"
+                                                    placeholder="Enter the card number" name="cnumber" required>
+                                                <div class="valid-feedback">Valid.</div>
+                                                <div class="invalid-feedback">Please fill out this field.
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="cvvn">Enter your CVV number:</label>
+                                                <input type="password" class="form-control" id="cvvn"
+                                                    placeholder="Enter your cvv" name="cvv" required>
+                                                <div class="valid-feedback">Valid.</div>
+                                                <div class="invalid-feedback">Please fill out this field.
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group form-check">
+                                                <label class="form-check-label">
+                                                    <input class="form-check-input" type="checkbox" name="remember"
+                                                        required> I agree to the terms and
+                                                    conditions.
+                                                    <div class="valid-feedback">Valid.</div>
+                                                    <div class="invalid-feedback">Check this checkbox to
+                                                        continue.</div>
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <h5 class="text-center">Payable amount = {{price | currency:
+                                                    'INR'}} </h5>
+                                            </div>
+                                            <div class="text-center">
+                                                <button type="submit" class="btn btn-success">Make Payment</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-danger"
+                                            data-dismiss="modal">Cancel</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+  
+  
+      </form>
+  </div>
+</body>

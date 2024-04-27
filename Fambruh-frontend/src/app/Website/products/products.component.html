@@ -1,0 +1,32 @@
+
+
+
+<div class="min-h-screen bg-white pb-20 grid">
+    <div class='grid place-items-center lg:grid-cols-4 _container gap-y-10'>
+        <div class="card rounded-lg px-8 py-20 relative hover:shadow-xl" *ngFor="let product of products">
+            <a href="#" [routerLink]="['/product', product.pid]" class="buy buy-among-us absolute bottom-0 bg-gray-600 hover:bg-gray-500 text-white px-4 py-2 rounded-full transition-all duration-500 opacity-0 z-10 bg-among-us">Buy Now</a>
+            <div class="image image-2">
+                <!-- Use property binding to bind the src attribute -->
+                <img [src]="product.img1" alt="Fall Guys" class="product rounded transition-all duration-500">
+            </div>
+        </div>
+
+    </div>
+    <div class='grid place-items-center lg:grid-cols-2 _container gap-y-10'>
+        <div style="width: 90%;" class="card rounded-lg px-8 py-20 relative hover:shadow-xl" >
+            <a href="#" class="buy buy-among-us absolute bottom-0 bg-gray-600 hover:bg-gray-500 text-white px-4 py-2 rounded-full transition-all duration-500 opacity-0 z-10 bg-among-us">Buy Now</a>
+            <div class="image image-2">
+                <!-- Use property binding to bind the src attribute -->
+                <img style="width: 100%;" src="https://i.pinimg.com/736x/6f/75/57/6f7557a20102cf2eecd994d0f46e1ada.jpg" alt="Fall Guys" class="product rounded transition-all duration-500">
+            </div>
+        </div>
+        <div style="width: 90%;" class="card rounded-lg px-8 py-20 relative hover:shadow-xl" >
+            <a href="#" class="buy buy-among-us absolute bottom-0 bg-gray-600 hover:bg-gray-500 text-white px-4 py-2 rounded-full transition-all duration-500 opacity-0 z-10 bg-among-us">Buy Now</a>
+            <div class="image image-2">
+                <!-- Use property binding to bind the src attribute -->
+                <img style="width: 100%;" src="https://i.pinimg.com/736x/6f/75/57/6f7557a20102cf2eecd994d0f46e1ada.jpg" alt="Fall Guys" class="product rounded transition-all duration-500">
+            </div>
+        </div>
+    </div>
+</div>
+

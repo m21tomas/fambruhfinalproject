@@ -1,0 +1,123 @@
+// Just for kicks and layout
+body {
+   
+    background-color: #000000;
+    height: 100vh;
+    padding-top: 100px;
+  }
+  
+  
+  // FAQ
+  .faq-nav {
+    font-family: open24;
+    letter-spacing: 2px;
+      flex-direction: column;
+      margin: 0 0 32px;
+      border-radius: 2px;    
+      border: 1px solid #6a6969;
+      box-shadow: 0 1px 5px rgba(85, 85, 85, 0.15);
+      
+      .nav-link {
+          position: relative;
+          display: block;
+          margin: 0;
+          padding: 13px 16px;
+          background-color: #ffffff;
+          border: 0;
+          border-bottom: 1px solid #ddd;
+          border-radius: 0;
+          color: #616161;
+          transition: background-color .2s ease;
+          
+          &:hover {
+              background-color: #e2c707;
+          }
+          
+          &.active {
+              background-color: #e2c707;
+              font-weight: 700;
+              color: rgba(0,0,0,.87);        
+          }
+          
+          &:last-of-type {
+              border-bottom-left-radius: 2px;
+              border-bottom-right-radius: 2px;
+              border-bottom: 0;
+          }
+          
+          i.mdi {
+              margin-right: 5px;
+              font-size: 18px;
+              position: relative;
+          }
+      }
+  }
+  
+  // TAB CONTENT
+  .tab-content {
+    font-family: open24;
+    letter-spacing: 1px;
+      box-shadow: 0 1px 5px rgba(85, 85, 85, 0.15);
+      
+      .card {
+          border-radius: 0;
+      }
+      
+      .card-header {
+          padding: 15px 16px;
+          border-radius: 0;
+          background-color: #e2c707;
+    
+          h5 {  
+          
+              margin: 0;
+              
+              button {
+                  display: block;
+                  width: 100%;
+                  padding: 0;
+                  border: 0;
+                  font-weight: 700;
+                  color: #000000;
+                  text-align: left;
+                  white-space: normal;
+                  
+                  &:hover,
+                  &:focus,
+                  &:active,
+                  &:hover:active {
+                      text-decoration: none;
+                  }
+              }
+          }
+      }
+      
+      .card-body {
+        border-right: 4px solid #e2c707;
+        border-left: 4px solid #e2c707;
+          p {
+              color: #616161;
+             
+              
+              &:last-of-type {
+                  margin: 0;
+              }
+          }
+      }
+  }
+  
+  
+  // BORDER FIX
+  .accordion {
+      > .card {
+          &:not(:first-child) {
+              border-top: 0;
+          }   
+      }
+  }
+  
+  .collapse.show {
+      .card-body {
+          border-bottom: 1px solid rgba(0,0,0,.125);
+      }
+  }

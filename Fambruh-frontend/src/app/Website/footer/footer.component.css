@@ -1,0 +1,217 @@
+
+
+
+body {
+    letter-spacing: 2px;
+    margin: 0;
+    font-family: open24 ;
+}
+
+.large-header {
+    height: 320px;
+    position: relative;
+    width: 100%;
+    background-color: rgb(0, 0, 0);
+    overflow: hidden;
+    color: #e2c707!important;
+}
+
+.row1 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center; /* Align items to the center */
+    position: absolute;
+    top: 50%; /* Center the row vertically */
+    width: 100%;
+    transform: translateY(-50%); /* Adjust for centering */
+}
+
+.col-lg-4 {
+    
+    
+    width: calc(33.333% - 10px);
+    box-sizing: border-box;
+    padding: 10px;
+    text-align: center;
+    color: #e2c707;
+   
+}
+b{
+    color: #e2c707;
+    font-size: 30px;
+}
+.col-lg-4 i {
+    font-size: 32px;
+    border: 2px solid #e2c707;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+h2 {
+    margin-top: 5px;
+    text-align: center;
+    font-size: 18px; /* Adjust the font size as needed */
+}
+
+/* Additional styles for smaller screens */
+@media only screen and (max-width: 768px) {
+    .col-lg-4 {
+        width: 100%;
+        margin-bottom: 30px;
+        margin-top: 20px;
+    }
+
+    .col-lg-4 i {
+        font-size: 24px; /* Adjust the font size for smaller screens */
+    }
+
+    h2 {
+        font-size: 16px; /* Adjust the font size for smaller screens */
+    }
+    .large-header{
+        height: 430px;
+    }
+}
+
+.new_footer_area {
+    background: #000000;
+}
+
+
+.new_footer_top {
+    padding: 30px;
+    position: relative;
+      overflow-x: hidden;
+}
+.new_footer_area .footer_bottom {
+    padding-top: 5px;
+    padding-bottom: 50px;
+}
+.footer_bottom {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 20px;
+    color: white;
+    padding: 15px 0px;
+}
+.new_footer_top .company_widget p {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 28px;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+.new_footer_top .company_widget .f_subscribe_two .btn_get {
+    border-width: 1px;
+    margin-top: 20px;
+}
+.btn_get_two:hover {
+    background: transparent;
+    color: #e2c707;
+}
+.btn_get:hover {
+    color: #fff;
+    background: #e2c707;
+    border-color: #e2c707;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+a:hover, a:focus, .btn:hover, .btn:focus, button:hover, button:focus {
+    text-decoration: none;
+    outline: none;
+}
+a,.btn,button{
+    text-decoration: none;
+}
+
+
+
+.new_footer_top .f_widget.about-widget .f_list li a:hover {
+    color: #e2c707;
+}
+.new_footer_top .f_widget.about-widget .f_list li {
+    margin-bottom: 11px;
+}
+.f_widget.about-widget .f_list li:last-child {
+    margin-bottom: 0px;
+}
+.f_widget.about-widget .f_list li {
+    margin-bottom: 15px;
+}
+.f_widget.about-widget .f_list {
+    margin-bottom: 0px;
+}
+.new_footer_top .f_social_icon a {
+    width: 44px;
+    height: 44px;
+    line-height: 43px;
+    background: transparent;
+    border: 1px solid #e2c707;
+    font-size: 24px;
+}
+.f_social_icon a {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    font-size: 14px;
+    line-height: 45px;
+    color: #e2c707;
+    display: inline-block;
+    background: #fdfeff;
+    text-align: center;
+    -webkit-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+.ti-facebook:before {
+    content: "\e741";
+}
+.ti-twitter-alt:before {
+    content: "\e74b";
+}
+.ti-vimeo-alt:before {
+    content: "\e74a";
+}
+.ti-pinterest:before {
+    content: "\e731";
+}
+
+.btn_get_two {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    background: #e2c707;
+    border-color: #e2c707;
+    color: #fff;
+}
+
+.btn_get_two:hover {
+    background: transparent;
+    color: #e2c707;
+}
+
+.new_footer_top .f_social_icon a:hover {
+    background: #e2c707;
+    border-color: #e2c707;
+  color:black;
+}
+.new_footer_top .f_social_icon a + a {
+    margin-left: 4px;
+}
+.new_footer_top .f-title {
+    margin-bottom: 30px;
+    color: #837400;
+}
+.f_600 {
+    font-weight: 600;
+}
+.f_size_18 {
+    font-size: 18px;
+}
+h1, h2, h3, h4, h5, h6 {
+    color: #e2c707;
+    font-size: 25px;
+}
+.new_footer_top .f_widget.about-widget .f_list li a {
+    color: #ffffff;
+}

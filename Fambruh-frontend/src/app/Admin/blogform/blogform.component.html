@@ -1,0 +1,96 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-9">
+        <form #blogForm="ngForm">
+          <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" name="title" [(ngModel)]="blog.title" required #title="ngModel">
+            <span class="text-danger" *ngIf="title.invalid && (title.dirty || title.touched)">
+              Title is required
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="contentshort">Short Content</label>
+            <textarea class="form-control" id="contentshort" name="contentshort" [(ngModel)]="blog.contentshort" required #contentshort="ngModel"></textarea>
+            <span class="text-danger" *ngIf="contentshort.invalid && (contentshort.dirty || contentshort.touched)">
+              Short content is required
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="content1">Content 1</label>
+            <textarea class="form-control" id="content1" name="content1" [(ngModel)]="blog.content1" required #content1="ngModel"></textarea>
+            <span class="text-danger" *ngIf="content1.invalid && (content1.dirty || content1.touched)">
+              Content 1 is required
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="content2">Content 2</label>
+            <textarea class="form-control" id="content2" name="content2" [(ngModel)]="blog.content2" required #content2="ngModel"></textarea>
+            <span class="text-danger" *ngIf="content2.invalid && (content2.dirty || content2.touched)">
+              Content 2 is required
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="content3">Content 3</label>
+            <textarea class="form-control" id="content3" name="content3" [(ngModel)]="blog.content3" required #content3="ngModel"></textarea>
+            <span class="text-danger" *ngIf="content3.invalid && (content3.dirty || content3.touched)">
+              Content 3 is required
+            </span>
+          </div>
+          <div class="form-group">
+            <label for="author">Author</label>
+            <input type="text" class="form-control" id="author" name="author" [(ngModel)]="blog.author" required #author="ngModel">
+            <span class="text-danger" *ngIf="author.invalid && (author.dirty || author.touched)">
+              Author is required
+            </span>
+          </div>
+          
+          <div class="form-group">
+            <label for="img">Select Blog Image:</label>
+            <input type="file" class="form-control-file border" id="img" accept="image/*"
+                (change)="onChangeFileField($event)">
+        </div>
+        
+        <hr>
+
+          <div class="text-center">
+            <div class="btn-group">
+                <button (click)="onSubmit()" class="btn btn-primary"
+                    [disabled]="blogForm.invalid" data-toggle="modal"
+                    data-target="#myModal">Add Blog</button>
+                <!-- The Modal -->
+                <div class="modal fade" id="myModal">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Add a new Blog</h4>
+                                <button type="button" class="close" (click)="onClick()"
+                                    data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <span *ngIf="isValid" style="color:green">{{message}}</span>
+                                <span *ngIf="!isValid" style="color: red">{{message}}</span>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                    (click)="onClick()">Close</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <button type="reset" class="btn btn-danger">Reset</button>
+            </div>
+        </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+  
