@@ -28,6 +28,8 @@ export class LoginComponent {
     private userService: UserService,
     private router: Router
   ) { }
+
+  
   onLoginSubmit() {
     this.loginService.generateToken(this.credentials).subscribe({
       next: (response) => {

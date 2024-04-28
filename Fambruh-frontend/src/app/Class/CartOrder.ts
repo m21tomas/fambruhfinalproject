@@ -1,5 +1,5 @@
 import { CartcomboItem } from "./Cartcombo";
-import { OrderItem } from "./order-item";
+import { CartItem } from "./Cart";
 
 export class CartOrder {
    
@@ -13,7 +13,7 @@ export class CartOrder {
     contact!: string;
     paidAmount!: number;
     paymentMode!: string;
-    cartItem: OrderItem[] = [];
-    combocartitem: CartcomboItem[] = [];
-
+    cartItems: CartItem[] = [];
+    cartcomboItems: CartcomboItem[] = [];
+   // cartItem: OrderItem[] = [];
 }

@@ -20,7 +20,7 @@ export class NavbarComponent implements OnInit {
   username = '';
   totalPrice = 0;
   totalQuantity = 0;
-  cartCount = 0;
+  cartCount!: number;
   wishlistCount=0;
   constructor(
     private renderer: Renderer2,
@@ -30,7 +30,7 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
+this.updateCartCount();
     this.updateMenuIconColor();
     window.addEventListener('resize', () => this.updateMenuIconColor());
     const userDetails = this.loginService.getUserDetails();
@@ -94,5 +94,9 @@ export class NavbarComponent implements OnInit {
   getOrders(): void {
     let url = '/myorder/' + this.username;
     this.router.navigateByUrl(url);
+  }
+  updateCartCount() {
+    // Get the current cart count from the CartService
+    this.cartCount = this.cartservice.getCartCount();
   }
 }

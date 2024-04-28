@@ -108,7 +108,7 @@ export class ProductdetailComponent implements OnInit, AfterViewInit, OnDestroy 
       this.product.img4 = 'data:image/jpeg;base64,' + product.image1;
       this.product.img5 = 'data:image/jpeg;base64,' + product.image2;
       this.product.img6 = 'data:image/jpeg;base64,' + product.image3;
-  console.log(this.product.img3);
+      //console.log(this.product.img3);
     });
   }
 
@@ -168,7 +168,7 @@ getAllProduct() {
       this.products.forEach((p) => {
         if (p.mainImage) { // Check if mainImage is defined
           p.img1 = 'data:image/jpeg;base64,' + p.mainImage;
-          console.log('img1:',p.img1)
+         // console.log('img1:',p.img1)
         }
       });
     },

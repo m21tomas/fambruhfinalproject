@@ -31,9 +31,9 @@ export class CartitemComponent implements OnInit {
     private loginService: LoginService,private cdr:ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    console.log("cartitems",this.cartItems);
   this.cartDetails();
   this.combocartDetails();
+  //console.log("cartitems",JSON.stringify(this.cartItems));
   }
   
   cartDetails() {

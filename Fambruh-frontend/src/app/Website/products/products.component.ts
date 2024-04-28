@@ -41,7 +41,7 @@ export class ProductsComponent implements OnInit {
         this.products.forEach((p) => {
           if (p.mainImage) { // Check if mainImage is defined
             p.img1 = 'data:image/jpeg;base64,' + p.mainImage;
-            console.log('img1:',p.img1)
+            //console.log('img1:',p.img1)
           }
         });
       },

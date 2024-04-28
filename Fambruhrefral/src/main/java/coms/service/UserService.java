@@ -83,6 +83,7 @@ public class UserService {
 			
 			if(!createdUser.isEnabled()) {
 				try {
+					System.out.println("Created user username: "+createdUser.getEmail()+"\n");
 					String jwtToken = jwtUtil.generateVerifyAccountToken(createdUser);
 					emailUtil.sendAccountVerificationEmail(createdUser.getEmail(), jwtToken);
 				} catch (MessagingException e) {

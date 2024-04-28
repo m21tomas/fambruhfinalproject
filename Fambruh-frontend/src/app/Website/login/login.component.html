@@ -26,7 +26,7 @@
                          
                          
                             <div class="card-front" >
-                                <form #login="ngForm" (ngSubmit)="onLoginSubmit()">
+                              
                                 <div class="center-wrap">
                                     <div class="section text-center">
                                         <h4 class="mb-4 pb-3">Log In</h4>
@@ -51,20 +51,20 @@
                                                 password.</span>
                                         </div>
                                          <br>
-                                        <input type="submit" value="Login" [disabled]="login.invalid" 
-                                        class="btn btn-primary btn-block">
+                                        <input type="submit" value="Login" 
+                                        class="btn btn-primary btn-block" (click)="onLoginSubmit()">
                                          <p class="mb-0 mt-4 text-center"><a (click)="goToforgotpassword()" 
                                             class="link">Forgot your password?</a></p>
                                       </div>
                                 </div>
-                            </form></div>
+                        </div>
 
 
                           
                           
                           
                             <div class="card-back">
-                                <form (ngSubmit)="onSignupSubmit()" #registerationForm="ngForm">
+                              
                                 <div class="center-wrap">
                                     <div class="section text-center">
                                         <h4 class="mb-4 pb-3">Sign Up</h4>
@@ -75,9 +75,7 @@
                                             id="username" name="username"
                                             [(ngModel)]="user.username" ngModel>
                                             <i class="input-icon uil uil-user"></i>
-                                            <span *ngIf="username.invalid && username.touched" 
-                                            style="color: red">Please enter a valid
-                                                username.</span>
+                                     
                                         </div>	
 
 
@@ -101,9 +99,7 @@
                                              name="password"
                                             [(ngModel)]="user.password" ngModel>
                                             <i class="input-icon uil uil-lock-alt"></i>
-                                             <span *ngIf="password.invalid && password.touched" 
-                                             style="color: red">Please enter valid
-                                              password of minimum 6 characters.</span>
+                                           
                                         </div>
                                   </div>
                                         
@@ -115,12 +111,12 @@
                                             <label>i agree to the  <a routerLink="/terms&conditions" style="color:blue; text-decoration: underline;">terms and condition</a></label>
                                             
                                             
-                                            <input type="submit" value="Signup" [disabled]="registerationForm.invalid" 
+                                            <input type="submit" value="Signup" (click)="onSignupSubmit()" 
                                             class="btn btn1 btn-primary btn-block">
                                       
                                                
                                                 </div>
-                                </form>
+                                
 </div>
 
 

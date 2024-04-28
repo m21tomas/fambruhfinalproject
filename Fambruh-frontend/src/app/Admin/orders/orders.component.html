@@ -33,7 +33,14 @@
                         <td>{{ order.contact }}</td>
                         <td>{{ order.paidAmount }}</td>
                         <td>{{ order.paymentMode }}</td>
-                        <td>{{ order.status }}</td>
+                        <td> <p>Order ID: {{ order.oid }}</p>
+                            <p>Status: {{ order.status }}</p>
+                            <select [(ngModel)]="order.status">
+                              <option value="CONFIRMED">New Status 1</option>
+                              <option value="DELIVERED">New Status 2</option>
+                              <!-- Add more options as needed -->
+                            </select>
+                            <button (click)="changeStatus(this.oid, this.newStatus)">Change Status</button></td>
                     
                         <td>{{ order.date }}</td>
                         <!-- Add more table cells as needed -->

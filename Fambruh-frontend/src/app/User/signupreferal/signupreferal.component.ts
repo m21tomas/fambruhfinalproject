@@ -18,6 +18,7 @@ export class SignupreferalComponent implements OnInit {
   signUpForm: FormGroup;
   referralCode!: string;
   user: User = new User();
+
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,

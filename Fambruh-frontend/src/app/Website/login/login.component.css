@@ -11,8 +11,9 @@ body{
 	font-size: 15px;
 	line-height: 1.7;
 	color: #c4c3ca;
-	background-color: #000000;
+	background-color: #1f2029;
 	overflow-x: hidden;
+  padding-top: 30px;
 }
 a {
 	cursor: pointer;

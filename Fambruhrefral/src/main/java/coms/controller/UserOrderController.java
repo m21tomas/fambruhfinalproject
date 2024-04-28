@@ -35,6 +35,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import coms.exceptions.UserNotFoundException;
 import coms.model.cartorder.CartItem;
 import coms.model.cartorder.CartItemBack;
@@ -97,6 +100,9 @@ public class UserOrderController {
 	@Autowired
 	private UserDetailService userDetailService;
 	
+	@Autowired
+    private ObjectMapper objectMapper;
+	
 	//FROM YOUR FRONTEND
 	@PreAuthorize("hasAuthority('USER')")
 	@PostMapping("/create")
@@ -133,6 +139,19 @@ public class UserOrderController {
 			for(CartcomboItem item : cartcomboItems) {
 				Optional<Product> optProd1 = productRepo.findById(item.getPid1());
 				Optional<Product> optProd2 = productRepo.findById(item.getPid2());
+				
+				if(!optProd1.get().isAvailable()) {
+					Map<String, Object> body = new LinkedHashMap<>();
+					body.put("timestamp", LocalDateTime.now());
+					body.put("message", "Product1 is unavailable");
+					return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+				}
+				if(!optProd2.get().isAvailable()) {
+					Map<String, Object> body = new LinkedHashMap<>();
+					body.put("timestamp", LocalDateTime.now());
+					body.put("message", "Product2 is unavailable");
+					return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+				}
 				
 				if(optProd1.isPresent() && optProd2.isPresent()) {
 					Size size1 = item.getSelectedSize1().getSizeName();
@@ -204,6 +223,13 @@ public class UserOrderController {
 					
 					ComboProduct savedCombo = comboRepo.save(comboProduct);
 					
+					try {
+						System.out.println("COMBO PRODUCT: "+objectMapper.writeValueAsString(savedCombo));
+					} catch (JsonProcessingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
 					ComboProductQuantity comboProductQuantity = new ComboProductQuantity(savedCombo, item.getQuantity());
 					
 					comboProductQuantity.setCartItem(null);
@@ -233,6 +259,21 @@ public class UserOrderController {
 			for(CartItem item : cartItems) {
 				Optional<Product> optProduct0 = productRepo.findById(item.getPid());
 				Optional<Product> productAvailable = productRepo.findByNameAndAvailableTrue(item.getName()).stream().findAny();
+				
+				if(!optProduct0.get().getName().equals(item.getName())) {
+					Map<String, Object> body = new LinkedHashMap<>();
+					body.put("timestamp", LocalDateTime.now());
+					body.put("message1", "Provided product name: "+item.getName()+" is not like in database by the provided id product name: "+ optProduct0.get().getName());
+					body.put("message2", "Both - the id and the name should correspond to the exisitng product");
+					return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+				}
+				if(!optProduct0.get().isAvailable()) {
+					Map<String, Object> body = new LinkedHashMap<>();
+					body.put("timestamp", LocalDateTime.now());
+					body.put("message", "Product is unavailable");
+					return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+				}
+				
 				if(optProduct0.isPresent() && productAvailable.isPresent()) {
 					Size size = item.getSelectedSize().getSizeName();
 					

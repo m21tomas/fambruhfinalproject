@@ -1,13 +1,6 @@
 import { ProductQuantity, Product } from "./product";
 
-export enum OrderStatus {
-  Placed = 'Placed',
-  Confirmed = 'Confirmed',
-  Processing = 'Processing',
-  OnTheWay = 'On the Way',
-  Delivered = 'Delivered',
-  Canceled = 'Canceled'
-}
+
 
 export class OrderSummary {
   oid!: number;
@@ -21,9 +14,12 @@ export class OrderSummary {
   contact!: string;
   paidAmount!: number;
   paymentMode!: string;
-  status!: OrderStatus;
+  status!: string;
   date!: string;
   products: ProductQuantity[] = [];
+  updateStatus(newStatus: string): void {
+    this.status = newStatus;
+  }
 }
 
 

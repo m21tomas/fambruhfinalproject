@@ -82,7 +82,21 @@ calculateTotalPrice() {
     return cartItem.quantity; // Return updated quantity
   }
   
-  
+  getCartCount(): number {
+    let cartCount = 0;
+
+    // Calculate cart count for individual products
+    for (const cartItem of this.cartItems) {
+      cartCount += cartItem.quantity;
+    }
+
+    // Calculate cart count for combo products
+    for (const comboItem of this.cartcomboItems) {
+      cartCount += comboItem.quantity;
+    }
+
+    return cartCount;
+  }
 
   remove(cartItem: CartItem) {
     const itemIndex = this.cartItems.findIndex(tempCartItem => tempCartItem.pid === cartItem.pid);

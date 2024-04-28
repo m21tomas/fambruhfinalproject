@@ -79,7 +79,7 @@ export class ProfileComponent implements OnInit {
       },
       error: (error) => {
         console.log(error);
-        alert('No Orders found');
+        //alert('No Orders found');
       }
     });
   }
@@ -89,8 +89,9 @@ export class ProfileComponent implements OnInit {
       next: (data) => {
         console.log(data); // Log the data received from the API
         // Sort orders by date in descending order
-        this.recorders = data.reverse();
         data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        // Reverse the sorted array
+        data.reverse();
         // Concatenate the new orders array with the existing orders array
         this.recorders = data.concat(this.recorders);
         // Get only the first two orders
@@ -98,10 +99,11 @@ export class ProfileComponent implements OnInit {
       },
       error: (error) => {
         console.log(error);
-        alert('No Orders found');
+       // alert('No Orders found');
       }
     });
   }
+  
   
   getOrderDetails(oid: number) {
     let url = '/orderdetail/' + oid;

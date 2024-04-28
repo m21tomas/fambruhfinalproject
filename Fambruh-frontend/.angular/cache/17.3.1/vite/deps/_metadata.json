@@ -1,0 +1,88 @@
+{
+  "hash": "176ef60d",
+  "configHash": "71b16ff3",
+  "lockfileHash": "6c5b5e23",
+  "browserHash": "67abeb6c",
+  "optimized": {
+    "@angular/common": {
+      "src": "../../../../../node_modules/@angular/common/fesm2022/common.mjs",
+      "file": "@angular_common.js",
+      "fileHash": "3151450b",
+      "needsInterop": false
+    },
+    "@angular/common/http": {
+      "src": "../../../../../node_modules/@angular/common/fesm2022/http.mjs",
+      "file": "@angular_common_http.js",
+      "fileHash": "60da2541",
+      "needsInterop": false
+    },
+    "@angular/core": {
+      "src": "../../../../../node_modules/@angular/core/fesm2022/core.mjs",
+      "file": "@angular_core.js",
+      "fileHash": "4e1c55d3",
+      "needsInterop": false
+    },
+    "@angular/forms": {
+      "src": "../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
+      "file": "@angular_forms.js",
+      "fileHash": "81cf828f",
+      "needsInterop": false
+    },
+    "@angular/platform-browser": {
+      "src": "../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
+      "file": "@angular_platform-browser.js",
+      "fileHash": "3ffe6dc2",
+      "needsInterop": false
+    },
+    "@angular/router": {
+      "src": "../../../../../node_modules/@angular/router/fesm2022/router.mjs",
+      "file": "@angular_router.js",
+      "fileHash": "a0a6af50",
+      "needsInterop": false
+    },
+    "ngx-pagination": {
+      "src": "../../../../../node_modules/ngx-pagination/fesm2020/ngx-pagination.mjs",
+      "file": "ngx-pagination.js",
+      "fileHash": "eef806f3",
+      "needsInterop": false
+    },
+    "rxjs": {
+      "src": "../../../../../node_modules/rxjs/dist/esm5/index.js",
+      "file": "rxjs.js",
+      "fileHash": "4e3c9936",
+      "needsInterop": false
+    },
+    "swiper": {
+      "src": "../../../../../node_modules/swiper/swiper.mjs",
+      "file": "swiper.js",
+      "fileHash": "435aeb89",
+      "needsInterop": false
+    },
+    "wowjs": {
+      "src": "../../../../../node_modules/wowjs/dist/wow.js",
+      "file": "wowjs.js",
+      "fileHash": "126fb5f8",
+      "needsInterop": true
+    }
+  },
+  "chunks": {
+    "chunk-RVZM7ZZE": {
+      "file": "chunk-RVZM7ZZE.js"
+    },
+    "chunk-5CQBPHP3": {
+      "file": "chunk-5CQBPHP3.js"
+    },
+    "chunk-R7NSLQLU": {
+      "file": "chunk-R7NSLQLU.js"
+    },
+    "chunk-7NASW6CU": {
+      "file": "chunk-7NASW6CU.js"
+    },
+    "chunk-WSA2QMXP": {
+      "file": "chunk-WSA2QMXP.js"
+    },
+    "chunk-WKYGNSYM": {
+      "file": "chunk-WKYGNSYM.js"
+    }
+  }
+}
