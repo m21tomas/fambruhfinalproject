@@ -51,12 +51,7 @@ public class CartwishController {
         return cartWishService.addToCart(product, size, quantity, username);
     }
     
-    @PreAuthorize("hasAuthority('USER')")
-    @PostMapping("/cart/addCombo")
-    public ResponseEntity<?> addComboToCart(@RequestBody ComboProduct comboProduct, @RequestParam int quantity, @RequestParam String username) {
-        System.out.println("\nAdding combo product to cart - USERNAME: "+username+"\n");
-        return cartWishService.addComboToCart(comboProduct, quantity, username);
-    }
+
     
     @PreAuthorize("hasAuthority('USER')")
     @PostMapping("/wishlist/add")

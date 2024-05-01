@@ -1,1 +1,225 @@
-<p>orderinvoice works!</p>
+<app-navbar></app-navbar><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: rgb(0, 0, 0); height: 100%;">
+    <div style="width: 50%; background-color: white; padding-top: 30px;" class="container">
+        <div style="color: grey; width: 80%;margin: 0 auto;font-size: 14px;" class="row">
+            <div class="col-lg-6">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhHQyipmPt5dwUhfrR2EkgvHYjTW5AGZpxDFwKfte_eGOXmFHexI3NmCaES5_xbo6-CmAEPLRQdUDGbVqof2pqDO87AYigyrO9gzbiodcIwfss3MqgK_zYJEWUCZupvJrafiNX82cfenA-x0CGolJd4cshKXnsY3xcf7lGlaUihPuDeR4RpFC0Ix-Ade2Me/s320/Screenshot_2024-04-20_104727-removebg-preview.png" width="120" height="35" alt="logo"/>
+               <br><br> <p>
+                    <span>Hello,</span>
+                    <span> {{orderInvoice.username}}.</span><br>
+                    <span>Thank you for shopping from our store and for your order.</span>
+                </p>
+            </div>
+            <div style="text-align: end;" class="col-lg-6">
+                <h2 style="font-size: 20px; color: #e2c707;">Invoice</h2>
+                <br><br>
+                <p><span>ORDER</span>
+               <span>#{{orderInvoice.oid}}</span><br>
+                <span>{{orderInvoice.date}}</span>
+               </p>
+                <!-- Additional content for the invoice section can be added here -->
+            </div>
+        </div>
+
+<!-- /Header -->
+<!-- Order Details -->
+<table style="margin: 0 auto;" width="80%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e2c707">
+    <tbody>
+      <tr>
+        <td>
+          <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff">
+            <tbody>
+              <tr>
+              <tr class="hiddenMobile">
+                <td height="60"></td>
+              </tr>
+              <tr class="visibleMobile">
+                <td height="40"></td>
+              </tr>
+              <tr>
+                <td>
+                  <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                    <tbody>
+                      <tr>
+                   
+                        <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="left">
+                          <small>Image</small>
+                        </th>
+                             <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 10px 7px 0;" width="52%" align="left">
+                          Item
+                        </th>
+                            <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="center">
+                          Size
+                        </th>
+                        <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #5b5b5b; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="center">
+                          Quantity
+                        </th>
+                        <th style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #1e2b33; font-weight: normal; line-height: 1; vertical-align: top; padding: 0 0 7px;" align="right">
+                          Subtotal
+                        </th>
+                      </tr>
+                      <tr>
+                        <td height="1" style="background: #bebebe;" colspan="5"></td>
+                      </tr>
+                      <tr>
+                        <td height="10" colspan="5"></td>
+                      </tr>
+                      <tr *ngFor="let p of orderInvoice.products">  <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0"><img  style="height:80px; width:50px;" [src]="p.product.img2"></td>
+                        <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #e2c707;  line-height: 18px;  vertical-align: top; padding:10px 0;" class="article">
+                          {{p.product.name}}
+                        </td>
+                         <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;text-align: start;" align="center">{{p.size}}</td>
+                        <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;text-align: start;" align="center">{{p.quantity}}</td>
+                        <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #1e2b33;  line-height: 18px;  vertical-align: top; padding:10px 0;text-align: start;" align="right">₹{{p.product.price}}</td>
+                    
+                      </tr>
+                      <tr>
+                        <td height="1" colspan="5" style="border-bottom:1px solid #e4e4e4"></td>
+                      </tr>
+                      <tr>
+                        <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0"><img  style="height:80px; width:50px;" src="data:image/webp;base64,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"></td>
+                        <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #e2c707;  line-height: 18px;  vertical-align: top; padding:10px 0;" class="article">Half sleeve tshirt</td>
+                          <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="start">S</td>
+                        <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="start">1</td>
+                        <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #1e2b33;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="start">₹29.95</td>
+                      </tr>
+                      <tr>
+                        <td height="1" colspan="5" style="border-bottom:1px solid #e4e4e4"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+              <tr>
+                <td height="20"></td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- /Order Details -->
+  <!-- Total -->
+  <table style="margin: 0 auto;" width="80%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#e1e1e1">
+    <tbody>
+      <tr>
+        <td>
+          <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullTable" bgcolor="#ffffff">
+            <tbody>
+              <tr>
+                <td>
+  
+                  <!-- Table Total -->
+                  <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center" class="fullPadding">
+                    <tbody>
+                      <tr>
+                        <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; ">
+                          Subtotal
+                        </td>
+                        <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; white-space:nowrap;" width="80">
+                          ₹{{orderInvoice.paidAmount}}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; ">
+                          Shipping &amp; Handling
+                        </td>
+                        <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e; line-height: 22px; vertical-align: top; text-align:right; ">
+                          ₹0.00
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
+                          <strong>Grand Total (Incl.Tax)</strong>
+                        </td>
+                        <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
+                          <strong>₹{{orderInvoice.paidAmount}}</strong>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #b0b0b0; line-height: 22px; vertical-align: top; text-align:right; "><small>TAX</small></td>
+                        <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #b0b0b0; line-height: 22px; vertical-align: top; text-align:right; ">
+                          <small>₹0.00</small>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <!-- /Table Total -->
+  
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- /Total -->
+  <!-- Information -->
+  <div style="margin: 0 auto; width: 80%;margin-top: 80px;" class="row">
+    <div class="col-lg-6">
+       
+                <h5 style="font-size: 15px;">BILLING INFORMATION</h5>
+                <p style="font-size: 14px;">
+                    Philip Brooks<br>
+                    Public Wales, Somewhere<br>
+                    New York NY<br>
+                    4468, United States<br>
+                    T: 202-555-0133
+                </p>
+    
+    </div>
+    <div class="col-lg-6">
+     
+                <h5 style="font-size: 15px;">PAYMENT METHOD</h5>
+                <p style="font-size: 14px;">
+                    Credit Card<br>
+                    Credit Card Type: Visa<br>
+                    Worldpay Transaction ID: <a href="#" class="text-danger">4185939336</a><br>
+                    <a href="#" class="text-muted">Right of Withdrawal</a>
+                </p>
+     
+    </div>
+</div>
+<!-- Shipping Information and Shipping Method Section -->
+<div style="margin: 0 auto; width: 80%; margin-top: 30px;" class="row">
+    <div class="col-lg-6">
+        
+                <h5 style="font-size: 15px;">SHIPPING INFORMATION</h5>
+                <p style="font-size: 14px;" >
+                    Sup Inc<br>
+                    Another Place, Somewhere<br>
+                    New York NY<br>
+                    4468, United States<br>
+                    T: 202-555-0171
+                </p>
+      
+    </div>
+    <div class="col-lg-6">
+
+                <h5 style="font-size: 15px;">SHIPPING METHOD</h5>
+                <p style="font-size: 14px;">UPS: U.S. Shipping Services</p>
+        
+    </div>
+</div>
+<!-- Additional Information Section -->
+<div style="margin: 0 auto; width: 80%; margin-top: 30px;" class="row">
+    <div class="col-lg-12">
+    
+                <p style="font-size: 16px;">Have a nice day.</p>
+                <p style="font-size: 16px;text-align: center;color: #e2c707;">Copy of this invoice will be shared on registered email also</p>
+            </div>
+     
+</div>
+
+
+    </div>
+</body>
+</html><app-footer></app-footer>

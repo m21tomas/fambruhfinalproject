@@ -410,7 +410,7 @@ ul.checkout-bar li:before {
   text-shadow: 1px 1px rgba(0, 0, 0, 0.2);
   top: 4px;
   width: 35px;
-  z-index: 999;
+  z-index: 11;
 }
 ul.checkout-bar li.active {
   color: #8bc53f;
@@ -418,16 +418,16 @@ ul.checkout-bar li.active {
 }
 ul.checkout-bar li.active:before {
   background: #8bc53f;
-  z-index: 99999;
+  z-index:15;
 }
 ul.checkout-bar li.visited {
   background: #ECECEC;
   color: #57aed1;
-  z-index: 99999;
+  z-index: 15;
 }
 ul.checkout-bar li.visited:before {
   background: #57aed1;
-  z-index: 99999;
+  z-index: 15;
 }
 ul.checkout-bar li:nth-child(1):before {
   content: "1";
@@ -516,7 +516,7 @@ ul.checkout-bar a {
     position: absolute;
     top: -65px;
     width: 45px;
-    z-index: 99;
+    z-index: 10;
   }
   ul.checkout-bar li.visited {
     background: none;
@@ -534,6 +534,6 @@ ul.checkout-bar a {
     position: absolute;
     top: -50px;
     width: 100%;
-    z-index: 99;
+    z-index: 10;
   }
 }

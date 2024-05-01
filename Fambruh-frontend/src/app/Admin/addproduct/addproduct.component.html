@@ -23,11 +23,12 @@
               <td>{{ product.discountedPrice }}</td>
               <td>
                 <label class="switch">
-                    <input type="checkbox" name="available" [(ngModel)]="product.available"
-                        (change)="onActivate(product.pid,product)">
-                    <span class="slider round"></span>
+                  <input type="checkbox" #availabilityCheckbox (change)="updateStatus()"  [(ngModel)]="product.available" ngModel>
+                  <span class="slider round"></span>
                 </label>
-            </td>
+              </td>
+              
+            
               <td>{{ product.brand }}</td>
               <td>
                 <ul>

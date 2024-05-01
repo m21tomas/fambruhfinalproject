@@ -32,8 +32,7 @@ public class Cartwishservice {
     private CartRepository cartItemRepository;
     @Autowired
     private ProductRepo productRepo;
-    @Autowired
-    private ComboProductRepository comboRepo;
+
     @Autowired
     private WishlistRepository wishlistRepository;
     @Autowired
@@ -165,43 +164,7 @@ public class Cartwishservice {
         }
     }
     
-    // Method to add a combo product to the cart
-    public ResponseEntity<?> addComboToCart(ComboProduct comboProduct, int quantity, String username) {
-    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        
-    	if (authentication != null && authentication.isAuthenticated()) {
-    		String authenticatedUsername = authentication.getName();
-    		if (authenticatedUsername.equals(username)) {
-	        	User user = userRepository.findByUsername(username);
-	        	Optional<ComboProduct> foundCombo = comboRepo.findById(comboProduct.getId());
-	        	if(foundCombo.isPresent()) {
-	        		CartItemBack cartItem = new CartItemBack();
-		        	cartItem.setUser(user);
-		        	ComboProductQuantity cpq = new ComboProductQuantity(cartItem, comboProduct, quantity);
-		        	cartItem.getComboProductQuantities().add(cpq);
-		        	cartItemRepository.save(cartItem);
-		        	return new ResponseEntity<>("Combo product added to cart", HttpStatus.CREATED);
-	        	} else {
-	        		Map<String, Object> body = new LinkedHashMap<>();
-		            body.put("timestamp", LocalDateTime.now());
-		            body.put("message", "There is no such ComboProduct that you are trying to add to cart.");
-		            return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
-	        	}
-    		} else {
-    			Map<String, Object> body = new LinkedHashMap<>();
- 	            body.put("timestamp", LocalDateTime.now());
- 	            body.put("message", "Provided username doesn't match authenticated principal name.");
- 	            return new ResponseEntity<>(body, HttpStatus.UNAUTHORIZED);
-    		}
-        }
-        else {
-        	Map<String, Object> body = new LinkedHashMap<>();
-            body.put("timestamp", LocalDateTime.now());
-            body.put("message", "Unauthorized request. You are not logged in.");
-    		return new ResponseEntity<>(body, HttpStatus.UNAUTHORIZED);
-        }
-	}
-
+  
     // Method to move a cart item to the wishlist
     public void moveCartItemToWishlist(Long cartItemId, String username) {
         CartItemBack cartItem = cartItemRepository.findById(cartItemId).orElse(null);

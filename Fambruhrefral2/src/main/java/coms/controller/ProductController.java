@@ -83,54 +83,10 @@ public class ProductController {
         return productService.findTrueProduct(name);
     }
 
-    // Add new combo product
-    //@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
-    @PostMapping("/add/comboproduct")
-    public ResponseEntity<?> addNewComboProduct(@RequestBody ComboProduct comboProduct) {
-        return productService.addComboProduct(comboProduct);
-    }
 
-    // Update existing combo product
-    //@PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
-    @PutMapping("/update/comboproduct/{id}")
-    public ResponseEntity<?> updateComboProduct(@PathVariable("id") Long id, @Valid @RequestBody ComboProduct comboProduct) {
-        ComboProduct existingComboProduct = productService.findComboProduct(id);
-        if (existingComboProduct != null) {
-            existingComboProduct.setProduct1(comboProduct.getProduct1());
-            existingComboProduct.setSize1(comboProduct.getSize1());
-            existingComboProduct.setProduct2(comboProduct.getProduct2());
-            existingComboProduct.setSize2(comboProduct.getSize2());
-            productService.addComboProduct(existingComboProduct);
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
 
-    // Get combo product by ID
-    @GetMapping("/get/comboproduct/{id}")
-    public ResponseEntity<?> getComboProductById(@PathVariable("id") Long id) {
-        ComboProduct comboProduct = productService.findComboProduct(id);
-        if (comboProduct != null) {
-            return ResponseEntity.ok(comboProduct);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
 
-    // Get all combo products
-    @GetMapping("/get/all-comboproducts")
-    public ResponseEntity<?> getAllComboProducts() {
-        List<ComboProduct> comboProducts = productService.findAllComboProducts();
-        return ResponseEntity.ok(comboProducts);
-    }
+ 
 
-    // Delete combo product by ID
-    @PreAuthorize("hasAuthority('ADMIN')")
-    @DeleteMapping("/delete/comboproduct/{id}")
-    public ResponseEntity<?> deleteComboProduct(@PathVariable("id") Long id) {
-        productService.deleteComboProductById(id);
-        return ResponseEntity.ok().build();
-    }
 }
 

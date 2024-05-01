@@ -9,6 +9,9 @@ import { CartOrder } from '../Class/CartOrder';
   providedIn: 'root'
 })
 export class UserService {
+  getProduct(productId: number) {
+    throw new Error('Method not implemented.');
+  }
 
   private baseUrl = 'http://localhost:9400';
 
@@ -43,9 +46,8 @@ export class UserService {
   public updateProduct(pid: number, product: Product): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/product/update/${pid}`, product);
   }
-
-  public setAvailable(pid: number, product: Product): Observable<any> {
-    return this.http.put<any>(`${this.baseUrl}/product/set-availability/${pid}`, product['available']);
+  setAvailability(pid: number, status: boolean): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/product/set-availability/${pid}`,status);
   }
   
 

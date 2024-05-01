@@ -18,11 +18,7 @@ public class ProductImageHover {
     private String type;
     
     private String filePath;
-    
-//    @Lob
-//    @Column(name = "image_data")
-//    private byte[] imageData;
-    
+   
     @OneToOne(mappedBy = "hoverImage")
     @JsonBackReference
     private Product product;

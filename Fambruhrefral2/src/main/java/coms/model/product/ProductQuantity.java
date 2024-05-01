@@ -23,7 +23,7 @@ public class ProductQuantity {
     private CartItemBack cartItem;
 
     @ManyToOne
-    @JsonIgnore
+   
     private Product product;
     
     @Enumerated(EnumType.STRING)

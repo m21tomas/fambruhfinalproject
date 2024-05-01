@@ -18,7 +18,24 @@ public class CartOrder {
     private String paymentMode;
     private Set<CartItem> cartItems = new HashSet<>();
     private Set<CartcomboItem> cartcomboItems = new HashSet<>();
-
+    /*
+    {	
+    	"username":"Tomasm21",
+    	"firstName":"Angelina",
+    	"lastName":"Jolie",
+    	"address":"Billing str. 11",
+    	"district":"Delhi",
+    	"pinCode":400050,
+    	"state":"California",
+    	"contact":1234567890,
+    	"paidAmount":0,
+    	"paymentMode":"CARD-PAYMENT",
+    	"cartItem":[],
+    	"combocartitem":[],
+    }	
+    */
+    
+    
     public CartOrder() {
     }
 

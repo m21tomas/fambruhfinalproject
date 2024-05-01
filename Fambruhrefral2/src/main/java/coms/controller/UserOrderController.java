@@ -306,7 +306,7 @@ public class UserOrderController {
 	    List<OrderInvoiceDto> productDTOs = new ArrayList<>();
 	    for (ProductQuantity productQuantity : orderCreated.getProducts()) {
 	        Product product = productQuantity.getProduct();
-	        byte[] imageData = getImageFromFile(product.getMainImage().getFilePath());
+	        byte[] imageData = getImageFromFile(product.getHoverImage().getFilePath());
 	        String base64Image = Base64.getEncoder().encodeToString(imageData);
 	        
 	        System.out.println("\nbase64Image string: \n"+base64Image+"\n");

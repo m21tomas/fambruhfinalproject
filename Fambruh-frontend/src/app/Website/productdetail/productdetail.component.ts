@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
 import Swiper from 'swiper';
 import { UserService } from '../../service/user.service';
 import { ComboProduct, Product, ProductResponseDto, ProductSize } from '../../Class/product';
@@ -60,7 +60,7 @@ export class ProductdetailComponent implements OnInit, AfterViewInit, OnDestroy 
 
    
   }
-
+ 
 
   ngAfterViewInit(): void {
     console.log('ngAfterViewInit() called');
@@ -90,7 +90,7 @@ export class ProductdetailComponent implements OnInit, AfterViewInit, OnDestroy 
         el: '.swiper-scrollbar',
       },
     });
-
+    this.setupEventListeners();
     console.log('Swiper instance:', this.swiper); // Log Swiper instance for debugging
   }
 
@@ -203,5 +203,61 @@ getAllProduct() {
     if (heart) {
       heart.classList.toggle('is-active');
     }
+  }
+
+  setupEventListeners() {
+    // Click event for dropdown caption
+    const caption = this.elementRef.nativeElement.querySelector('.dropdown > .caption');
+    caption.addEventListener('click', () => {
+      this.toggleDropdown();
+    });
+  
+    // Click event for dropdown item
+    const items = this.elementRef.nativeElement.querySelectorAll('.dropdown > .list > .item');
+    items.forEach((item: HTMLElement) => {
+      item.addEventListener('click', (event: MouseEvent) => {
+        this.selectItem((event.target as HTMLElement).textContent!.trim());
+      });
+    });
+  }
+  
+  @HostListener('document:keyup', ['$event'])
+  handleKeyUpEvent(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+      this.closeDropdowns();
+    }
+  }
+  
+  @HostListener('document:click', ['$event'])
+  handleDocumentClick(event: MouseEvent) {
+    if (!this.elementRef.nativeElement.querySelector('.dropdown').contains(event.target)) {
+      this.closeDropdowns();
+    }
+  }
+  
+  toggleDropdown() {
+    const dropdown = this.elementRef.nativeElement.querySelector('.dropdown');
+    if (dropdown) {
+      dropdown.classList.toggle('open');
+    }
+  }
+  
+  selectItem(text: string) {
+    const items = this.elementRef.nativeElement.querySelectorAll('.dropdown > .list > .item');
+    items.forEach((item: HTMLElement) => {
+      item.classList.remove('selected');
+    });
+    const caption = this.elementRef.nativeElement.querySelector('.dropdown > .caption');
+    if (caption) {
+      caption.textContent = text;
+    }
+    this.closeDropdowns();
+  }
+  
+  closeDropdowns() {
+    const dropdowns = this.elementRef.nativeElement.querySelectorAll('.dropdown');
+    dropdowns.forEach((dropdown: HTMLElement) => {
+      dropdown.classList.remove('open');
+    });
   }
 }

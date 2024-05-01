@@ -41,6 +41,7 @@ public class BlogController {
     @Autowired
     private ObjectMapper objectMapper;
 
+
  // Add new blog post
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/add/new")

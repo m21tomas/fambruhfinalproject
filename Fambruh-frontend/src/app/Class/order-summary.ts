@@ -1,8 +1,9 @@
-import { ProductQuantity, Product } from "./product";
+import { ProductQuantity, Product, ComboProduct } from "./product";
 
 
 
 export class OrderSummary {
+
   oid!: number;
   username!: string;
   firstName!: string;
@@ -17,9 +18,10 @@ export class OrderSummary {
   status!: string;
   date!: string;
   products: ProductQuantity[] = [];
-  updateStatus(newStatus: string): void {
-    this.status = newStatus;
-  }
+comboproduct!:ComboProduct;
+img2!:any;
+
+
 }
 
 
