@@ -20,6 +20,7 @@ import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -65,6 +66,7 @@ import coms.service.Cartwishservice;
 import coms.service.EmailUtil;
 import coms.service.UserDetailService;
 import coms.service.UserOrderService;
+import lombok.Value;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/order")
@@ -158,10 +160,10 @@ public class UserOrderController {
 					Size size2 = item.getSelectedSize2().getSizeName();
 
 					if(optProd1.get().getSizes().stream().
-							anyMatch(product -> product.getSizeId() == item.getSelectedSize1().getSizeId())) {
+							anyMatch(product -> product.getSizeId().equals(item.getSelectedSize1().getSizeId()))) {
 						
 						ProductSize dbProductSize = optProd1.get().getSizes().stream()
-								.filter(theSize -> theSize.getSizeId() == item.getSelectedSize1().getSizeId())
+								.filter(theSize -> theSize.getSizeId().equals(item.getSelectedSize1().getSizeId()))
 								.findFirst().get();
 						
                         if(dbProductSize.getSizeName() != item.getSelectedSize1().getSizeName()){
@@ -189,10 +191,10 @@ public class UserOrderController {
 					}
 					
 					if(optProd2.get().getSizes().stream()
-							.anyMatch(product -> product.getSizeId() == item.getSelectedSize2().getSizeId())) {
+							.anyMatch(product -> product.getSizeId().equals(item.getSelectedSize2().getSizeId()))) {
 						
 						ProductSize dbProductSize2 = optProd2.get().getSizes().stream()
-								.filter(theSize -> theSize.getSizeId() == item.getSelectedSize2().getSizeId())
+								.filter(theSize -> theSize.getSizeId().equals(item.getSelectedSize2().getSizeId()))
 								.findFirst().get();
 						
 						if(dbProductSize2.getSizeName() != item.getSelectedSize2().getSizeName()) {
@@ -260,6 +262,9 @@ public class UserOrderController {
 				Optional<Product> optProduct0 = productRepo.findById(item.getPid());
 				Optional<Product> productAvailable = productRepo.findByNameAndAvailableTrue(item.getName()).stream().findAny();
 				
+				System.out.println("Found product: "+ optProduct0.get().getName()+", id: "+optProduct0.get().getPid()+" by calling id: "+item.getPid());
+				System.out.println("Found product: "+ productAvailable.get().getName()+", id: "+productAvailable.get().getPid()+" by calling name: "+item.getName());
+				
 				if(!optProduct0.get().getName().equals(item.getName())) {
 					Map<String, Object> body = new LinkedHashMap<>();
 					body.put("timestamp", LocalDateTime.now());
@@ -278,12 +283,15 @@ public class UserOrderController {
 					Size size = item.getSelectedSize().getSizeName();
 					
 					//Optional<ProductSize> productSize = sizeRepo.findById(item.getSelectedSize().getSizeId());
-					
+					optProduct0.get().getSizes().stream().forEach(itemSize -> {System.out.println("Checking size id: "+itemSize.getSizeId()+" by calling size id: "+item.getSelectedSize().getSizeId()+", is equal: "+(itemSize.getSizeId().equals(item.getSelectedSize().getSizeId())));});
+					System.out.println("Faulty sizes stream check result: "+(optProduct0.get().getSizes().stream()
+							.anyMatch(product -> product.getSizeId().equals(item.getSelectedSize().getSizeId()))));
+				    
 					if(optProduct0.get().getSizes().stream()
-							.anyMatch(product -> product.getSizeId() == item.getSelectedSize().getSizeId())) {
+							.anyMatch(product -> product.getSizeId().equals(item.getSelectedSize().getSizeId()))) {
 						
 						ProductSize dbProductSize2 = optProduct0.get().getSizes().stream()
-								.filter(theSize -> theSize.getSizeId() == item.getSelectedSize().getSizeId())
+								.filter(theSize -> theSize.getSizeId().equals(item.getSelectedSize().getSizeId()))
 								.findFirst().get();
 						
 						if(dbProductSize2.getSizeName() != item.getSelectedSize().getSizeName()) {
@@ -343,41 +351,39 @@ public class UserOrderController {
 	        userRepo.save(foundUser);
 	    }
 
-	    
-	    List<OrderInvoiceDto> productDTOs = new ArrayList<>();
-	    for (ProductQuantity productQuantity : orderCreated.getProducts()) {
-	        Product product = productQuantity.getProduct();
-	        byte[] imageData = getImageFromFile(product.getMainImage().getFilePath());
-	        String base64Image = Base64.getEncoder().encodeToString(imageData);
-	        
-	        System.out.println("\nbase64Image string: \n"+base64Image+"\n");
-	        
-	        OrderInvoiceDto productDTO = new OrderInvoiceDto();
-	        productDTO.setProduct(product);
-	        productDTO.setSize(productQuantity.getSize());
-	        productDTO.setQuantity(productQuantity.getQuantity());
-	        productDTO.setBase64Image(base64Image);
-	        
-	        productDTOs.add(productDTO);
-	    }
-
-	    // Prepare template variables for email
-	    Map<String, Object> templateVariables = new HashMap<>();
-	    templateVariables.put("products", productDTOs);
-	    
-	    String recipientEmail = foundUser.getEmail();
-
-	    // Send order invoice email
-	    try {
-	        emailUtil.sendOrderInvoiceEmail(recipientEmail, "Order Invoice", "email-template", templateVariables);
-	    } catch (MessagingException e) {
-	        // Handle exception
-	        e.printStackTrace();
-	        // You might want to return an error response in case of email sending failure
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to send order invoice email");
-	    }
-
-	    return ResponseEntity.ok(orderCreated);
+	    	List<OrderInvoiceDto> productDTOs = new ArrayList<>();
+	    	for (ProductQuantity productQuantity : orderCreated.getProducts()) {
+	    		Product product = productQuantity.getProduct();
+	    		byte[] imageData = getImageFromFile(product.getHoverImage().getFilePath());
+	    		String base64Image = Base64.getEncoder().encodeToString(imageData);
+	    		
+	    		OrderInvoiceDto productDTO = new OrderInvoiceDto();
+	    		productDTO.setProduct(product);
+	    		productDTO.setSize(productQuantity.getSize());
+	    		productDTO.setQuantity(productQuantity.getQuantity());
+	    		productDTO.setBase64Image(base64Image);
+	    		productDTO.setContentId("attachment-"+product.getHoverImage().getName());
+	    		productDTOs.add(productDTO);
+	    	}
+	    	productDTOs.stream().forEach(item -> System.out.println("Product name: "+item.getProduct().getName()));
+	    	// Prepare template variables for email
+	    	 Map<String, Object> templateVariables = new HashMap<>();
+	    	 templateVariables.put("products", productDTOs);
+	    	
+	    	String recipientEmail = foundUser.getEmail();
+	    	
+	    	// Send order invoice email
+	    	try {
+	    		//emailUtil.sendOrderInvoiceEmailWithBase64Images(recipientEmail, "Order Invoice", "email-template3", templateVariables);
+	    		emailUtil.sendOrderInvoiceEmailWithContentIdsImages(recipientEmail, "Order Invoice", "email-template3", templateVariables, productDTOs);
+	    	} catch (MessagingException e) {
+	    		// Handle exception
+	    		e.printStackTrace();
+	    		// You might want to return an error response in case of email sending failure
+	    		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to send order invoice email");
+	    	}
+	    	
+	    	return ResponseEntity.ok(orderCreated);
 	}
 	
 	private byte[] getImageFromFile(String filePath) {

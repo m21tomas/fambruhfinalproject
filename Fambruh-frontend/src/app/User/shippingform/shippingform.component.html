@@ -10,7 +10,7 @@
         <div>
           <label for="fname">First Name <abbr title="required" aria-label="required">*</abbr></label>
         <input id="fname" #fname="ngModel"
-          required [(ngModel)]="orderDetails.firstName" ngModel
+          required [(ngModel)]="orderDetails.firstname" ngModel
           type="text"
           name="firstName"
           placeholder="First name"
@@ -21,7 +21,7 @@
         <div>
           <label for="lname">Last Name <abbr title="required" aria-label="required">*</abbr></label>
           <input #lname="ngModel" id="lname"
-            required  [(ngModel)]="orderDetails.lastName" ngModel
+            required  [(ngModel)]="orderDetails.lastname" ngModel
             type="text"
             name="lname"
             placeholder="Last name"

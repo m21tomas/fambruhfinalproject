@@ -8,15 +8,17 @@ public class OrderInvoiceDto {
 	private Size size;
 	private int quantity;
     private String base64Image;
+    private String contentId;
     
     public OrderInvoiceDto() {}
     
-	public OrderInvoiceDto(Product product, Size size, int quantity, String base64Image) {
+	public OrderInvoiceDto(Product product, Size size, int quantity, String base64Image, String contentId) {
 		super();
 		this.product = product;
 		this.size = size;
 		this.quantity = quantity;
 		this.base64Image = base64Image;
+		this.contentId = contentId;
 	}
 
 	public Product getProduct() {
@@ -50,4 +52,13 @@ public class OrderInvoiceDto {
 	public void setBase64Image(String base64Image) {
 		this.base64Image = base64Image;
 	}
+
+	public String getContentId() {
+		return contentId;
+	}
+
+	public void setContentId(String contentId) {
+		this.contentId = contentId;
+	}
+	
 }
