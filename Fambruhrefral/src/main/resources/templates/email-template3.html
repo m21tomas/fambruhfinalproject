@@ -158,9 +158,7 @@
                       <td height="10" colspan="5"></td>
                     </tr>
                     <tr th:each="productDTO : ${products}">
-                      <tr>
 	                      <td style="font-size: 14px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0">
-	                      <!--	<img th:src="'data:' + ${productDTO.product.hoverImage.type} + ';base64,' + ${productDTO.base64Image}" style="height:80px; width:70px;"> -->
 	                        <img th:src="'cid:' + ${contentId}" style="height:80px; width:50px;"/>
 	                      </td>
 	                      <td th:text="${productDTO.product.name}" style="font-size: 14px; font-family: 'Open Sans', sans-serif; color: #e2c707;  line-height: 18px;  vertical-align: top; padding:10px 0;" class="article">
@@ -171,7 +169,6 @@
 	                      </td>
 	                      <td th:text="'₹' + ${productDTO.product.price}" style="font-size: 14px; font-family: 'Open Sans', sans-serif; color: #1e2b33;  line-height: 18px;  vertical-align: top; padding:10px 0;" align="right">
 	                      </td>
-                      </tr>
                       <tr>
                          <td height="1" colspan="5" style="border-bottom:1px solid #e4e4e4"></td>
                       </tr>

@@ -284,8 +284,6 @@ public class UserOrderController {
 					
 					//Optional<ProductSize> productSize = sizeRepo.findById(item.getSelectedSize().getSizeId());
 					optProduct0.get().getSizes().stream().forEach(itemSize -> {System.out.println("Checking size id: "+itemSize.getSizeId()+" by calling size id: "+item.getSelectedSize().getSizeId()+", is equal: "+(itemSize.getSizeId().equals(item.getSelectedSize().getSizeId())));});
-					System.out.println("Faulty sizes stream check result: "+(optProduct0.get().getSizes().stream()
-							.anyMatch(product -> product.getSizeId().equals(item.getSelectedSize().getSizeId()))));
 				    
 					if(optProduct0.get().getSizes().stream()
 							.anyMatch(product -> product.getSizeId().equals(item.getSelectedSize().getSizeId()))) {

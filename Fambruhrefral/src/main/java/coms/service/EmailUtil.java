@@ -18,6 +18,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import coms.model.dtos.OrderInvoiceDto;
+import coms.model.product.Product;
 
 @Component
 public class EmailUtil {
@@ -86,12 +87,24 @@ public class EmailUtil {
   public void sendOrderInvoiceEmailWithContentIdsImages (String recipientEmail, String subject, String templateName, Map<String, Object> templateVariables, List<OrderInvoiceDto> productDtos) throws MessagingException {
       MimeMessage message = javaMailSender.createMimeMessage();
       MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
-
+      /*
+      for (OrderInvoiceDto productDTO : productDtos) {
+          // Check if productDTO is not null and if it has product
+          if (productDTO != null && productDTO.getProduct() != null) {
+              Product product = productDTO.getProduct();
+              // Check if product has name
+              if (product.getName() != null) {
+                  System.out.println("Decomposed productDtos properties product name: " + product.getName());
+              } else {
+                  System.out.println("Product name is null");
+              }
+          } else {
+              System.out.println("Product or productDTO is null");
+          }
+      }
+      */
       Context thymeleafContext = new Context();
-      //thymeleafContext.setVariables(templateVariables);
-//      Map<String, Object> templateVariables = new HashMap<>();
-//	  templateVariables.put("products", productDtos);
-	  thymeleafContext.setVariables(templateVariables);
+      thymeleafContext.setVariables(templateVariables);
 
       String htmlBody = templateEngine.process(templateName, thymeleafContext);
 
