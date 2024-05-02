@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Ordered Products</title>
+    
+</head>
+<body>
+
+<div class="logo" style="margin-top: 25px;" align="center">
+    <img src="../static/images/Fambruh-logo-white.jpg" th:src="@{images/Fambruh-logo-white.jpg}" alt="Logo">
+    <!-- <img src="../static/images/pirate.jpg" width="1000" th:src="@{images/pirate.jpg}"/> -->
+</div>
+
+<div class="order-details" style="width: 50%; background-color: #f2f2f2; border-radius: 10px; margin: 0 auto; padding: 20px;">
+    <!-- Loop through each product in the products set -->
+    <div class="product-card" th:each="productDTO : ${products}" style="display: flex; margin-bottom: 10px; background-color: #ffffff; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+        <div class="product-image" style="flex: 15%; padding: 10px;">
+            <!-- Display ProductImageMain here -->
+            <img th:src="'data:image/jpeg;base64,' + ${productDTO.base64Image}" alt="Product Image" style="width: 100%; border-radius: 5px;">
+            <img src="data:image/jpeg;base64,${productDTO.hoverImageBase64}" alt="Main Image" style="width: 100%; border-radius: 5px;">
+        </div>
+        <div class="product-details" style="flex: 85%; padding: 10px;">
+            <div class="product-name" th:text="${productDTO.product.name}" style="font-size: 18px; font-weight: bold; margin-bottom: 5px;"></div>
+            <div class="product-price" th:text="'₹' + ${productDTO.product.price}" style="font-size: 16px; margin-bottom: 5px;"></div>
+            <div class="product-brand" th:text="'By ' + ${productDTO.product.brand}" style="font-size: 14px; color: #666666;"></div>
+            <div class="product-quantity" th:text="'Quantity: ' + ${productDTO.quantity}" style="font-size: 14px; color: #666666;"></div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

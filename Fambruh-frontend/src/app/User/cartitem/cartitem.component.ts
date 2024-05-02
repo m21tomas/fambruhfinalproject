@@ -10,11 +10,12 @@ import { LoginService } from '../../service/login.service';
 import { Product } from '../../Class/product';
 import { CartItem } from '../../Class/Cart';
 import { CartcomboItem } from '../../Class/Cartcombo';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-cartitem',
   standalone: true,
-  imports: [FooterComponent,NavbarComponent,RouterModule,RouterLink,CommonModule],
+  imports: [FooterComponent,NavbarComponent,RouterModule,RouterLink,CommonModule,FormsModule],
   templateUrl: './cartitem.component.html',
   styleUrl: './cartitem.component.scss'
 })
@@ -31,9 +32,9 @@ export class CartitemComponent implements OnInit {
     private loginService: LoginService,private cdr:ChangeDetectorRef) { }
 
   ngOnInit(): void {
+    console.log("cartitems",this.cartItems);
   this.cartDetails();
   this.combocartDetails();
-  //console.log("cartitems",JSON.stringify(this.cartItems));
   }
   
   cartDetails() {
@@ -66,24 +67,24 @@ export class CartitemComponent implements OnInit {
     console.log("Total quantity:", this.totalQuantity);
   }
   quantity: number = 1; // Initial quantity
-  increamentQuantity(cartItem: CartItem) {
-    this.cartService.addToCart(cartItem);
+   // Method to increment quantity of a CartItem
+   incrementQuantity(cartItem: CartItem) {
+    this.cartService.incrementQuantity(cartItem);
   }
 
-  incrementQuantity(cartItem: CartItem) {
-    const updatedQuantity = this.cartService.addToCart(cartItem);
-    console.log("Updated Quantity:", updatedQuantity); // Log the returned value
-    this.quantity = updatedQuantity; // Update quantity
-    this.cdr.detectChanges(); // Trigger change detection
-  }
-  
-  
-
+  // Method to decrement quantity of a CartItem
   decrementQuantity(cartItem: CartItem) {
-    const updatedQuantity = this.cartService.decrementQuantity(cartItem);
-    if (updatedQuantity !== 0) {
-      this.quantity = updatedQuantity; // Update quantity
-    }
+    this.cartService.decrementQuantity(cartItem);
+  }
+
+  // Method to increment quantity of a CartComboItem
+  incrementComboQuantity(cartComboItem: CartcomboItem) {
+    this.cartService.incrementComboQuantity(cartComboItem);
+  }
+
+  // Method to decrement quantity of a CartComboItem
+  decrementComboQuantity(cartComboItem: CartcomboItem) {
+    this.cartService.decrementComboQuantity(cartComboItem);
   }
   
   navigateToC() {

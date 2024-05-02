@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Product, ProductSize } from '../../Class/product';
 import { UserService } from '../../service/user.service';
 import { FormsModule } from '@angular/forms';
@@ -12,16 +12,48 @@ import { CommonModule } from '@angular/common';
   templateUrl: './addproduct.component.html',
   styleUrl: './addproduct.component.css'
 })
-export class AddproductComponent implements OnInit {
-  constructor(private blogService: UserService, private router: Router) {
-    this.getAllProduct();
-  }
+export class AddproductComponent{
 
+  constructor(private blogService: UserService, private router: Router,private route:ActivatedRoute) {
+    this.getAllProduct();
+    this.pid = this.route.snapshot.params['pid'];
+    this.getProduct();
+  }
+  status!: boolean; // Declare the availability property
   products: Product[] = [];
   prod: Product = new Product();
   Blogtitle!: string;
+isValid!:boolean;
+message!:string;
+pid!: number;
+  
 
-  ngOnInit(): void {}
+
+getProduct() {
+  this.blogService.findById(this.pid).subscribe({
+    next: (data) => {
+      this.prod = data;
+    }, error: (error) => {
+      console.log(error);
+    }
+  })
+}
+
+updateStatus() {
+  this.blogService.setAvailability(this.pid, this.status).subscribe({
+    next: (data) => {
+      this.isValid = true;
+      this.message = 'Medicine details updated successfully!';
+    }, error: (error) => {
+      this.isValid = false;
+      this.message = 'Something went wrong!';
+    }
+  })
+}
+
+
+  
+  
 
   getAllProduct() {
     this.blogService.getAllProduct().subscribe({
@@ -65,15 +97,5 @@ export class AddproductComponent implements OnInit {
     }
   }
   
-  onActivate(pid: number, p: Product) {
-    this.prod = p;
-    this.blogService.setAvailable(pid, this.prod).subscribe({
-      next: (data) => {
-        // Handle success if needed
-      }, 
-      error: (error) => {
-        console.log(error);
-      }
-    });
-  }
+
 }

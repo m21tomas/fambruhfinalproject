@@ -5,6 +5,8 @@ import { Router, RouterLink } from '@angular/router';
 import { LoginService,JwtService, ReferralService} from '../../service/login.service';
 import { UserService } from '../../service/user.service';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { Subscription } from 'rxjs';
+import { CartService } from '../../service/cart.service';
 
 @Component({
   selector: 'app-profile',
@@ -26,13 +28,22 @@ export class ProfileComponent implements OnInit {
   count: number = 0;
   tableSize: number = 3;
   event: any;
-
+  cartCountSubscription!: Subscription;
+  cartCount!: number;
+  ordercount!:number;
   onTableDataChange(event: any) {
     this.page = event;
   }
   constructor(private loginService: LoginService,private refralservice:ReferralService,
-    private userservice:UserService, private router: Router) {} 
+    private userservice:UserService, private router: Router,private cartService: CartService) {} 
   ngOnInit(): void {
+           // Initialize cart count when the component is initialized
+           this.updateCartCount();
+           // Subscribe to cart count changes
+           this.cartCountSubscription = this.cartService.cartCountSubject.subscribe(() => {
+             this.updateCartCount();
+           });
+   this.updateCartCount();
     this.getUserDetails(); // Call getUserDetails when the component initializes
     this.referralCodeGenerated = false; // Reset the referralCodeGenerated flag
     this.username = this.loginService.getUserDetails().username;
@@ -44,7 +55,15 @@ export class ProfileComponent implements OnInit {
   selectTab(tab: string) {
     this.selectedTab = tab;
   }
+  ngOnDestroy() {
+    // Unsubscribe from cart count changes to avoid memory leaks
+    this.cartCountSubscription.unsubscribe();
+  }
 
+  updateCartCount() {
+    // Get the current cart count from the CartService
+    this.cartCount = this.cartService.getCartCount();
+  }
   getUserDetails() {
     this.userDetails = this.loginService.getUserDetails();
     console.log('User details:', this.userDetails);
@@ -76,13 +95,16 @@ export class ProfileComponent implements OnInit {
         console.log(data); // Log the data received from the API
         // Reverse the array to make the newest orders appear first
         this.orders = data.reverse();
+        // Get the order count
+        this.ordercount = this.orders.length;
       },
       error: (error) => {
         console.log(error);
-        //alert('No Orders found');
+        alert('No Orders found');
       }
     });
   }
+  
   
   getrecentOrders() {
     this.userservice.getOrderByUsername(this.username).subscribe({
@@ -99,7 +121,7 @@ export class ProfileComponent implements OnInit {
       },
       error: (error) => {
         console.log(error);
-       // alert('No Orders found');
+        alert('No Orders found');
       }
     });
   }

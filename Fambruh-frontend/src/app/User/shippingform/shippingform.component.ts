@@ -55,7 +55,7 @@ export class ShippingformComponent {
           this.router.navigate(['/orderplaced', data.oid]);
         } else {
           console.error('Invalid order ID: ', data.oid);
-          console.log('Order etails at RESPONSE:\n',JSON.stringify(data));
+          console.log('Order details at RESPONSE:\n',JSON.stringify(data));
           // Handle the error or navigate to a fallback route
         }
       }, 

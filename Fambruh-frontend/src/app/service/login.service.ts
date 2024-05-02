@@ -72,7 +72,7 @@ export class LoginService {
   public getUserDetails() {
     let user = localStorage.getItem('user');
     if (user != null) {
-      //console.log('User details retrieved from local storage:', user);
+      console.log('User details retrieved from local storage:', user);
       return JSON.parse(user);
     } else {
       this.logout();

@@ -117,6 +117,9 @@ export class ProductQuantity {
     pqid!: number;
     product!: Product;
     quantity!: number;
+    size!: string; // Define the 'size' property here
+    hoverImage!:any;
+    img2!:any;
 }
 export class ComboProduct {
     comboid!: number;

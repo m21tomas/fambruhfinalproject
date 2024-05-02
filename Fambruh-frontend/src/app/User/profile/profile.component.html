@@ -45,14 +45,14 @@
                 <div class="d-flex my-4 flex-wrap">
                     <div class="box me-4 my-1 bg-light"> <img src="https://www.freepnglogos.com/uploads/box-png/cardboard-box-brown-vector-graphic-pixabay-2.png" alt="">
                         <div class="d-flex align-items-center mt-2">
-                            <div class="tag">Orders placed</div>
-                            <div class="ms-auto number">10</div>
+                            <div class="tag">Orders placed:</div>
+                            <div class="ms-auto number">&nbsp;{{ordercount}}</div>
                         </div>
                     </div>&nbsp;&nbsp;
                     <div class="box me-4 my-1 bg-light"> <img src="https://www.freepnglogos.com/uploads/shopping-cart-png/shopping-cart-campus-recreation-university-nebraska-lincoln-30.png" alt="">
                         <div class="d-flex align-items-center mt-2">
-                            <div class="tag">Items in Cart</div>
-                            <div class="ms-auto number">10</div>
+                            <div class="tag">Items in Cart:</div>
+                            <div class="ms-auto number">&nbsp;{{cartCount}}</div>
                         </div>
                     </div>
             
@@ -74,24 +74,24 @@
                         <div class="col-lg-9">
                             <div class="d-sm-flex align-items-sm-start justify-content-sm-between">
                                 <div class="status">Status : {{ order.status }}</div>
-                                <div class="btn btn-primary text-uppercase" (click)="getOrderDetails(order.id)">order info</div>
+                                <div class="btn btn-primary text-uppercase" (click)="getOrderDetails(order.oid)">order info</div>
                             </div>
         
                          
 <div class="checkout-wrap">
     <ul class="checkout-bar">
   
-      <li class="active">
+      <li class="visited first">
         <a href="#">PLACED</a>
       </li>
       
-      <li class="active">CONFIRMED</li>
+      <li class="previous visited">CONFIRMED</li>
       
       <li class="active">PROCESSING</li>
       
-      <li class="active">ON_THE_WAY</li>
+      <li class="">ON_THE_WAY</li>
       
-      <li class="active">DELIVERED</li>
+      <li class="">DELIVERED</li>
          
     </ul>
   </div>
@@ -128,7 +128,7 @@
                         <div class="col-lg-9">
                             <div class="d-sm-flex align-items-sm-start justify-content-sm-between">
                                 <div class="status">Status : {{ order.status }}</div>
-                                <div class="btn btn-primary text-uppercase" (click)="getOrderDetails(order.id)">order info</div>
+                                <div class="btn btn-primary text-uppercase" (click)="getOrderDetails(order.oid)">order info</div>
                             </div>
         
                          

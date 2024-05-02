@@ -18,13 +18,13 @@
 					<div class="cart-item cart-item--shopping-cart row" *ngFor="let item of cartItems">
 						<div class="cart-item--wrapper">
 							<div class="cart-item--details">
-							<a class="cart-item--link cart-item--image-link" href="@cartItem.LineItem.AddedFromUrl()">
+							<a class="cart-item--link cart-item--image-link" >
 								<div class="cart-item--image">
 									<img class="img-responsive" [src]="item.img3">
 								</div>
 							</a>
 							<div class="cart-item--description">
-								<a class="cart-item--link cart-item--text-link" href="@cartItem.LineItem.AddedFromUrl()">
+								<a class="cart-item--link cart-item--text-link" >
 									<h2 class="cart-item--title">{{item.name}}</h2>
 								</a>
 								<div class="cart-item--detail cart-item--size">Size: {{item.selectedSize.sizeName}}</div>
@@ -38,9 +38,10 @@
 							<div class="cart-item--values">
 								<div class="cart-item--quantity">
 									<div class="cart-item--quantity-form"  aria-labelledby="order-detail__legend--quantity">
-										<input style="color: black; background-color: white;" class="cart-item--quantity-input" [value]="quantity" disabled><hr>
+										
+										<input style="color: black; background-color: white;" class="cart-item--quantity-input" [(ngModel)]="item.quantity" disabled><hr>
 										<button (click)="decrementQuantity(item)" class="cart-item--quantity-update cart-item--submit" aria-label="Increase Quantity" type="submit">-</button>&nbsp;&nbsp;
-										<button class="cart-item--quantity-update cart-item--submit" aria-label="Decrease Quantity" type="submit">+</button>
+										<button class="cart-item--quantity-update cart-item--submit" (click)="incrementQuantity(item)" aria-label="Decrease Quantity" type="submit">+</button>
 									</div>
 								</div>
 								<div class="cart-item--price" aria-labelledby="order-detail__legend--price"><span>₹ {{item.price}}</span></div>
@@ -54,7 +55,7 @@
 					<div class="cart-item cart-item--shopping-cart row" *ngFor="let item of cartcomboItems">
 						<div class="cart-item--wrapper">
 							<div class="cart-item--details">
-							<a class="cart-item--link cart-item--image-link" href="@cartItem.LineItem.AddedFromUrl()">
+							<a class="cart-item--link cart-item--image-link" >
 								<div class="cart-item--image">
 									<img class="img-responsive" [src]="item.img3">
 							
@@ -64,7 +65,7 @@
 								</div>
 							</a>
 							<div class="cart-item--description">
-								<a class="cart-item--link cart-item--text-link" href="@cartItem.LineItem.AddedFromUrl()">
+								<a class="cart-item--link cart-item--text-link">
 									<h2 class="cart-item--title">{{item.name}}</h2>
 								</a>
 								<div class="cart-item--detail cart-item--size">Size: {{item.selectedSize1.sizeName}}</div>
@@ -79,8 +80,9 @@
 							<div class="cart-item--values">
 								<div class="cart-item--quantity">
 									<div class="cart-item--quantity-form"  aria-labelledby="order-detail__legend--quantity">
-										<input style="color: black; background-color: white;" class="cart-item--quantity-input" [value]="quantity" disabled><hr>
-									
+										<input style="color: black; background-color: white;" class="cart-item--quantity-input" [(ngModel)]="item.quantity" disabled><hr>
+										<button (click)="decrementComboQuantity(item)" class="cart-item--quantity-update cart-item--submit" aria-label="Increase Quantity" type="submit">-</button>&nbsp;&nbsp;
+										<button class="cart-item--quantity-update cart-item--submit" (click)="incrementComboQuantity(item)" aria-label="Decrease Quantity" type="submit">+</button>
 									</div>
 								</div>
 								<div class="cart-item--price" aria-labelledby="order-detail__legend--price"><span>₹ {{item.price}}</span></div>
@@ -147,3 +149,5 @@
 		</div>
 	</section>
 	</body>
+
+

@@ -19,6 +19,9 @@ export class AffiliateComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    window.scrollTo(0, 0); 
+  
+
     $(window).on('load', () => {
       setTimeout(() => {
         $('#CJ-Overlay').fadeOut(800);

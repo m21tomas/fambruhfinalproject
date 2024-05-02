@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 
 import { UserGuard } from './service/user.guard';
+import { DropdownComponent } from './dropdown/dropdown.component';
 export const routes: Routes = [
 {path:'',component:HomeComponent},
 
@@ -90,5 +91,11 @@ export const routes: Routes = [
             path:'faq',
             loadComponent:()=>
                 import('./Website/faq/faq.component').then((c)=>c.FaqComponent)
+        },
+        {path:'orderdetail/:oid',
+            loadComponent:()=>
+                import('./User/orderinvoice/orderinvoice.component').then((c)=>c.OrderinvoiceComponent)
         }
+        ,
+        {path:'drop',component:DropdownComponent}
 ];

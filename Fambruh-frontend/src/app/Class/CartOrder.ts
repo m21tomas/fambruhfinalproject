@@ -1,11 +1,12 @@
-import { CartcomboItem } from "./Cartcombo";
 import { CartItem } from "./Cart";
+import { CartcomboItem } from "./Cartcombo";
+import { OrderItem } from "./order-item";
 
 export class CartOrder {
    
     username!: string;
-    firstname!: string;
-    lastname!: string;
+    firstName!: string;
+    lastName!: string;
     address!: string;
     district!: string;
     pinCode!: number;
@@ -15,5 +16,5 @@ export class CartOrder {
     paymentMode!: string;
     cartItems: CartItem[] = [];
     cartcomboItems: CartcomboItem[] = [];
-   // cartItem: OrderItem[] = [];
+
 }

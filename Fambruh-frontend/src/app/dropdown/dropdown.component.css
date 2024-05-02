@@ -1,0 +1,62 @@
+*, :before, :after {
+    box-sizing: border-box;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto Condensed', 'Sans serif';
+  }
+  
+  html, body {
+    background-color: #333;
+  }
+  
+  div.container {
+    margin: 34px auto;
+    width: 260px;
+    background-color: transparent;
+  }
+  
+  div.dropdown {
+    position: relative;
+  }
+  
+  div.dropdown > div.caption {
+    background-color: #f2f2f2;
+    padding: 11px 24px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  div.dropdown > div.list {
+    position: absolute;
+    background-color: #f2f2f2;
+    width: 100%;
+    border-radius: 0 0 3px 3px;
+    display: none;
+  }
+  
+  div.dropdown > div.list > div.item {
+    padding: 11px 24px;
+    cursor: pointer;
+  }
+  
+  div.dropdown > div.list > div.item.selected {
+    font-weight: bold;
+  }
+  
+  div.dropdown > div.caption:hover,
+  div.dropdown > div.list > div.item:hover {
+    background-color: rgb(83, 161, 214);
+    color: #fff;
+  }
+  
+  div.dropdown.open > div.caption {
+    border-radius: 3px 3px 0 0;
+    border-bottom: solid 1px #999;
+  }
+  
+  div.dropdown.open > div.list {
+    display: block;
+  }

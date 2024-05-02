@@ -5,6 +5,7 @@ import { Router, ActivatedRoute, RouterModule, NavigationEnd } from '@angular/ro
 import { User } from '../../Class/user';
 import { LoginService } from '../../service/login.service';
 import { CartService } from '../../service/cart.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -20,6 +21,7 @@ export class NavbarComponent implements OnInit {
   username = '';
   totalPrice = 0;
   totalQuantity = 0;
+  cartCountSubscription!: Subscription;
   cartCount!: number;
   wishlistCount=0;
   constructor(
@@ -30,6 +32,12 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+        // Initialize cart count when the component is initialized
+        this.updateCartCount();
+        // Subscribe to cart count changes
+        this.cartCountSubscription = this.cartservice.cartCountSubject.subscribe(() => {
+          this.updateCartCount();
+        });
 this.updateCartCount();
     this.updateMenuIconColor();
     window.addEventListener('resize', () => this.updateMenuIconColor());
@@ -95,6 +103,11 @@ this.updateCartCount();
     let url = '/myorder/' + this.username;
     this.router.navigateByUrl(url);
   }
+  ngOnDestroy() {
+    // Unsubscribe from cart count changes to avoid memory leaks
+    this.cartCountSubscription.unsubscribe();
+  }
+
   updateCartCount() {
     // Get the current cart count from the CartService
     this.cartCount = this.cartservice.getCartCount();

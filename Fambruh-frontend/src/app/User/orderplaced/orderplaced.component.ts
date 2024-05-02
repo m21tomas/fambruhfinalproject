@@ -4,6 +4,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { UserService } from '../../service/user.service';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from '../../Website/navbar/navbar.component';
+import { Product } from '../../Class/product';
 
 
 @Component({
@@ -11,8 +12,7 @@ import { NavbarComponent } from '../../Website/navbar/navbar.component';
   standalone: true,
   imports: [CommonModule,NavbarComponent,RouterLink],
   templateUrl: './orderplaced.component.html',
-  styleUrl: './orderplaced.component.scss',
-  encapsulation:ViewEncapsulation.None
+  styleUrl: './orderplaced.component.scss'
 })
 export class OrderplacedComponent {
   oid!: number;
@@ -29,7 +29,7 @@ export class OrderplacedComponent {
       next: (data) => {
         this.orderInvoice = data;
         this.orderInvoice.products.forEach((p) => {
-          p.product.img1 = 'data:image/jpeg;base64,' + p.product.mainImage.imageData;
+          p.product.img2 = 'data:image/jpeg;base64,' + p.product.hoverImage.imageData;
         })
       }, error: (error) => {
         console.log(error);

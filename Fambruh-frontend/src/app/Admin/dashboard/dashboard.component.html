@@ -63,6 +63,13 @@
        Blogs
       </div></div>
 
+      <div class="tab" (click)="selectTab('tab6')" [class.active]="selectedTab === 'tab6'">
+        <div class="header-link" ><svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+          <path d="M76 240c12.1 0 23.1-4.8 31.2-12.6l44.2 22A44.9 44.9 0 00196 300a45 45 0 0040.6-64.4l60-60a45 45 0 0062.3-54l52.2-39.2a45 45 0 10-18-24l-52.2 39.2a45 45 0 00-65.5 56.8l-60 60a44.7 44.7 0 00-50.6 8.2l-44.2-22A44.9 44.9 0 0076 150a45 45 0 000 90zM436 30a15 15 0 110 30 15 15 0 010-30zm-120 90a15 15 0 110 30 15 15 0 010-30zM196 240a15 15 0 110 30 15 15 0 010-30zM76 180a15 15 0 110 30 15 15 0 010-30zm0 0" />
+          <path d="M497 482h-16V165a15 15 0 00-15-15h-60a15 15 0 00-15 15v317h-30V255a15 15 0 00-15-15h-60a15 15 0 00-15 15v227h-30V375a15 15 0 00-15-15h-60a15 15 0 00-15 15v107h-30V315a15 15 0 00-15-15H46a15 15 0 00-15 15v167H15a15 15 0 100 30h482a15 15 0 100-30zm-76-302h30v302h-30zm-120 90h30v212h-30zM181 390h30v92h-30zM61 330h30v152H61zm0 0" />
+         </svg>
+         FAQs
+        </div></div>
 
       <div class="user-info">
        <button class="button">All
@@ -512,6 +519,9 @@
       <div class="tab-content" *ngIf="selectedTab === 'tab5'">
        <app-orders></app-orders>
       </div>
+      <div class="tab-content" *ngIf="selectedTab === 'tab6'">
+        <app-orders></app-orders>
+       </div>
     </div>
 
 
