@@ -1,10 +1,12 @@
 package coms;
 
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Scanner;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import coms.configuration.JwtUtil;
 import coms.service.UserDetailService;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 
 @SpringBootTest
 public class JwtTokenValidateTest {
@@ -31,11 +34,23 @@ public class JwtTokenValidateTest {
         String username = "";
         try {
             username = jwtUtil.extractUsername(jwtToken);
-            System.out.println("JWT token extracted username: "+username);
-        }catch(ExpiredJwtException e) {
-            e.printStackTrace();
+            System.out.println("JWT token extracted username: " + username);
+        } catch (ExpiredJwtException e) {
+            // Handle token expiration without printing stack trace
             System.out.println("Token Expired!");
-        }catch(Exception e) {
+            // Fail the test with an appropriate message
+            Assertions.fail("Token is expired");
+            scanner.close();
+            return; // Exit the method to prevent further processing
+        } catch (MalformedJwtException e) {
+            // Handle malformed token without printing stack trace
+            System.out.println("Malformed JWT token!");
+            // Fail the test with an appropriate message
+            Assertions.fail("Malformed JWT token");
+            scanner.close();
+            return; // Exit the method to prevent further processing
+        } catch (Exception e) {
+            // Handle other exceptions if needed
             e.printStackTrace();
         }
         
