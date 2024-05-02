@@ -209,10 +209,10 @@
   </select>
 </div>
 
-<div class="box" *ngIf="selectedProduct1">
+<div class="box" *ngIf="selectedProduct2">
   <label>Select Size for Product 2:</label>
   <select style="color: black;" [(ngModel)]="selectedSize2">
-    <option style="color: black;" *ngFor="let size of selectedProduct1.sizes" [ngValue]="size">{{ size.sizeName }}</option>
+    <option style="color: black;" *ngFor="let size of selectedProduct2.sizes" [ngValue]="size">{{ size.sizeName }}</option>
   </select>
 </div>
 
