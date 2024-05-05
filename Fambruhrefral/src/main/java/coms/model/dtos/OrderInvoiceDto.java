@@ -9,16 +9,18 @@ public class OrderInvoiceDto {
 	private int quantity;
     private String base64Image;
     private String contentId;
+    private String externalUrl;
     
     public OrderInvoiceDto() {}
     
-	public OrderInvoiceDto(Product product, Size size, int quantity, String base64Image, String contentId) {
+	public OrderInvoiceDto(Product product, Size size, int quantity, String base64Image, String contentId, String externalUrl) {
 		super();
 		this.product = product;
 		this.size = size;
 		this.quantity = quantity;
 		this.base64Image = base64Image;
 		this.contentId = contentId;
+		this.externalUrl = externalUrl;
 	}
 
 	public Product getProduct() {
@@ -60,5 +62,15 @@ public class OrderInvoiceDto {
 	public void setContentId(String contentId) {
 		this.contentId = contentId;
 	}
+
+	public String getExternalUrl() {
+		return externalUrl;
+	}
+
+	public void setExternalUrl(String externalUrl) {
+		this.externalUrl = externalUrl;
+	}
+	
+	
 	
 }

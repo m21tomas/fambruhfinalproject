@@ -76,18 +76,25 @@ public class ReferralService {
 		        .map(grantedAuthority -> new Authority(grantedAuthority.getAuthority()))
 		        .collect(Collectors.toSet());
 		userDto.setRoles(authorities);
+		
 		if (user.getReferralCode() != null && !user.getReferralCode().isEmpty()) {			
 			userDto.setReferralCode(user.getReferralCode());
 		}
 		else {
 			userDto.setReferralCode(null);
 		}
+		
 		if (user.getReferredByCode() != null && !user.getReferredByCode().isEmpty()) {			
 			userDto.setReferredByCode(user.getReferredByCode());
 		}
 		else {
 			userDto.setReferredByCode(null);
 		}
+		
+		userDto.setCredits(user.getCredits());
+		
+		userDto.setRefLevel(user.getRefLevel());
+		
 		return userDto;
 	}
 
@@ -158,6 +165,17 @@ public class ReferralService {
 		
 		return dtoList;
     }
+	
+	@Transactional(readOnly = true)
+	public List<UserInfoResponse> getUsersByRefLevel(int level){
+		List<User> levelUsers = userRepo.findAllByRefLevelAndEnabledTrue(level);
+		if(levelUsers.size() == 0) {
+			throw new UserNotFoundException("No users found with the given referral level!");
+		} else {
+			List<UserInfoResponse> dtoList = levelUsers.stream().map(user -> mapToUserInfoResponse(user)).collect(Collectors.toList());
+			return dtoList;
+		}
+	}
 
 	@Transactional
 	public String makeUserAreferral(Principal principal) {

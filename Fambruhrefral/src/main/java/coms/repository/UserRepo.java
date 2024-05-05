@@ -31,5 +31,7 @@ public interface UserRepo extends JpaRepository<User, Long> {
 
     // Find users by username containing a keyword
     public List<User> findByUsernameContaining(String keyword);
+    
+    public List<User> findAllByRefLevelAndEnabledTrue(int refLevel);
 }
 

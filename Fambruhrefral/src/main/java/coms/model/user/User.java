@@ -1,5 +1,6 @@
 package coms.model.user;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
@@ -23,8 +24,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @Table(name = "users")
 public class User implements UserDetails{
-
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2344301933287522491L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,8 +46,12 @@ public class User implements UserDetails{
 	
     private String referredByCode;
     
-    @Column(name = "Verified_referral_user", columnDefinition = "VARCHAR(5)")
-    private boolean referredVerified = false;
+    @Column(precision = 9, scale = 2)
+    private Double credits = 0.00;
+    
+    private int refLevel = 0;
+    
+    private boolean refVerified = false;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
 	private Set<UserRole> userRoles = new HashSet<>();
@@ -58,6 +62,7 @@ public class User implements UserDetails{
 	public User() {
 		super();
 	}
+	
 	public User(String username, String password, String email) {
 		this.username = username;
 		this.password = password;
@@ -138,13 +143,13 @@ public class User implements UserDetails{
 	public void setReferredByCode(String referredByCode) {
 		this.referredByCode = referredByCode;
 	}
-	
-	public boolean isReferredVerified() {
-		return referredVerified;
+
+	public boolean isRefVerified() {
+		return refVerified;
 	}
 	
-	public void setReferredVerified(boolean referredVerified) {
-		this.referredVerified = referredVerified;
+	public void setRefVerified(boolean refVerified) {
+		this.refVerified = refVerified;
 	}
 	
 	public LocalDateTime getLastSeen() {
@@ -153,6 +158,22 @@ public class User implements UserDetails{
 	
 	public void setLastSeen(LocalDateTime lastSeen) {
 		this.lastSeen = lastSeen;
+	}
+	
+	public Double getCredits() {
+		return credits;
+	}
+	
+	public void setCredits(Double credits) {
+		this.credits = credits;
+	}
+	
+	public int getRefLevel() {
+		return refLevel;
+	}
+	
+	public void setRefLevel(int refLevel) {
+		this.refLevel = refLevel;
 	}
 	
 	@Override
@@ -181,7 +202,4 @@ public class User implements UserDetails{
 		// TODO Auto-generated method stub
 		return true;
 	}
-
-	
-
 }

@@ -32,7 +32,7 @@
                           
                           
                             <div class="card-front">
-                             
+                             <div [formGroup]="signUpForm" (ngSubmit)="onSubmit()">
                                 <div class="center-wrap">
                                     <div class="section text-center">
                                         <h4 class="mb-4 pb-3">Sign Up</h4>
@@ -73,7 +73,7 @@
                                             <input type="submit" value="Signup" [disabled]="signUpForm.invalid" 
                                             class="btn btn-primary btn-block" (click)="onSubmit()">
                                           
-                                               
+                                        </div>
                                                 </div>
                                
 </div>

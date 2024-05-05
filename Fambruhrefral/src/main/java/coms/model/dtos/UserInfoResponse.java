@@ -10,18 +10,22 @@ public class UserInfoResponse {
 	private String email;
 	private String referralCode;
     private String referredByCode;
+    private Double credits;
+    private int refLevel;
     private Set<Authority> roles;
     
     public UserInfoResponse() {}
     
 	public UserInfoResponse(Long userId, String username, String email, String referralCode, String referredByCode,
-			Set<Authority> roles) {
+			Double credits, int refLevel, Set<Authority> roles) {
 		super();
 		this.userId = userId;
 		this.username = username;
 		this.email = email;
 		this.referralCode = referralCode;
 		this.referredByCode = referredByCode;
+		this.credits = credits;
+		this.refLevel = refLevel;
 		this.roles = roles;
 	}
 
@@ -63,6 +67,22 @@ public class UserInfoResponse {
 
 	public void setReferredByCode(String referredByCode) {
 		this.referredByCode = referredByCode;
+	}
+
+	public Double getCredits() {
+		return credits;
+	}
+
+	public void setCredits(Double credits) {
+		this.credits = credits;
+	}
+
+	public int getRefLevel() {
+		return refLevel;
+	}
+
+	public void setRefLevel(int refLevel) {
+		this.refLevel = refLevel;
 	}
 
 	public Set<Authority> getRoles() {

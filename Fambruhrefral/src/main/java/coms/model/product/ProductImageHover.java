@@ -19,6 +19,9 @@ public class ProductImageHover {
     
     private String filePath;
     
+    @Column(length = 500)
+    private String externalUrl;
+    
 //    @Lob
 //    @Column(name = "image_data")
 //    private byte[] imageData;
@@ -31,13 +34,14 @@ public class ProductImageHover {
 		super();
 	}
 
-	public ProductImageHover(Long imgId, String name, String type, String filePath, Product product) {
+	public ProductImageHover(Long imgId, String name, String type, String filePath, Product product, String externalUrl) {
 		super();
 		this.imgId = imgId;
 		this.name = name;
 		this.type = type;
 		this.filePath = filePath;
 		this.product = product;
+		this.externalUrl = externalUrl;
 	}
 	
 	@PreRemove
@@ -94,6 +98,14 @@ public class ProductImageHover {
 		this.product = product;
 	}
 
-    // Constructors
+	public String getExternalUrl() {
+		return externalUrl;
+	}
+
+	public void setExternalUrl(String externalUrl) {
+		this.externalUrl = externalUrl;
+	}
+
+    
    
 }

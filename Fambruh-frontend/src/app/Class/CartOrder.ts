@@ -5,8 +5,8 @@ import { OrderItem } from "./order-item";
 export class CartOrder {
    
     username!: string;
-    firstName!: string;
-    lastName!: string;
+    firstname!: string;
+    lastname!: string;
     address!: string;
     district!: string;
     pinCode!: number;

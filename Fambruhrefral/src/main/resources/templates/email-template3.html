@@ -159,7 +159,7 @@
                     </tr>
                     <tr th:each="productDTO : ${products}">
 	                      <td style="font-size: 14px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0">
-	                        <img th:src="'cid:' + ${contentId}" style="height:80px; width:50px;"/>
+	                        <img th:src="${productDTO.externalUrl}" style="height:80px; width:50px;"/>
 	                      </td>
 	                      <td th:text="${productDTO.product.name}" style="font-size: 14px; font-family: 'Open Sans', sans-serif; color: #e2c707;  line-height: 18px;  vertical-align: top; padding:10px 0;" class="article">
 	                      </td>

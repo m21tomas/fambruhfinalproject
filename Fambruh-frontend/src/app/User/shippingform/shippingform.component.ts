@@ -23,31 +23,28 @@ export class ShippingformComponent {
   orderDetails: CartOrder = new CartOrder();
   cartItems: CartItem[] = [];
   cartcomboItems: CartcomboItem[] = [];
- // orderItem: OrderItem[] = [];
   price: number = 0;
   username!: string;
+
   constructor(private router: Router, private cartService: CartService, private loginService: LoginService, private userService: UserService) { }
+  
   ngOnInit(): void {
-    // for (let cartItems of this.cartItems) {
-    //   let items: OrderItem = new OrderItem();
-   
-    //   items.quantity = cartItems.quantity;
-    //   this.orderItem.push(items);
-    // }
     this.cartItems = this.cartService.cartItems;
     this.cartcomboItems = this.cartService.cartcomboItems;
-  
     this.username = this.loginService.getUserDetails().username;
+    this.cartService.totalPrice.subscribe((totalPrice: number) => {
+      this.orderDetails.paidAmount = totalPrice;
+      //console.log("CartService total price subscription: ", this.orderDetails.paidAmount);
+    });
     this.cartService.calculateTotalPrice();
     this.orderDetails.username = this.username;
-    this.orderDetails.paidAmount = this.price;
     this.orderDetails.paymentMode = "CARD-PAYMENT";
     this.orderDetails.cartItems = this.cartItems;
     this.orderDetails.cartcomboItems = this.cartcomboItems;
   }
  
   onSubmit() {
-    //console.log("Order details on REQUEST:\n", JSON.stringify(this.orderDetails));
+    //console.log("Order details on REQUEST:\n", this.orderDetails);
     
     this.userService.createOrder(this.orderDetails).subscribe({
       next: (data: any) => {

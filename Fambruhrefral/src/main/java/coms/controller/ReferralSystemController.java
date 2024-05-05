@@ -50,4 +50,10 @@ public class ReferralSystemController {
     public ResponseEntity<?> checkReferralFriendsSignups(Principal principal) {
         return refService.getReferralNotifications(principal);
     }
+	
+	@PreAuthorize("hasAuthority('ADMIN')")
+	@GetMapping("/listByLevel/{level}")
+	public ResponseEntity<?> getReferralsByLevel(@PathVariable int level) {
+        return ResponseEntity.ok(refService.getUsersByRefLevel(level));
+    }
 }
